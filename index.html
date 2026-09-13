@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1A0E08">
+<meta name="description" content="Warung Cakrawala Sego Sambel — Pesan sego sambel khas Malang & cetak struk Bluetooth">
+<title>Warung Cakrawala — Sego Sambel Khas Malang</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root {
+  --primary:        #E63946;
+  --primary-600:    #C42A38;
+  --primary-700:    #A01F2C;
+  --primary-soft:   rgba(230, 57, 70, 0.14);
+
+  --accent:         #F4A300;
+  --accent-600:     #D98F00;
+  --accent-soft:    rgba(244, 163, 0, 0.15);
+
+  --leaf:           #16A34A;
+  --leaf-soft:      rgba(22, 163, 74, 0.14);
+
+  --success:        #22C55E;
+  --success-soft:   rgba(34, 197, 94, 0.14);
+  --danger:         #EF4444;
+  --danger-soft:    rgba(239, 68, 68, 0.14);
+  --warning:        #F59E0B;
+  --info:           #3B82F6;
+
+  --bg:             #0F0805;
+  --bg-2:           #1A0E08;
+  --surface:        rgba(255, 240, 225, 0.045);
+  --surface-2:      rgba(255, 240, 225, 0.075);
+  --surface-3:      rgba(255, 240, 225, 0.115);
+  --border:         rgba(255, 220, 180, 0.10);
+  --border-strong:  rgba(255, 220, 180, 0.20);
+
+  --text:           #FFF6EC;
+  --text-2:         #D4BFA9;
+  --text-3:         #8C7562;
+
+  --r-xs: 8px;  --r-sm: 12px;  --r: 16px;
+  --r-lg: 20px; --r-xl: 28px;  --r-full: 9999px;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.35), 0 1px 2px rgba(0,0,0,.25);
+  --shadow:    0 8px 24px rgba(0,0,0,.42), 0 2px 6px rgba(0,0,0,.28);
+  --shadow-lg: 0 22px 60px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.35);
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 150ms; --t: 220ms; --t-slow: 360ms;
+
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Courier New', ui-monospace, monospace;
+}
+
+/* ... (CSS TETAP SAMA SEPERTI SEBELUMNYA, TIDAK ADA YANG DIUBAH DI BAGIAN CSS) ... */
+/* Agar jawaban tidak terlalu panjang, saya asumsikan CSS bagian 1-13 sama persis.
+   Anda cukup menyalin ulang dari file sebelumnya, atau saya sertakan kembali di bawah. */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100dvh; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); overflow-x: hidden; line-height: 1.5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body::before, body::after { content: ''; position: fixed; border-radius: 50%; filter: blur(120px); opacity: .32; pointer-events: none; z-index: -1; will-change: transform; }
+body::before { width: 480px; height: 480px; background: radial-gradient(circle, #E63946 0%, transparent 70%); top: -180px; left: -160px; animation: float1 18s ease-in-out infinite; }
+body::after { width: 520px; height: 520px; background: radial-gradient(circle, #F4A300 0%, transparent 70%); bottom: -220px; right: -200px; animation: float2 22s ease-in-out infinite; }
+@keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,40px) scale(1.08); } }
+@keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-50px,-30px) scale(1.06); } }
+img, svg { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; }
+ul { list-style: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,220,180,.14); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,220,180,.26); }
+.app { max-width: 1240px; margin: 0 auto; }
+.main-grid { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 22px; align-items: start; }
+@media (max-width: 980px) { .main-grid { grid-template-columns: 1fr; } }
+.icon { flex-shrink: 0; }
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* BUTTONS */
+.btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 18px; border-radius: var(--r-sm); font-weight: 600; font-size: 14px; letter-spacing: .1px; transition: transform var(--t) var(--ease-spring), box-shadow var(--t) var(--ease-smooth), background var(--t) var(--ease-smooth), color var(--t) var(--ease-smooth); user-select: none; -webkit-tap-highlight-color: transparent; will-change: transform; }
+.btn:active { transform: scale(.955); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn:disabled:active { transform: none; }
+.ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,.45); transform: scale(0); animation: rippleAnim 620ms var(--ease-smooth) forwards; pointer-events: none; }
+@keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+.btn-primary { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%); color: #fff; box-shadow: 0 6px 18px rgba(230,57,70,.35), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(230,57,70,.5), inset 0 1px 0 rgba(255,255,255,.25); }
+.btn-success { background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%); color: #fff; box-shadow: 0 6px 18px rgba(34,197,94,.32), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-success:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(34,197,94,.48), inset 0 1px 0 rgba(255,255,255,.25); }
+.btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover:not(:disabled) { background: var(--surface-3); border-color: var(--border-strong); transform: translateY(-2px); }
+.btn-accent { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-600) 100%); color: #1F1200; font-weight: 700; box-shadow: 0 6px 18px rgba(244,163,0,.35), inset 0 1px 0 rgba(255,255,255,.4); }
+.btn-accent:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(244,163,0,.5); }
+.btn-block { width: 100%; }
+.btn-lg { padding: 15px 22px; font-size: 15px; border-radius: var(--r); }
+
+/* HEADER */
+.header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 18px 24px; margin-bottom: 22px; background: linear-gradient(135deg, rgba(230,57,70,.14), rgba(244,163,0,.10)), var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); box-shadow: var(--shadow); animation: fadeDown var(--t-slow) var(--ease-smooth) both; }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-logo { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(135deg, var(--primary), var(--primary-700)); color: #fff; box-shadow: 0 8px 22px rgba(230,57,70,.45), inset 0 1px 0 rgba(255,255,255,.25); position: relative; }
+.brand-logo::after { content: ''; position: absolute; inset: -3px; border-radius: 17px; background: linear-gradient(135deg, var(--primary), var(--accent)); opacity: .25; filter: blur(8px); z-index: -1; }
+.brand-text h1 { font-size: 19px; font-weight: 800; letter-spacing: -.3px; line-height: 1.15; }
+.brand-text h1 span { background: linear-gradient(90deg, var(--accent), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand-text p { font-size: 11.5px; color: var(--text-3); font-weight: 500; margin-top: 2px; }
+.brand-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; color: var(--accent); padding: 2px 8px; border-radius: var(--r-full); background: var(--accent-soft); border: 1px solid rgba(244,163,0,.25); margin-top: 4px; }
+.printer-status { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); font-size: 12.5px; font-weight: 600; color: var(--text-2); transition: all var(--t) var(--ease-smooth); max-width: 260px; }
+.status-pill span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 0 3px rgba(239,68,68,.18); transition: all var(--t) var(--ease-smooth); }
+.status-pill.connected { color: var(--success); border-color: rgba(34,197,94,.32); background: var(--success-soft); }
+.status-pill.connected .status-dot { background: var(--success); box-shadow: 0 0 0 3px rgba(34,197,94,.22), 0 0 12px rgba(34,197,94,.7); animation: pulseDot 2s ease-in-out infinite; }
+@keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,.22), 0 0 12px rgba(34,197,94,.7); } 50% { box-shadow: 0 0 0 6px rgba(34,197,94,.06), 0 0 18px rgba(34,197,94,.9); } }
+
+/* MENU & CART (SAMA SEPERTI SEBELUMNYA) */
+.menu-section { animation: fadeUp var(--t-slow) var(--ease-smooth) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.section-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.section-head h2 { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; letter-spacing: -.2px; }
+.section-head h2 .icon { color: var(--primary); }
+.category-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { position: relative; overflow: hidden; padding: 7px 14px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 12.5px; font-weight: 600; transition: all var(--t) var(--ease-spring); -webkit-tap-highlight-color: transparent; display: inline-flex; align-items: center; gap: 6px; }
+.chip:hover { background: var(--surface-3); color: var(--text); transform: translateY(-1px); }
+.chip:active { transform: scale(.94); }
+.chip.active { background: linear-gradient(135deg, var(--primary), var(--primary-600)); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(230,57,70,.4); }
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
+.menu-card { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 16px 14px 14px; border-radius: var(--r); background: linear-gradient(160deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); box-shadow: var(--shadow-sm); cursor: pointer; transition: transform var(--t) var(--ease-spring), box-shadow var(--t) var(--ease-smooth), border-color var(--t) var(--ease-smooth); -webkit-tap-highlight-color: transparent; text-align: center; animation: cardIn 420ms var(--ease-spring) both; animation-delay: var(--delay, 0ms); will-change: transform; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.menu-card:hover { transform: translateY(-4px); border-color: rgba(230,57,70,.45); box-shadow: 0 14px 36px rgba(0,0,0,.4), 0 0 0 1px rgba(230,57,70,.2); }
+.menu-card:active { transform: translateY(-1px) scale(.985); }
+.card-emoji { width: 58px; height: 58px; margin: 0 auto; border-radius: 50%; display: grid; place-items: center; font-size: 30px; line-height: 1; background: radial-gradient(circle at 30% 30%, var(--surface-3), var(--surface)); border: 1px solid var(--border); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 4px 12px rgba(0,0,0,.2); transition: transform var(--t) var(--ease-spring); }
+.menu-card:hover .card-emoji { transform: scale(1.08) rotate(-4deg); }
+.menu-card h3 { font-size: 13.5px; font-weight: 700; color: var(--text); letter-spacing: -.1px; line-height: 1.3; }
+.menu-card .price { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .2px; }
+.menu-card .card-tag { position: absolute; top: 10px; left: 10px; font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--accent); padding: 2px 7px; border-radius: var(--r-full); background: var(--accent-soft); border: 1px solid rgba(244,163,0,.3); }
+.qty-badge { position: absolute; top: 10px; right: 10px; min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--r-full); background: linear-gradient(135deg, var(--primary), var(--primary-700)); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; box-shadow: 0 4px 12px rgba(230,57,70,.55); transform: scale(0); transition: transform var(--t) var(--ease-spring); pointer-events: none; }
+.qty-badge.show { transform: scale(1); }
+.qty-badge.bounce { animation: badgeBounce 420ms var(--ease-spring); }
+@keyframes badgeBounce { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.btn-add { width: 100%; padding: 8px 12px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); font-weight: 700; font-size: 12.5px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid rgba(230,57,70,.3); transition: all var(--t) var(--ease-spring); position: relative; overflow: hidden; }
+.btn-add:hover { background: linear-gradient(135deg, var(--primary), var(--primary-600)); color: #fff; border-color: transparent; box-shadow: 0 8px 20px rgba(230,57,70,.45); }
+.btn-add:active { transform: scale(.94); }
+
+.cart-panel { position: sticky; top: 20px; border-radius: var(--r-lg); background: linear-gradient(165deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); backdrop-filter: blur(22px) saturate(160%); -webkit-backdrop-filter: blur(22px) saturate(160%); box-shadow: var(--shadow-lg); overflow: hidden; animation: fadeUp var(--t-slow) var(--ease-smooth) 120ms both; }
+@media (max-width: 980px) { .cart-panel { position: static; } }
+.cart-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: linear-gradient(135deg, rgba(230,57,70,.16), rgba(244,163,0,.10)); border-bottom: 1px solid var(--border); }
+.cart-head-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; letter-spacing: -.1px; }
+.cart-head-title .icon { color: var(--primary); }
+.cart-count { padding: 4px 11px; border-radius: var(--r-full); background: var(--accent); color: #1F1200; font-size: 11.5px; font-weight: 800; transition: transform var(--t) var(--ease-spring); }
+.cart-count.bounce { animation: badgeBounce 420ms var(--ease-spring); }
+.cart-body { max-height: 380px; overflow-y: auto; padding: 8px 14px; }
+.cart-empty { text-align: center; padding: 44px 20px; color: var(--text-3); }
+.cart-empty-icon { width: 68px; height: 68px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-3); animation: floatY 3s ease-in-out infinite; }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.cart-empty p { font-size: 13.5px; font-weight: 600; color: var(--text-2); }
+.cart-empty small { font-size: 11.5px; color: var(--text-3); display: block; margin-top: 4px; }
+.cart-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 12px 8px; border-bottom: 1px dashed var(--border); animation: itemIn 280ms var(--ease-spring) both; }
+.cart-item:last-child { border-bottom: none; }
+@keyframes itemIn { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: translateX(0); } }
+.ci-info .ci-name { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.ci-info .ci-price { font-size: 11.5px; color: var(--text-3); font-weight: 500; }
+.qty-ctrl { display: inline-flex; align-items: center; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-full); padding: 3px; }
+.qty-btn { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: var(--text-2); transition: all var(--t-fast) var(--ease-spring); position: relative; overflow: hidden; }
+.qty-btn:hover { background: var(--surface-3); color: var(--text); }
+.qty-btn:active { transform: scale(.85); }
+.qty-btn.minus:hover { color: var(--danger); background: var(--danger-soft); }
+.qty-btn.plus:hover { color: var(--success); background: var(--success-soft); }
+.qty-val { min-width: 22px; text-align: center; font-size: 13px; font-weight: 800; color: var(--text); }
+.ci-sub { font-size: 13.5px; font-weight: 800; color: var(--accent); min-width: 68px; text-align: right; font-variant-numeric: tabular-nums; }
+.cart-foot { padding: 18px 20px; background: linear-gradient(180deg, rgba(0,0,0,.22), transparent); border-top: 1px solid var(--border); }
+.total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.total-row .label { font-size: 12.5px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .6px; }
+.total-row .amount { font-size: 24px; font-weight: 800; letter-spacing: -.6px; background: linear-gradient(90deg, var(--accent), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+
+/* MODAL, TOAST, FOOTER (SAMA SEPERTI SEBELUMNYA) */
+.modal-overlay { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(8, 3, 2, 0.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; opacity: 0; visibility: hidden; transition: opacity var(--t) var(--ease-smooth), visibility var(--t); }
+.modal-overlay.show { opacity: 1; visibility: visible; }
+.modal { width: 100%; max-width: 440px; max-height: 92dvh; overflow-y: auto; border-radius: var(--r-xl); background: linear-gradient(170deg, #1E1209, #140B06); border: 1px solid var(--border-strong); box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,220,180,.05) inset; transform: scale(.94) translateY(14px); opacity: 0; transition: transform var(--t-slow) var(--ease-spring), opacity var(--t) var(--ease-smooth); }
+.modal-overlay.show .modal { transform: scale(1) translateY(0); opacity: 1; }
+.modal-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, rgba(230,57,70,.16), transparent); }
+.modal-head h2 { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; letter-spacing: -.1px; }
+.modal-head h2 .icon { color: var(--primary); }
+.icon-btn { position: relative; overflow: hidden; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); color: var(--text-2); transition: all var(--t) var(--ease-spring); }
+.icon-btn:hover { background: var(--danger-soft); color: var(--danger); transform: rotate(90deg); }
+.icon-btn:active { transform: rotate(90deg) scale(.85); }
+.modal-body { padding: 22px; }
+.receipt { background: #FFFCF4; color: #1A1A1A; border-radius: var(--r-sm); padding: 18px 16px; font-family: var(--font-mono); font-size: 12px; line-height: 1.65; margin-bottom: 20px; max-height: 260px; overflow-y: auto; box-shadow: 0 12px 36px rgba(0,0,0,.45), inset 0 0 0 1px rgba(0,0,0,.06); position: relative; }
+.receipt::before, .receipt::after { content: ''; position: absolute; left: 0; right: 0; height: 8px; background-image: radial-gradient(circle at 4px 4px, #140B06 4px, transparent 4.5px); background-size: 10px 10px; background-repeat: repeat-x; }
+.receipt::before { top: -1px; }
+.receipt::after { bottom: -1px; transform: rotate(180deg); }
+.receipt .r-center { text-align: center; }
+.receipt .r-bold { font-weight: 700; }
+.receipt .r-line { border-top: 1px dashed #999; margin: 8px 0; }
+.receipt .r-row { display: flex; justify-content: space-between; gap: 12px; }
+.receipt .r-row span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.receipt .r-total { display: flex; justify-content: space-between; font-weight: 800; font-size: 14px; margin-top: 8px; padding-top: 8px; border-top: 1.5px solid #222; }
+.receipt .r-meta { font-size: 11px; }
+.receipt .r-tagline { font-size: 10px; font-style: italic; color: #A0522D; margin-top: 3px; letter-spacing: .3px; }
+.field-label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 10px; }
+.pay-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.pay-method { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 10px; border-radius: var(--r-sm); background: var(--surface); border: 1.5px solid var(--border); color: var(--text-3); font-weight: 700; font-size: 13px; transition: all var(--t) var(--ease-spring); }
+.pay-method:hover { color: var(--text); border-color: var(--border-strong); transform: translateY(-2px); }
+.pay-method:active { transform: scale(.96); }
+.pay-method.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); box-shadow: 0 8px 22px rgba(230,57,70,.3); }
+.pay-method .icon { width: 22px; height: 22px; }
+.cash-group { margin-bottom: 16px; }
+.input-wrap { position: relative; display: flex; align-items: center; }
+.input-prefix { position: absolute; left: 14px; font-weight: 700; font-size: 15px; color: var(--text-3); pointer-events: none; }
+.input-field { width: 100%; padding: 14px 16px 14px 42px; border-radius: var(--r-sm); background: var(--surface); border: 1.5px solid var(--border); color: var(--text); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; transition: all var(--t) var(--ease-smooth); }
+.input-field:focus { outline: none; border-color: var(--primary); background: var(--surface-2); box-shadow: 0 0 0 4px rgba(230,57,70,.16); }
+.input-field::placeholder { color: var(--text-3); font-weight: 500; }
+.quick-cash { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.quick-cash button { padding: 6px 12px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 11.5px; font-weight: 700; transition: all var(--t) var(--ease-spring); }
+.quick-cash button:hover { background: var(--accent-soft); color: var(--accent); border-color: rgba(244,163,0,.4); transform: translateY(-1px); }
+.quick-cash button:active { transform: scale(.92); }
+.change-box { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; border-radius: var(--r-sm); background: var(--success-soft); border: 1px solid rgba(34,197,94,.3); margin-bottom: 18px; transition: all var(--t) var(--ease-smooth); animation: popIn 240ms var(--ease-spring); }
+@keyframes popIn { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: scale(1); } }
+.change-box.error { background: var(--danger-soft); border-color: rgba(239,68,68,.3); }
+.change-box .cl { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--text-3); }
+.change-box .cv { font-size: 18px; font-weight: 800; color: var(--success); font-variant-numeric: tabular-nums; }
+.change-box.error .cv { color: var(--danger); }
+.modal-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; padding-top: 4px; }
+.spinner { width: 16px; height: 16px; border: 2.5px solid rgba(255,255,255,.28); border-top-color: #fff; border-radius: 50%; animation: spin .65s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.toast-wrap { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; max-width: calc(100vw - 40px); pointer-events: none; }
+.toast { pointer-events: auto; display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: var(--r); background: linear-gradient(135deg, #241609, #180D06); border: 1px solid var(--border-strong); border-left: 3px solid var(--info); box-shadow: var(--shadow-lg); font-size: 13.5px; font-weight: 600; color: var(--text); min-width: 260px; max-width: 380px; animation: toastIn 340ms var(--ease-spring); backdrop-filter: blur(16px); }
+.toast.out { animation: toastOut 280ms var(--ease-smooth) forwards; }
+@keyframes toastIn { from { opacity: 0; transform: translateX(120%) scale(.9); } to { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes toastOut { to { opacity: 0; transform: translateX(120%) scale(.92); } }
+.toast.success { border-left-color: var(--success); } .toast.success .t-icon { color: var(--success); }
+.toast.error { border-left-color: var(--danger); } .toast.error .t-icon { color: var(--danger); }
+.toast.warning { border-left-color: var(--warning); } .toast.warning .t-icon { color: var(--warning); }
+.toast.info .t-icon { color: var(--info); }
+.toast .t-icon { flex-shrink: 0; }
+.toast .t-msg { flex: 1; line-height: 1.4; }
+.footer-info { max-width: 1240px; margin: 26px auto 8px; padding: 18px 22px; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--border); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.fi-item { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; color: var(--text-2); }
+.fi-item .icon { color: var(--primary); margin-top: 2px; flex-shrink: 0; }
+.fi-item strong { display: block; color: var(--text); font-weight: 700; margin-bottom: 2px; font-size: 13px; }
+@media (max-width: 640px) { body { padding: 14px; } .header { padding: 14px 16px; border-radius: var(--r); } .brand-logo { width: 42px; height: 42px; border-radius: 12px; } .brand-text h1 { font-size: 15.5px; } .brand-text p { font-size: 10.5px; } .status-pill { font-size: 11.5px; padding: 7px 12px; max-width: 180px; } .btn-connect-text { display: none; } .menu-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; } .menu-card { padding: 14px 10px 12px; } .card-emoji { width: 50px; height: 50px; font-size: 26px; } .menu-card h3 { font-size: 12.5px; } .modal { border-radius: var(--r-lg); } .modal-body { padding: 18px; } .modal-actions { grid-template-columns: 1fr; } .toast-wrap { top: 12px; right: 12px; left: 12px; max-width: none; } .toast { min-width: 0; } }
+@media (max-width: 380px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } .cart-item { grid-template-columns: 1fr auto; gap: 8px; } .ci-sub { grid-column: 1 / -1; text-align: right; margin-top: 2px; } }
+@media print { body * { visibility: hidden !important; } .receipt, .receipt * { visibility: visible !important; } .receipt { position: absolute; left: 0; top: 0; width: 58mm; padding: 4px; border: none; box-shadow: none; background: #fff; color: #000; max-height: none; overflow: visible; } .receipt::before, .receipt::after { display: none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } body::before, body::after { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="header" role="banner">
+    <div class="brand">
+      <div class="brand-logo" aria-hidden="true">
+        <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 4c-1.5 1-2 2-2 3h4c0-1-.5-2-2-3z"/></svg>
+      </div>
+      <div class="brand-text">
+        <h1>Cakrawala <span>Sego Sambel</span></h1>
+        <p>Khas Malang · Sejak 2015</p>
+        <span class="brand-tag">
+          <svg class="icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          Pedasnya Bikin Nagih
+        </span>
+      </div>
+    </div>
+    <div class="printer-status">
+      <div class="status-pill" id="statusPill" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusText">Printer: Terputus</span>
+      </div>
+      <button type="button" class="btn btn-accent" id="btnConnect" aria-label="Hubungkan ke printer Bluetooth">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+        <span class="btn-connect-text">Hubungkan Printer</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-grid">
+    <section class="menu-section" aria-labelledby="menuTitle">
+      <div class="section-head">
+        <h2 id="menuTitle">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          Menu Sego Sambel
+        </h2>
+        <div class="category-chips" id="chips" role="tablist" aria-label="Filter kategori"></div>
+      </div>
+      <div class="menu-grid" id="menuGrid" role="list"></div>
+    </section>
+
+    <aside class="cart-panel" aria-labelledby="cartTitle">
+      <div class="cart-head">
+        <div class="cart-head-title" id="cartTitle">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          Pesanan Anda
+        </div>
+        <span class="cart-count" id="cartCount" aria-live="polite">0 item</span>
+      </div>
+      <div class="cart-body" id="cartBody" role="region" aria-label="Daftar pesanan"></div>
+      <div class="cart-foot">
+        <div class="total-row">
+          <span class="label">Total</span>
+          <span class="amount" id="totalAmount" aria-live="polite">Rp 0</span>
+        </div>
+        <button type="button" class="btn btn-success btn-block btn-lg" id="btnPay" disabled aria-label="Bayar dan cetak struk">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          Bayar & Cetak Struk
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <section class="footer-info reveal" aria-label="Informasi warung">
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div><strong>Alamat Warung</strong>Jl. Raya Cakrawala No. 88, Malang, Jawa Timur</div>
+    </div>
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+      <div><strong>Telepon / WA</strong>0812-3456-7890</div>
+    </div>
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <div><strong>Jam Buka</strong>Setiap Hari · 10.00 – 22.00 WIB</div>
+    </div>
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" x2="21" y1="6" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <div><strong>Layanan</strong>Dine-in · Take Away · Delivery</div>
+    </div>
+  </section>
+</div>
+
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h2 id="modalTitle">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        Pembayaran
+      </h2>
+      <button type="button" class="icon-btn" id="btnClose" aria-label="Tutup dialog pembayaran">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="receipt" id="receipt" aria-label="Pratinjau struk"></div>
+      <div>
+        <label class="field-label">Metode Pembayaran</label>
+        <div class="pay-methods" role="radiogroup" aria-label="Pilih metode pembayaran">
+          <button type="button" class="pay-method active" id="btnCash" data-method="cash" role="radio" aria-checked="true">
+            <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+            Tunai
+          </button>
+          <button type="button" class="pay-method" id="btnQris" data-method="qris" role="radio" aria-checked="false">
+            <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+            QRIS
+          </button>
+        </div>
+      </div>
+      <div class="cash-group" id="cashGroup">
+        <label class="field-label" for="inputCash">Uang Diterima</label>
+        <div class="input-wrap">
+          <span class="input-prefix">Rp</span>
+          <input type="text" inputmode="numeric" class="input-field" id="inputCash" placeholder="0" autocomplete="off" aria-label="Nominal uang yang diterima">
+        </div>
+        <div class="quick-cash" id="quickCash"></div>
+      </div>
+      <div class="change-box" id="changeBox" style="display:none;">
+        <span class="cl" id="changeLabel">Kembalian</span>
+        <span class="cv" id="changeVal">Rp 0</span>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost btn-lg" id="btnCancel">Batal</button>
+        <button type="button" class="btn btn-primary btn-lg" id="btnConfirm" disabled>
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          Cetak & Bayar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap" role="region" aria-label="Notifikasi" aria-live="polite"></div>
+
+<script>
+'use strict';
+(() => {
+  /* ---------- 1. STORE (Disesuaikan dengan Buku Panduan) ---------- */
+  const STORE = Object.freeze({
+    name: 'WARUNG CAKRAWALA',
+    subtitle: 'Sego Sambel Khas Malang',
+    address: 'Jl. Raya Cakrawala No. 88, Malang, Jawa Timur',
+    phone: '0812-3456-7890',
+    paperWidth: 32,             // 32 karakter (sesuai 384 dots / 12 dots per Font A)
+    hasCutter: false,           // Buku panduan: "Auto-cutter: NO" -> Jangan kirim perintah potong
+    footer: 'Matur Nuwun',
+    tagline: 'Pedasnya Bikin Nagih'
+  });
+
+  /* ---------- 2. MENU ---------- */
+  const MENU = Object.freeze([
+    { id: 1,  nama: 'Nasi Putih 1',        harga: 15000, emoji: '🍚', kategori: 'sego',    tag: '' },
+    { id: 2,  nama: 'Nasi Putih ½',        harga: 15000, emoji: '🍚', kategori: 'sego' },
+    { id: 3,  nama: 'Sego Sambel Ijo',     harga: 16000, emoji: '🌶️', kategori: 'sego' },
+    { id: 4,  nama: 'Sego Sambel Matah',   harga: 18000, emoji: '🌶️', kategori: 'sego',    tag: 'Pedes!' },
+    { id: 5,  nama: 'Sego Sambel Bawang Telur', harga: 18000, emoji: '🍳', kategori: 'sego' },
+    { id: 6,  nama: 'Sego Sambel Komplit', harga: 25000, emoji: '🍛', kategori: 'sego',    tag: 'Favorite' },
+    { id: 7,  nama: 'Ayam Goreng',         harga: 12000, emoji: '🍗', kategori: 'lauk' },
+    { id: 8,  nama: 'Bebek Goreng',        harga: 25000, emoji: '🦆', kategori: 'lauk',    tag: 'Spesial' },
+    { id: 9,  nama: 'Ikan Nila Goreng',    harga: 18000, emoji: '🐟', kategori: 'lauk' },
+    { id: 10, nama: 'Ikan Lele Goreng',    harga: 10000, emoji: '🐟', kategori: 'lauk' },
+    { id: 11, nama: 'Telur Dadar',         harga: 5000,  emoji: '🍳', kategori: 'lauk' },
+    { id: 12, nama: 'Tempe Goreng',        harga: 3000,  emoji: '🟫', kategori: 'lauk' },
+    { id: 13, nama: 'Tahu Goreng',         harga: 3000,  emoji: '🟨', kategori: 'lauk' },
+    { id: 14, nama: 'Lalapan Segar',       harga: 5000,  emoji: '🥬', kategori: 'sayur' },
+    { id: 15, nama: 'Urap Sayur',          harga: 5000,  emoji: '🥗', kategori: 'sayur' },
+    { id: 16, nama: 'Kangkung Tumis',      harga: 7000,  emoji: '🥬', kategori: 'sayur' },
+    { id: 17, nama: 'Es Teh Manis',        harga: 5000,  emoji: '🧊', kategori: 'minuman', tag: 'Best Seller' },
+    { id: 18, nama: 'Teh Hangat',          harga: 4000,  emoji: '🍵', kategori: 'minuman' },
+    { id: 19, nama: 'Es Jeruk',            harga: 6000,  emoji: '🍊', kategori: 'minuman' },
+    { id: 20, nama: 'Jeruk Hangat',        harga: 5000,  emoji: '🍊', kategori: 'minuman' },
+    { id: 21, nama: 'Es Kelapa Muda',      harga: 8000,  emoji: '🥥', kategori: 'minuman' },
+    { id: 22, nama: 'Kopi Hitam',          harga: 6000,  emoji: '☕', kategori: 'minuman' },
+    { id: 23, nama: 'Kopi Susu',           harga: 8000,  emoji: '☕', kategori: 'minuman' },
+    { id: 24, nama: 'Es Cincau',           harga: 7000,  emoji: '🥤', kategori: 'minuman' },
+    { id: 25, nama: 'Pisang Goreng',       harga: 5000,  emoji: '🍌', kategori: 'jajanan' },
+    { id: 26, nama: 'Tahu Isi',            harga: 3000,  emoji: '🥟', kategori: 'jajanan' },
+    { id: 27, nama: 'Cireng',              harga: 4000,  emoji: '🥠', kategori: 'jajanan' },
+    { id: 28, nama: 'Mendoan',             harga: 3000,  emoji: '🍘', kategori: 'jajanan' }
+  ]);
+
+  const CATEGORIES = Object.freeze([
+    { key: 'all',     label: 'Semua' },
+    { key: 'sego',    label: 'Sego Sambel' },
+    { key: 'lauk',    label: 'Lauk' },
+    { key: 'sayur',   label: 'Sayur' },
+    { key: 'minuman', label: 'Minuman' },
+    { key: 'jajanan', label: 'Jajanan' }
+  ]);
+
+  const MAX_QTY = 99;
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 3. STATE & DOM ---------- */
+  const state = { cart: [], filter: 'all', payment: 'cash', invoice: null, printerConnected: false, processing: false };
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  const el = {
+    menuGrid: $('#menuGrid'), chips: $('#chips'), cartBody: $('#cartBody'), cartCount: $('#cartCount'),
+    totalAmount: $('#totalAmount'), btnPay: $('#btnPay'), statusPill: $('#statusPill'), statusText: $('#statusText'),
+    btnConnect: $('#btnConnect'), modal: $('#modal'), receipt: $('#receipt'), btnClose: $('#btnClose'),
+    btnCancel: $('#btnCancel'), btnConfirm: $('#btnConfirm'), inputCash: $('#inputCash'), quickCash: $('#quickCash'),
+    changeBox: $('#changeBox'), changeVal: $('#changeVal'), changeLabel: $('#changeLabel'), cashGroup: $('#cashGroup'),
+    btnCash: $('#btnCash'), btnQris: $('#btnQris'), toastWrap: $('#toastWrap')
+  };
+
+  /* ---------- 4. UTILS ---------- */
+  const formatRp = (n) => 'Rp ' + (n || 0).toLocaleString('id-ID');
+  const formatNum = (n) => (n || 0).toLocaleString('id-ID');
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  const debounce = (fn, delay = 200) => { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); }; };
+  const pad2 = (n) => String(n).padStart(2, '0');
+  const formatDateTime = (d = new Date()) => `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}/${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  const makeInvoice = () => {
+    const d = new Date();
+    const date = `${d.getFullYear()}${pad2(d.getMonth()+1)}${pad2(d.getDate())}`;
+    const time = `${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
+    const rand = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+    return `CKR-${date}-${time}-${rand}`;
+  };
+
+  /* ---------- 5. TOAST ---------- */
+  const TOAST_ICONS = {
+    success: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+    error: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>',
+    warning: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>',
+    info: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>'
+  };
+  function toast(message, type = 'info', duration = 3200) {
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `${TOAST_ICONS[type] || TOAST_ICONS.info}<span class="t-msg">${escapeHtml(message)}</span>`;
+    el.toastWrap.appendChild(t);
+    setTimeout(() => { t.classList.add('out'); t.addEventListener('animationend', () => t.remove(), { once: true }); }, duration);
+  }
+
+  /* ---------- 6. RIPPLE ---------- */
+  function attachRipple(node) {
+    if (!node || node.dataset.ripple === '1') return;
+    node.dataset.ripple = '1';
+    node.addEventListener('pointerdown', (e) => {
+      if (REDUCED) return;
+      const rect = node.getBoundingClientRect(); const size = Math.max(rect.width, rect.height);
+      const span = document.createElement('span'); span.className = 'ripple';
+      span.style.width = span.style.height = size + 'px';
+      span.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      span.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      node.appendChild(span); span.addEventListener('animationend', () => span.remove(), { once: true });
+    });
+  }
+  function bindRipples(root = document) {
+    $$('.btn, .chip, .pay-method, .qty-btn, .icon-btn, .btn-add, .quick-cash button', root).forEach(attachRipple);
+  }
+
+  /* ---------- 7. RENDER ---------- */
+  function renderChips() {
+    el.chips.innerHTML = CATEGORIES.map(c => `
+      <button type="button" class="chip ${state.filter === c.key ? 'active' : ''}" data-cat="${c.key}" role="tab" aria-selected="${state.filter === c.key}">${escapeHtml(c.label)}</button>
+    `).join('');
+  }
+
+  function renderMenu() {
+    const data = state.filter === 'all' ? MENU : MENU.filter(m => m.kategori === state.filter);
+    el.menuGrid.innerHTML = data.map((m, i) => `
+      <article class="menu-card" role="listitem" tabindex="0" data-id="${m.id}" style="--delay:${Math.min(i * 35, 400)}ms" aria-label="${escapeHtml(m.nama)}, ${formatRp(m.harga)}">
+        ${m.tag ? `<span class="card-tag">${escapeHtml(m.tag)}</span>` : ''}
+        <span class="qty-badge" data-badge="${m.id}">0</span>
+        <div class="card-emoji" aria-hidden="true">${m.emoji}</div>
+        <h3>${escapeHtml(m.nama)}</h3>
+        <div class="price">${formatRp(m.harga)}</div>
+        <button type="button" class="btn-add" data-add="${m.id}" aria-label="Tambah ${escapeHtml(m.nama)} ke pesanan">
+          <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Tambah
+        </button>
+      </article>
+    `).join('');
+    bindRipples(el.menuGrid);
+    updateBadges();
+  }
+
+  const cartTotal = () => state.cart.reduce((s, i) => s + i.harga * i.qty, 0);
+  const cartQtyTot = () => state.cart.reduce((s, i) => s + i.qty, 0);
+  const findCart = (id) => state.cart.find(c => c.id === id);
+
+  function addToCart(id) {
+    const menu = MENU.find(m => m.id === id); if (!menu) return;
+    const item = findCart(id);
+    if (item) { if (item.qty >= MAX_QTY) { toast('Batas maksimum tercapai', 'warning'); return; } item.qty += 1; }
+    else { state.cart.push({ id, nama: menu.nama, harga: menu.harga, qty: 1 }); }
+    renderCart(); updateBadges(); bounceBadge(id);
+  }
+  function decreaseQty(id) {
+    const item = findCart(id); if (!item) return;
+    if (item.qty > 1) item.qty -= 1; else state.cart = state.cart.filter(c => c.id !== id);
+    renderCart(); updateBadges();
+  }
+  function updateBadges() {
+    MENU.forEach(m => {
+      const badge = el.menuGrid.querySelector(`[data-badge="${m.id}"]`); if (!badge) return;
+      const item = findCart(m.id); const q = item ? item.qty : 0;
+      badge.textContent = q; badge.classList.toggle('show', q > 0);
+    });
+  }
+  function bounceBadge(id) {
+    const badge = el.menuGrid.querySelector(`[data-badge="${id}"]`);
+    if (badge && !REDUCED) { badge.classList.remove('bounce'); void badge.offsetWidth; badge.classList.add('bounce'); }
+    if (!REDUCED) { el.cartCount.classList.remove('bounce'); void el.cartCount.offsetWidth; el.cartCount.classList.add('bounce'); }
+  }
+
+  function renderCart() {
+    if (state.cart.length === 0) {
+      el.cartBody.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon" aria-hidden="true"><svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div><p>Belum ada pesanan</p><small>Pilih sego sambel favoritmu dulu 🍚</small></div>`;
+      el.cartCount.textContent = '0 item'; el.totalAmount.textContent = 'Rp 0'; el.btnPay.disabled = true; return;
+    }
+    el.cartBody.innerHTML = state.cart.map(item => `
+      <div class="cart-item" data-row="${item.id}">
+        <div class="ci-info"><div class="ci-name">${escapeHtml(item.nama)}</div><div class="ci-price">${formatRp(item.harga)}</div></div>
+        <div class="qty-ctrl" role="group" aria-label="Atur jumlah ${escapeHtml(item.nama)}">
+          <button type="button" class="qty-btn minus" data-act="minus" data-id="${item.id}" aria-label="Kurangi"><svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+          <span class="qty-val" aria-live="polite">${item.qty}</span>
+          <button type="button" class="qty-btn plus" data-act="plus" data-id="${item.id}" aria-label="Tambah"><svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+        </div>
+        <div class="ci-sub">${formatRp(item.harga * item.qty)}</div>
+      </div>
+    `).join('');
+    bindRipples(el.cartBody);
+    el.cartCount.textContent = `${cartQtyTot()} item`; el.totalAmount.textContent = formatRp(cartTotal()); el.btnPay.disabled = false;
+  }
+
+  /* ---------- 8. RECEIPT PREVIEW ---------- */
+  function buildReceiptHTML() {
+    const total = cartTotal();
+    const rows = state.cart.map(i => `<div class="r-row"><span>${escapeHtml(i.nama)} x${i.qty}</span><span>${(i.harga * i.qty).toLocaleString('id-ID')}</span></div>`).join('');
+    const cash = state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || '0', 10) : 0;
+    const change = state.payment === 'cash' ? cash - total : 0;
+    return `
+      <div class="r-center r-bold">${escapeHtml(STORE.name)}</div>
+      <div class="r-center r-tagline">${escapeHtml(STORE.subtitle)}</div>
+      <div class="r-center r-meta">${escapeHtml(STORE.address)}</div>
+      <div class="r-center r-meta">Telp: ${escapeHtml(STORE.phone)}</div>
+      <div class="r-line"></div>
+      <div class="r-row r-meta"><span>No:</span><span>${escapeHtml(state.invoice || '-')}</span></div>
+      <div class="r-row r-meta"><span>Tanggal:</span><span>${formatDateTime()}</span></div>
+      <div class="r-row r-meta"><span>Metode:</span><span>${state.payment === 'cash' ? 'TUNAI' : 'QRIS'}</span></div>
+      <div class="r-line"></div>${rows}
+      <div class="r-total"><span>TOTAL</span><span>${total.toLocaleString('id-ID')}</span></div>
+      ${state.payment === 'cash' && cash > 0 ? `<div class="r-row r-meta" style="margin-top:6px"><span>Tunai</span><span>${cash.toLocaleString('id-ID')}</span></div><div class="r-row r-meta"><span>Kembali</span><span>${change.toLocaleString('id-ID')}</span></div>` : ''}
+    `;
+  }
+  function refreshReceipt() { el.receipt.innerHTML = buildReceiptHTML(); }
+
+  /* ---------- 9. MODAL & PAYMENT ---------- */
+  function openModal() {
+    if (state.cart.length === 0) { toast('Keranjang masih kosong', 'warning'); return; }
+    state.invoice = makeInvoice(); state.payment = 'cash'; el.inputCash.value = '';
+    refreshReceipt(); updatePaymentUI(); updateChange(); renderQuickCash();
+    el.modal.classList.add('show'); el.modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    setTimeout(() => el.inputCash.focus(), 220);
+  }
+  function closeModal() {
+    if (state.processing) return;
+    el.modal.classList.remove('show'); el.modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; state.invoice = null;
+  }
+  function updatePaymentUI() {
+    const isCash = state.payment === 'cash';
+    el.btnCash.classList.toggle('active', isCash); el.btnQris.classList.toggle('active', !isCash);
+    el.btnCash.setAttribute('aria-checked', String(isCash)); el.btnQris.setAttribute('aria-checked', String(!isCash));
+    el.cashGroup.style.display = isCash ? 'block' : 'none'; refreshReceipt();
+  }
+  function updateChange() {
+    const total = cartTotal();
+    if (state.payment === 'qris') { el.changeBox.style.display = 'none'; el.btnConfirm.disabled = state.processing; refreshReceipt(); return; }
+    const raw = el.inputCash.value.replace(/[^\d]/g, ''); const cash = parseInt(raw || '0', 10);
+    if (!cash) { el.changeBox.style.display = 'none'; el.btnConfirm.disabled = true; refreshReceipt(); return; }
+    const change = cash - total;
+    el.changeBox.style.display = 'flex'; el.changeBox.classList.toggle('error', change < 0);
+    el.changeLabel.textContent = change < 0 ? 'Kurang' : 'Kembalian';
+    el.changeVal.textContent = formatRp(Math.abs(change));
+    el.btnConfirm.disabled = change < 0 || state.processing; refreshReceipt();
+  }
+  function renderQuickCash() {
+    const total = cartTotal();
+    const base = [ total, Math.ceil(total / 5000) * 5000, Math.ceil(total / 10000) * 10000, Math.ceil(total / 50000) * 50000, Math.ceil(total / 100000) * 100000 ];
+    const uniq = Array.from(new Set(base.filter(v => v >= total))).slice(0, 5);
+    el.quickCash.innerHTML = uniq.map(v => `<button type="button" data-cash="${v}">${formatRp(v)}</button>`).join('');
+    bindRipples(el.quickCash);
+  }
+
+  /* ---------- 10. BLUETOOTH PRINTER (ESC/POS 58mm) ---------- */
+  const PRINTER_PROFILES = [
+    { service: '000018f0-0000-1000-8000-00805f9b34fb', char: '00002af1-0000-1000-8000-00805f9b34fb' },
+    { service: '0000ff00-0000-1000-8000-00805f9b34fb', char: '0000ff02-0000-1000-8000-00805f9b34fb' },
+    { service: '49535343-fe7d-4ae5-8fa9-9fafd205e455', char: '49535343-8841-43f4-a8d4-ecbe34729bb3' },
+    { service: 'e7810a71-73ae-499d-8c15-faa9aef0c3f2', char: 'bef8d6c9-9c21-4c9e-b632-bd58c1009f9f' },
+    { service: '0000ffe0-0000-1000-8000-00805f9b34fb', char: '0000ffe1-0000-1000-8000-00805f9b34fb' },
+    { service: '0000fff0-0000-1000-8000-00805f9b34fb', char: '0000fff2-0000-1000-8000-00805f9b34fb' }
+  ];
+
+  const PrinterBLE = {
+    device: null, server: null, char: null, connected: false, deviceName: '',
+    async connect() {
+      if (!('bluetooth' in navigator)) throw new DOMException('Web Bluetooth tidak didukung', 'NotSupportedError');
+      const optionalServices = PRINTER_PROFILES.map(p => p.service);
+      this.device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true, optionalServices });
+      this.deviceName = this.device.name || 'Printer';
+      this.device.addEventListener('gattserverdisconnected', () => {
+        this.connected = false; this.char = null; this.device = null; this.server = null;
+        setPrinterConnected(false); toast('Printer terputus', 'warning');
+      });
+      this.server = await this.device.gatt.connect();
+      let found = null;
+      for (const p of PRINTER_PROFILES) {
+        try { const svc = await this.server.getPrimaryService(p.service); const ch = await svc.getCharacteristic(p.char); if (ch) { found = ch; break; } } catch (_) {}
+      }
+      if (!found) {
+        try {
+          const svcs = await this.server.getPrimaryServices();
+          outer: for (const svc of svcs) {
+            try { const chars = await svc.getCharacteristics(); for (const ch of chars) { if (ch.properties.write || ch.properties.writeWithoutResponse) { found = ch; break outer; } } } catch (_) {}
+          }
+        } catch (_) {}
+      }
+      if (!found) { try { this.device.gatt.disconnect(); } catch (_) {} this.device = null; this.server = null; throw new Error('Karakteristik printer tidak ditemukan'); }
+      this.char = found; this.connected = true;
+    },
+    async write(bytes) {
+      if (!this.char) throw new Error('Printer belum terhubung');
+      const CHUNK = 20; const useWNR = !!this.char.properties.writeWithoutResponse;
+      for (let i = 0; i < bytes.length; i += CHUNK) {
+        const slice = bytes.subarray(i, Math.min(i + CHUNK, bytes.length));
+        if (useWNR) await this.char.writeValueWithoutResponse(slice); else await this.char.writeValue(slice);
+        await new Promise(r => setTimeout(r, 6)); // Jeda anti buffer overflow
+      }
+    },
+    disconnect() { try { if (this.device && this.device.gatt && this.device.gatt.connected) this.device.gatt.disconnect(); } catch (_) {} this.connected = false; this.char = null; this.device = null; this.server = null; }
+  };
+
+  /* ---------- 11. ESC/POS BUILDER (Sesuai Spesifikasi Buku Panduan) ---------- */
+  function buildEscPosReceipt(data) {
+    const W = STORE.paperWidth; // 32
+    const parts = [];
+    const push = (...b) => parts.push(Uint8Array.from(b));
+    const pushArr = (a) => parts.push(a);
+    const lf = () => push(0x0A);
+    const ascii = (s) => { const clean = String(s).replace(/[^\x20-\x7E]/g, '?'); const a = new Uint8Array(clean.length); for (let i = 0; i < clean.length; i++) a[i] = clean.charCodeAt(i) & 0x7F; return a; };
+    const line = (s = '') => { pushArr(ascii(s)); lf(); };
+    const align = (n) => push(0x1B, 0x61, n); // 0=kiri, 1=tengah, 2=kanan
+    const bold = (on) => push(0x1B, 0x45, on ? 1 : 0);
+    const size = (n) => push(0x1D, 0x21, n); // 0x00 normal, 0x11 = 2x2
+    const feed = (n) => push(0x1B, 0x64, n);
+    const init = () => push(0x1B, 0x40);
+    // Buku panduan: Auto-cutter NO -> Hanya kirim perintah potong jika hasCutter true
+    const cut = () => { if (STORE.hasCutter) push(0x1D, 0x56, 0x42, 0x00); };
+
+    const center = (s) => { s = String(s); if (s.length >= W) return s.slice(0, W); return ' '.repeat(Math.floor((W - s.length) / 2)) + s; };
+    const wrap = (s, width) => { s = String(s); const words = s.split(/\s+/); const lines = []; let cur = ''; for (const w of words) { if (!w) continue; if ((cur ? cur + ' ' + w : w).length <= width) { cur = cur ? cur + ' ' + w : w; } else { if (cur) lines.push(cur); cur = w.length > width ? w.slice(0, width) : w; } } if (cur) lines.push(cur); return lines.length ? lines : ['']; };
+    const lr = (l, r) => { l = String(l); r = String(r); if (l.length + r.length + 1 > W) { const maxL = Math.max(0, W - r.length - 1); l = l.length > maxL ? l.slice(0, maxL) : l; } const space = Math.max(1, W - l.length - r.length); return l + ' '.repeat(space) + r; };
+    const hr = () => line('-'.repeat(W));
+
+    init(); align(1);
+    size(0x11); bold(true); line(center(data.storeName));
+    size(0x00); bold(false); line(center(data.storeSubtitle));
+    wrap(data.storeAddress, W).forEach(l => line(center(l)));
+    line(center('Telp: ' + data.storePhone));
+    align(0); hr();
+    line(lr('No.', data.invoice)); line(lr('Tgl', data.date)); line(lr('Kasir', data.cashier));
+    line(lr('Bayar', data.paymentMethod === 'cash' ? 'TUNAI' : 'QRIS')); hr();
+    data.items.forEach(it => {
+      const sub = it.qty * it.price;
+      wrap(it.name, W).forEach(l => line(l));
+      line(lr(`  ${it.qty} x ${formatNum(it.price)}`, formatNum(sub)));
+    });
+    hr(); bold(true); line(lr('TOTAL', formatNum(data.total))); bold(false);
+    if (data.paymentMethod === 'cash') { line(lr('TUNAI', formatNum(data.cash))); line(lr('KEMBALI', formatNum(data.change))); }
+    hr(); align(1); line(center(data.footer)); line(center('~ Terima Kasih ~')); line(center(data.tagline));
+    feed(4); cut();
+
+    let total = 0; for (const p of parts) total += p.length;
+    const out = new Uint8Array(total); let off = 0;
+    for (const p of parts) { out.set(p, off); off += p.length; }
+    return out;
+  }
+
+  /* ---------- 12. PRINTER UI & EXECUTION ---------- */
+  function setPrinterConnected(connected, name) {
+    state.printerConnected = connected;
+    el.statusPill.classList.toggle('connected', connected);
+    el.statusText.textContent = connected ? `Printer: ${name || PrinterBLE.deviceName || 'Terhubung'}` : 'Printer: Terputus';
+    el.btnConnect.innerHTML = connected
+      ? '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="btn-connect-text">Terhubung</span>'
+      : '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg><span class="btn-connect-text">Hubungkan Printer</span>';
+    el.btnConnect.dataset.ripple = '0'; attachRipple(el.btnConnect);
+  }
+
+  async function connectPrinter() {
+    if (state.printerConnected) { toast('Printer sudah terhubung', 'info'); return; }
+    if (!navigator.bluetooth) { toast('Browser tidak mendukung Web Bluetooth', 'error'); return; }
+    el.btnConnect.disabled = true;
+    el.btnConnect.innerHTML = '<span class="spinner"></span><span class="btn-connect-text">Menghubungkan…</span>';
+    try {
+      await PrinterBLE.connect();
+      setPrinterConnected(true, PrinterBLE.deviceName);
+      toast('Printer berhasil terhubung', 'success');
+    } catch (err) {
+      console.warn('[Printer] connect error:', err);
+      let msg = 'Gagal menghubungkan printer';
+      const name = err && err.name;
+      if (name === 'NotFoundError') msg = 'Printer tidak ditemukan';
+      else if (name === 'SecurityError') msg = 'Akses Bluetooth ditolak. Gunakan HTTPS';
+      else if (name === 'NotSupportedError') msg = 'Browser tidak mendukung Web Bluetooth';
+      else if (name === 'NetworkError') msg = 'Koneksi ke printer gagal. Coba lagi';
+      else if (String(err && err.message || '').toLowerCase().includes('cancel')) msg = 'Pemilihan printer dibatalkan';
+      toast(msg, 'error'); setPrinterConnected(false);
+    } finally { el.btnConnect.disabled = false; }
+  }
+
+  async function printViaBluetooth() {
+    const total = cartTotal();
+    const cash = state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || total, 10) : total;
+    const change = state.payment === 'cash' ? cash - total : 0;
+    const bytes = buildEscPosReceipt({
+      storeName: STORE.name, storeSubtitle: STORE.subtitle, storeAddress: STORE.address, storePhone: STORE.phone,
+      invoice: state.invoice, date: formatDateTime(), cashier: 'Kasir Cakrawala', paymentMethod: state.payment,
+      items: state.cart.map(i => ({ name: i.nama, qty: i.qty, price: i.harga })), total, cash, change,
+      footer: STORE.footer, tagline: STORE.tagline
+    });
+    await PrinterBLE.write(bytes);
+  }
+
+  /* ---------- 13. FALLBACK PRINT (Jika Bluetooth tidak ada) ---------- */
+  function printFallback() {
+    const total = cartTotal();
+    const cash = state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || total, 10) : total;
+    const change = state.payment === 'cash' ? cash - total : 0;
+    const rows = state.cart.map(i => `<tr><td>${escapeHtml(i.nama)}<br><small>&nbsp;&nbsp;${i.qty} x ${formatNum(i.harga)}</small></td><td style="text-align:right;vertical-align:top">${formatNum(i.harga * i.qty)}</td></tr>`).join('');
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Struk ${escapeHtml(state.invoice)}</title>
+    <style>* { margin:0; padding:0; box-sizing:border-box; } body { font-family:'Courier New',monospace; font-size:12px; width:58mm; margin:0 auto; padding:6px; color:#000; } .c { text-align:center; } .b { font-weight:700; } .tag { font-size:10px; font-style:italic; color:#A0522D; margin-top:2px; } .line { border-top:1px dashed #000; margin:6px 0; } table { width:100%; border-collapse:collapse; } td { padding:1px 0; font-size:11px; } .tot { display:flex; justify-content:space-between; font-weight:700; font-size:13px; border-top:1px solid #000; margin-top:6px; padding-top:6px; } .row { display:flex; justify-content:space-between; font-size:11px; }</style></head><body>
+      <div class="c b">${escapeHtml(STORE.name)}</div><div class="c tag">${escapeHtml(STORE.subtitle)}</div><div class="c">${escapeHtml(STORE.address)}</div><div class="c">Telp: ${escapeHtml(STORE.phone)}</div><div class="line"></div>
+      <div class="row"><span>No.</span><span>${escapeHtml(state.invoice)}</span></div><div class="row"><span>Tgl</span><span>${formatDateTime()}</span></div><div class="row"><span>Bayar</span><span>${state.payment === 'cash' ? 'TUNAI' : 'QRIS'}</span></div><div class="line"></div>
+      <table>${rows}</table><div class="line"></div><div class="tot"><span>TOTAL</span><span>${formatNum(total)}</span></div>
+      ${state.payment === 'cash' ? `<div class="row"><span>Tunai</span><span>${formatNum(cash)}</span></div><div class="row"><span>Kembali</span><span>${formatNum(change)}</span></div>` : ''}
+      <div class="line"></div><div class="c">${escapeHtml(STORE.footer)}</div><div class="c">~ Terima Kasih ~</div><div class="c tag">${escapeHtml(STORE.tagline)}</div>
+    </body></html>`;
+    const iframe = document.createElement('iframe'); iframe.setAttribute('aria-hidden', 'true');
+    iframe.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0;pointer-events:none;';
+    document.body.appendChild(iframe);
+    const doc = iframe.contentWindow.document; doc.open(); doc.write(html); doc.close();
+    const cleanup = () => { setTimeout(() => { try { iframe.remove(); } catch (_) {} }, 500); };
+    const run = () => { try { iframe.contentWindow.focus(); iframe.contentWindow.print(); } catch (e) { console.warn('[Print] fallback error:', e); toast('Gagal membuka dialog print', 'error'); } try { iframe.contentWindow.addEventListener('afterprint', cleanup, { once: true }); } catch (_) {} setTimeout(cleanup, 60000); };
+    if (iframe.contentWindow.document.readyState === 'complete') setTimeout(run, 120); else iframe.addEventListener('load', () => setTimeout(run, 120), { once: true });
+  }
+
+  /* ---------- 14. CONFIRM PAYMENT ---------- */
+  async function confirmPayment() {
+    if (state.processing || state.cart.length === 0) return;
+    const total = cartTotal();
+    if (state.payment === 'cash') { const cash = parseInt(el.inputCash.value.replace(/[^\d]/g, '') || '0', 10); if (cash < total) { toast('Uang kurang dari total', 'error'); return; } }
+    state.processing = true; el.btnConfirm.disabled = true; el.btnConfirm.innerHTML = '<span class="spinner"></span> Memproses…';
+    let printed = false;
+    try {
+      if (state.printerConnected) { await printViaBluetooth(); printed = true; toast('Struk berhasil dicetak', 'success'); }
+      else { toast('Printer tidak terhubung, cetak via dialog browser', 'warning', 4200); printFallback(); printed = true; }
+    } catch (err) { console.warn('[Payment] print error:', err); toast('Gagal cetak ke printer. Periksa koneksi lalu coba lagi.', 'error', 4500); printed = false; }
+    finally {
+      state.processing = false; el.btnConfirm.disabled = false;
+      el.btnConfirm.innerHTML = `<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg> Cetak & Bayar`;
+    }
+    if (printed) { await new Promise(r => setTimeout(r, state.printerConnected ? 800 : 400)); state.cart = []; renderCart(); updateBadges(); closeModal(); toast('Pembayaran berhasil. Matur nuwun! 🙏', 'success'); }
+  }
+
+  /* ---------- 15. EVENTS ---------- */
+  function bindEvents() {
+    el.menuGrid.addEventListener('click', (e) => { const card = e.target.closest('.menu-card'); if (!card) return; addToCart(parseInt(card.dataset.id, 10)); });
+    el.menuGrid.addEventListener('keydown', (e) => { const card = e.target.closest('.menu-card'); if (!card) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); addToCart(parseInt(card.dataset.id, 10)); } });
+    el.chips.addEventListener('click', (e) => { const chip = e.target.closest('.chip'); if (!chip) return; state.filter = chip.dataset.cat; $$('.chip', el.chips).forEach(c => { const active = c.dataset.cat === state.filter; c.classList.toggle('active', active); c.setAttribute('aria-selected', String(active)); }); renderMenu(); });
+    el.cartBody.addEventListener('click', (e) => { const btn = e.target.closest('.qty-btn'); if (!btn) return; const id = parseInt(btn.dataset.id, 10); if (btn.dataset.act === 'plus') addToCart(id); else decreaseQty(id); });
+    el.btnPay.addEventListener('click', openModal); el.btnClose.addEventListener('click', closeModal); el.btnCancel.addEventListener('click', closeModal);
+    el.modal.addEventListener('click', (e) => { if (e.target === el.modal) closeModal(); });
+    el.btnCash.addEventListener('click', () => { state.payment = 'cash'; updatePaymentUI(); updateChange(); });
+    el.btnQris.addEventListener('click', () => { state.payment = 'qris'; updatePaymentUI(); updateChange(); });
+    const onCashInput = debounce(() => { const raw = el.inputCash.value.replace(/[^\d]/g, ''); el.inputCash.value = raw ? parseInt(raw, 10).toLocaleString('id-ID') : ''; updateChange(); }, 140);
+    el.inputCash.addEventListener('input', onCashInput);
+    el.quickCash.addEventListener('click', (e) => { const b = e.target.closest('[data-cash]'); if (!b) return; el.inputCash.value = parseInt(b.dataset.cash, 10).toLocaleString('id-ID'); updateChange(); });
+    el.inputCash.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !el.btnConfirm.disabled) confirmPayment(); });
+    el.btnConfirm.addEventListener('click', confirmPayment); el.btnConnect.addEventListener('click', connectPrinter);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && el.modal.classList.contains('show')) closeModal(); });
+    const mo = new MutationObserver(() => bindRipples());
+    mo.observe(el.menuGrid, { childList: true }); mo.observe(el.cartBody, { childList: true }); mo.observe(el.quickCash, { childList: true });
+  }
+
+  function initReveal() {
+    if (!('IntersectionObserver' in window) || REDUCED) { $$('.reveal').forEach(n => n.classList.add('in')); return; }
+    const io = new IntersectionObserver((entries) => { entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { threshold: 0.12 });
+    $$('.reveal').forEach(n => io.observe(n));
+  }
+
+  function init() {
+    renderChips(); renderMenu(); renderCart(); renderQuickCash(); bindEvents(); initReveal();
+    if (!navigator.bluetooth) {
+      toast('Browser tidak mendukung Web Bluetooth. Cetak akan menggunakan dialog print.', 'warning', 6500);
+      // Biarkan tombol menyala agar user bisa mencoba, tapi beri peringatan.
+    } else if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      toast('Web Bluetooth memerlukan HTTPS atau localhost.', 'warning', 6500);
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
+})();
+</script>
+</body>
+</html>
