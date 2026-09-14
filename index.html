@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1A0E08">
-<meta name="description" content="Warung Cakrawala Sego Sambel — Pesan sego sambel khas Malang & cetak struk USB">
+<meta name="description" content="Warung Cakrawala Sego Sambel — Pesan sego sambel khas Malang & cetak struk USB/Bluetooth">
 <title>Warung Cakrawala — Sego Sambel Khas Malang</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
   --accent: #F4A300; --accent-600: #D98F00; --accent-soft: rgba(244,163,0,.15);
   --success: #22C55E; --success-soft: rgba(34,197,94,.14);
   --danger: #EF4444; --danger-soft: rgba(239,68,68,.14);
-  --warning: #F59E0B; --info: #3B82F6;
+  --warning: #F59E0B; --info: #3B82F6; --bluetooth: #3B82F6; --bluetooth-soft: rgba(59,130,246,.14);
   --bg: #0F0805; --surface: rgba(255,240,225,.045); --surface-2: rgba(255,240,225,.075); --surface-3: rgba(255,240,225,.115);
   --border: rgba(255,220,180,.10); --border-strong: rgba(255,220,180,.20);
   --text: #FFF6EC; --text-2: #D4BFA9; --text-3: #8C7562;
@@ -68,6 +68,8 @@ button { cursor: pointer; background: none; border: none; }
 .btn-ghost:hover:not(:disabled) { background: var(--surface-3); border-color: var(--border-strong); transform: translateY(-2px); }
 .btn-accent { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-600) 100%); color: #1F1200; font-weight: 700; box-shadow: 0 6px 18px rgba(244,163,0,.35), inset 0 1px 0 rgba(255,255,255,.4); }
 .btn-accent:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(244,163,0,.5); }
+.btn-bluetooth { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); color: #fff; font-weight: 700; box-shadow: 0 6px 18px rgba(59,130,246,.35), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-bluetooth:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(59,130,246,.5); }
 .btn-block { width: 100%; }
 .btn-lg { padding: 15px 22px; font-size: 15px; border-radius: var(--r); }
 
@@ -84,6 +86,8 @@ button { cursor: pointer; background: none; border: none; }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 0 3px rgba(239,68,68,.18); transition: all var(--t); }
 .status-pill.connected { color: var(--success); border-color: rgba(34,197,94,.32); background: var(--success-soft); }
 .status-pill.connected .status-dot { background: var(--success); box-shadow: 0 0 0 3px rgba(34,197,94,.22), 0 0 12px rgba(34,197,94,.7); animation: pulseDot 2s ease-in-out infinite; }
+.status-pill.bt-connected { color: var(--bluetooth); border-color: rgba(59,130,246,.32); background: var(--bluetooth-soft); }
+.status-pill.bt-connected .status-dot { background: var(--bluetooth); box-shadow: 0 0 0 3px rgba(59,130,246,.22), 0 0 12px rgba(59,130,246,.7); animation: pulseDot 2s ease-in-out infinite; }
 @keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,.22), 0 0 12px rgba(34,197,94,.7); } 50% { box-shadow: 0 0 0 6px rgba(34,197,94,.06), 0 0 18px rgba(34,197,94,.9); } }
 
 .menu-section { animation: fadeUp var(--t-slow) var(--ease-smooth) both; }
@@ -151,6 +155,28 @@ button { cursor: pointer; background: none; border: none; }
 .icon-btn { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); color: var(--text-2); transition: all var(--t) var(--ease-spring); }
 .icon-btn:hover { background: var(--danger-soft); color: var(--danger); transform: rotate(90deg); }
 .modal-body { padding: 22px; }
+
+/* Printer method modal */
+.method-options { display: flex; flex-direction: column; gap: 12px; }
+.method-option { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: var(--r); background: var(--surface); border: 1.5px solid var(--border); transition: all var(--t) var(--ease-spring); text-align: left; }
+.method-option:hover { transform: translateY(-2px); border-color: var(--border-strong); background: var(--surface-2); }
+.method-option.bt:hover { border-color: rgba(59,130,246,.5); }
+.method-option.usb:hover { border-color: rgba(244,163,0,.5); }
+.method-option.serial:hover { border-color: rgba(34,197,94,.5); }
+.method-icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; }
+.method-icon.bt { background: linear-gradient(135deg, #3B82F6, #1D4ED8); color: #fff; box-shadow: 0 6px 18px rgba(59,130,246,.4); }
+.method-icon.usb { background: linear-gradient(135deg, var(--accent), var(--accent-600)); color: #1F1200; box-shadow: 0 6px 18px rgba(244,163,0,.4); }
+.method-icon.serial { background: linear-gradient(135deg, #22C55E, #16A34A); color: #fff; box-shadow: 0 6px 18px rgba(34,197,94,.4); }
+.method-info { flex: 1; min-width: 0; }
+.method-info h3 { font-size: 14.5px; font-weight: 700; color: var(--text); margin-bottom: 3px; display: flex; align-items: center; gap: 8px; }
+.method-info p { font-size: 12px; color: var(--text-3); line-height: 1.4; }
+.method-badge { font-size: 9.5px; font-weight: 800; padding: 2px 7px; border-radius: var(--r-full); background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(244,163,0,.3); letter-spacing: .4px; }
+.method-badge.bt { background: var(--bluetooth-soft); color: var(--bluetooth); border-color: rgba(59,130,246,.3); }
+.method-arrow { color: var(--text-3); flex-shrink: 0; }
+.method-option:disabled { opacity: .55; cursor: not-allowed; }
+.method-option:disabled:hover { transform: none; }
+.method-note { margin-top: 16px; padding: 12px 14px; border-radius: var(--r-sm); background: var(--warning-soft); border: 1px solid rgba(245,158,11,.25); font-size: 11.5px; color: var(--text-2); display: flex; gap: 8px; align-items: flex-start; }
+.method-note .icon { color: var(--warning); margin-top: 1px; }
 
 .receipt { background: #FFFCF4; color: #1A1A1A; border-radius: var(--r-sm); padding: 18px 16px; font-family: var(--font-mono); font-size: 12px; line-height: 1.65; margin-bottom: 20px; max-height: 260px; overflow-y: auto; box-shadow: 0 12px 36px rgba(0,0,0,.45); }
 .receipt .r-center { text-align: center; }
@@ -304,6 +330,63 @@ button { cursor: pointer; background: none; border: none; }
   </section>
 </div>
 
+<!-- Modal Pilih Metode Koneksi -->
+<div class="modal-overlay" id="methodModal" role="dialog" aria-modal="true" aria-labelledby="methodTitle" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h2 id="methodTitle">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+        Pilih Metode Koneksi
+      </h2>
+      <button type="button" class="icon-btn" id="btnMethodClose" aria-label="Tutup">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="method-options" id="methodOptions">
+        <button type="button" class="method-option bt" data-method="bluetooth" id="optBluetooth">
+          <div class="method-icon bt">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+          </div>
+          <div class="method-info">
+            <h3>Bluetooth <span class="method-badge bt">HP & Laptop</span></h3>
+            <p>Sambungkan printer thermal Bluetooth. Direkomendasikan untuk HP Android.</p>
+          </div>
+          <svg class="icon method-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <button type="button" class="method-option usb" data-method="usb" id="optUSB">
+          <div class="method-icon usb">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8zM12 18v4"/></svg>
+          </div>
+          <div class="method-info">
+            <h3>USB <span class="method-badge">Laptop/PC</span></h3>
+            <p>Kabel USB ke printer thermal. Hanya berfungsi di Chrome/Edge desktop.</p>
+          </div>
+          <svg class="icon method-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <button type="button" class="method-option serial" data-method="serial" id="optSerial">
+          <div class="method-icon serial">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><path d="M6 12h.01M10 12h.01M14 12h.01"/></svg>
+          </div>
+          <div class="method-info">
+            <h3>Serial (COM) <span class="method-badge">Laptop/PC</span></h3>
+            <p>Kabel USB-Serial. Untuk Windows bila mode USB terblokir driver.</p>
+          </div>
+          <svg class="icon method-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="method-note" id="methodNote">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span id="methodNoteText">Pastikan printer sudah <strong>dipairing</strong> di Pengaturan Bluetooth HP/Laptop sebelum menghubungkan.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Pembayaran -->
 <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
   <div class="modal" role="document">
     <div class="modal-head">
@@ -365,11 +448,13 @@ button { cursor: pointer; background: none; border: none; }
     subtitle: 'Sego Sambel Khas Malang',
     address: 'Jl. Raya Cakrawala No. 88, Malang',
     phone: '0812-3456-7890',
-    paperWidth: 32,        // 384 dots / 12 dots Font A = 32 karakter
-    hasCutter: false,      // Buku panduan: Auto-cutter NO
+    paperWidth: 32,
+    hasCutter: false,
     footer: 'Matur Nuwun',
     tagline: 'Pedasnya Bikin Nagih',
-    serialBaudRate: 9600   // Baud rate umum printer thermal USB-Serial
+    serialBaudRate: 9600,
+    btChunkSize: 100,
+    btChunkDelay: 30
   });
 
   /* ===================== 2. MENU ===================== */
@@ -423,10 +508,11 @@ button { cursor: pointer; background: none; border: none; }
     payment: 'cash',
     invoice: null,
     printerConnected: false,
-    printerType: null,      // 'usb' | 'serial' | null
+    printerType: null, // 'usb' | 'serial' | 'bluetooth' | null
     printerName: '',
     processing: false,
-    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+    isIOS: /iPhone|iPad|iPod/i.test(navigator.userAgent)
   };
 
   /* ===================== 4. DOM ===================== */
@@ -438,6 +524,10 @@ button { cursor: pointer; background: none; border: none; }
     cartBody: $('#cartBody'), cartCount: $('#cartCount'), totalAmount: $('#totalAmount'),
     btnPay: $('#btnPay'),
     statusPill: $('#statusPill'), statusText: $('#statusText'), btnConnect: $('#btnConnect'),
+    methodModal: $('#methodModal'), btnMethodClose: $('#btnMethodClose'),
+    methodOptions: $('#methodOptions'),
+    optBluetooth: $('#optBluetooth'), optUSB: $('#optUSB'), optSerial: $('#optSerial'),
+    methodNote: $('#methodNote'), methodNoteText: $('#methodNoteText'),
     modal: $('#modal'), receipt: $('#receipt'), btnClose: $('#btnClose'),
     btnCancel: $('#btnCancel'), btnConfirm: $('#btnConfirm'),
     inputCash: $('#inputCash'), quickCash: $('#quickCash'),
@@ -453,6 +543,7 @@ button { cursor: pointer; background: none; border: none; }
   const debounce = (fn, delay = 200) => { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); }; };
   const pad2 = (n) => String(n).padStart(2, '0');
   const formatDateTime = (d = new Date()) => `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}/${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   const makeInvoice = () => {
     const d = new Date();
     const date = `${d.getFullYear()}${pad2(d.getMonth()+1)}${pad2(d.getDate())}`;
@@ -461,9 +552,6 @@ button { cursor: pointer; background: none; border: none; }
     return `CKR-${date}-${time}-${rand}`;
   };
 
-  /**
-   * Pengecekan konteks aman secara komprehensif.
-   */
   function isSecureContext() {
     if (typeof window.isSecureContext === 'boolean' && !window.isSecureContext) return false;
     const proto = location.protocol;
@@ -474,9 +562,6 @@ button { cursor: pointer; background: none; border: none; }
     return false;
   }
 
-  /**
-   * Cek apakah Permissions-Policy memblokir fitur tertentu.
-   */
   function isFeatureAllowedByPolicy(feature) {
     try {
       if (document.featurePolicy && typeof document.featurePolicy.allowsFeature === 'function') {
@@ -486,13 +571,14 @@ button { cursor: pointer; background: none; border: none; }
     return true;
   }
 
-  function diagnoseSecurityError(err) {
-    const reasons = [];
-    if (!isSecureContext()) reasons.push('Halaman tidak berjalan di konteks aman (HTTPS/localhost)');
-    if (!isFeatureAllowedByPolicy('usb') && !isFeatureAllowedByPolicy('serial')) reasons.push('Header Permissions-Policy memblokir akses USB/Serial');
-    if (window !== window.top) reasons.push('Halaman berjalan di dalam iframe (akses USB/Serial tidak diizinkan lintas origin)');
-    if (reasons.length === 0) reasons.push('Akses ditolak oleh kebijakan keamanan browser');
-    return reasons.join('. ');
+  function hasBluetoothSupport() {
+    return typeof navigator !== 'undefined' && typeof navigator.bluetooth !== 'undefined';
+  }
+  function hasUSBSupport() {
+    return typeof navigator !== 'undefined' && typeof navigator.usb !== 'undefined';
+  }
+  function hasSerialSupport() {
+    return typeof navigator !== 'undefined' && typeof navigator.serial !== 'undefined';
   }
 
   /* ===================== 6. TOAST ===================== */
@@ -528,7 +614,7 @@ button { cursor: pointer; background: none; border: none; }
     });
   }
   function bindRipples(root = document) {
-    $$('.btn, .chip, .pay-method, .qty-btn, .icon-btn, .btn-add, .quick-cash button', root).forEach(attachRipple);
+    $$('.btn, .chip, .pay-method, .qty-btn, .icon-btn, .btn-add, .quick-cash button, .method-option', root).forEach(attachRipple);
   }
 
   /* ===================== 8. RENDER MENU ===================== */
@@ -651,7 +737,7 @@ button { cursor: pointer; background: none; border: none; }
   }
   const refreshReceipt = () => { el.receipt.innerHTML = buildReceiptHTML(); };
 
-  /* ===================== 11. MODAL ===================== */
+  /* ===================== 11. MODAL PEMBAYARAN ===================== */
   function openModal() {
     if (state.cart.length === 0) { toast('Keranjang masih kosong', 'warning'); return; }
     state.invoice = makeInvoice();
@@ -661,7 +747,7 @@ button { cursor: pointer; background: none; border: none; }
     el.modal.classList.add('show');
     el.modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => el.inputCash.focus(), 220);
+    setTimeout(() => { try { el.inputCash.focus(); } catch(_) {} }, 220);
   }
   function closeModal() {
     if (state.processing) return;
@@ -701,7 +787,61 @@ button { cursor: pointer; background: none; border: none; }
     bindRipples(el.quickCash);
   }
 
-  /* ===================== 12. ESC/POS BUILDER (58mm) ===================== */
+  /* ===================== 12. MODAL PILIH METODE ===================== */
+  function openMethodModal() {
+    // Reset status disabled & badge
+    el.optBluetooth.disabled = false;
+    el.optUSB.disabled = false;
+    el.optSerial.disabled = false;
+
+    // Tentukan dukungan
+    const btOk = hasBluetoothSupport();
+    const usbOk = hasUSBSupport();
+    const serialOk = hasSerialSupport();
+
+    // Mobile: prioritaskan Bluetooth
+    if (state.isMobile) {
+      // Susun urutan: Bluetooth dulu
+      el.methodOptions.appendChild(el.optBluetooth);
+    } else {
+      // Desktop: USB dulu
+      el.methodOptions.appendChild(el.optUSB);
+      el.methodOptions.appendChild(el.optSerial);
+      el.methodOptions.appendChild(el.optBluetooth);
+    }
+
+    // Nonaktifkan yang tidak didukung
+    if (!btOk) el.optBluetooth.disabled = true;
+    if (!usbOk) el.optUSB.disabled = true;
+    if (!serialOk) el.optSerial.disabled = true;
+
+    // Info tambahan
+    let note = '';
+    if (state.isIOS) {
+      note = 'iOS (iPhone/iPad) tidak mendukung Web Bluetooth. Gunakan Laptop/PC atau dialog print browser.';
+    } else if (state.isMobile && !btOk) {
+      note = 'Browser HP Anda tidak mendukung Web Bluetooth. Gunakan Chrome Android terbaru.';
+    } else if (!state.isMobile && !usbOk && !serialOk && !btOk) {
+      note = 'Browser Anda tidak mendukung koneksi printer. Gunakan Chrome/Edge terbaru.';
+    } else if (state.isMobile) {
+      note = 'Direkomendasikan: <strong>Bluetooth</strong>. Pastikan printer sudah dipairing di Pengaturan Bluetooth HP.';
+    } else {
+      note = 'Direkomendasikan: <strong>USB</strong> untuk laptop. Bila printer terblokir driver, gunakan Serial.';
+    }
+    el.methodNoteText.innerHTML = note;
+
+    el.methodModal.classList.add('show');
+    el.methodModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMethodModal() {
+    el.methodModal.classList.remove('show');
+    el.methodModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  /* ===================== 13. ESC/POS BUILDER (58mm) ===================== */
   function buildEscPosReceipt(data) {
     const W = STORE.paperWidth;
     const parts = [];
@@ -789,14 +929,192 @@ button { cursor: pointer; background: none; border: none; }
     return out;
   }
 
-  /* ===================== 13. PRINTER — WebUSB ===================== */
+  /* ===================== 14. PRINTER — Web Bluetooth ===================== */
+  const PrinterBluetooth = {
+    device: null,
+    characteristic: null,
+    deviceName: '',
+
+    // UUID umum printer thermal BLE 58mm
+    SERVICES: [
+      '000018f0-0000-1000-8000-00805f9b34fb', // Umum (Xprinter/Goojprt)
+      '0000ff00-0000-1000-8000-00805f9b34fb', // Umum
+      '0000ffe0-0000-1000-8000-00805f9b34fb', // HM-10 (banyak printer)
+      '0000fff0-0000-1000-8000-00805f9b34fb', // Banyak printer Cina
+      '0000ff10-0000-1000-8000-00805f9b34fb', // Beberapa model
+      'e7810a71-73ae-499d-8c15-faa9aef0c3f2', // RPP02N
+      '49535343-fe7d-4ae5-8fa9-9fafd205e455', // Microchip BM70
+      '0000fee7-0000-1000-8000-00805f9b34fb'  // Beberapa Siruser
+    ],
+
+    async connect() {
+      if (!hasBluetoothSupport()) {
+        throw new DOMException('Web Bluetooth tidak didukung di browser ini', 'NotSupportedError');
+      }
+      if (!isSecureContext()) {
+        throw new DOMException('Halaman tidak berjalan di konteks aman (HTTPS/localhost)', 'SecurityError');
+      }
+
+      let device;
+      try {
+        device = await navigator.bluetooth.requestDevice({
+          filters: [
+            ...this.SERVICES.map(s => ({ services: [s] })),
+            { namePrefix: 'Printer' },
+            { namePrefix: 'Thermal' },
+            { namePrefix: 'POS' },
+            { namePrefix: 'RPP' },
+            { namePrefix: 'PT-' },
+            { namePrefix: 'BlueTooth Printer' },
+            { namePrefix: 'BT' },
+            { namePrefix: 'MTP' },
+            { namePrefix: 'XP-' },
+            { namePrefix: 'GP-' },
+            { namePrefix: 'Gprinter' }
+          ],
+          optionalServices: this.SERVICES
+        });
+      } catch (err) {
+        // Fallback: terima semua perangkat
+        if (err.name === 'NotFoundError') {
+          try {
+            device = await navigator.bluetooth.requestDevice({
+              acceptAllDevices: true,
+              optionalServices: this.SERVICES
+            });
+          } catch (e2) { throw e2; }
+        } else {
+          throw err;
+        }
+      }
+
+      if (!device) throw new Error('Tidak ada perangkat Bluetooth yang dipilih');
+
+      // Koneksi ke GATT server
+      let server;
+      try {
+        server = await device.gatt.connect();
+      } catch (err) {
+        throw new Error('Gagal konek ke GATT server: ' + (err.message || 'unknown'));
+      }
+
+      // Cari characteristic yang bisa write
+      let characteristic = null;
+      let services = [];
+      try {
+        services = await server.getPrimaryServices();
+      } catch (err) {
+        services = [];
+      }
+
+      for (const service of services) {
+        let chars = [];
+        try { chars = await service.getCharacteristics(); } catch (_) { continue; }
+        for (const ch of chars) {
+          const props = ch.properties || {};
+          if (props.write || props.writeWithoutResponse) {
+            characteristic = ch;
+            break;
+          }
+        }
+        if (characteristic) break;
+      }
+
+      // Fallback: coba langsung pada service-service yang kita kenal
+      if (!characteristic) {
+        for (const svcUUID of this.SERVICES) {
+          try {
+            const svc = await server.getPrimaryService(svcUUID);
+            const chars = await svc.getCharacteristics();
+            for (const ch of chars) {
+              const props = ch.properties || {};
+              if (props.write || props.writeWithoutResponse) {
+                characteristic = ch;
+                break;
+              }
+            }
+            if (characteristic) break;
+          } catch (_) {}
+        }
+      }
+
+      if (!characteristic) {
+        try { device.gatt.disconnect(); } catch (_) {}
+        throw new Error('Tidak menemukan characteristic untuk menulis data ke printer Bluetooth');
+      }
+
+      this.device = device;
+      this.characteristic = characteristic;
+      this.deviceName = device.name || 'Bluetooth Printer';
+
+      // Listener aman
+      if (device && typeof device.addEventListener === 'function') {
+        try {
+          device.addEventListener('gattserverdisconnected', () => {
+            if (state.printerType === 'bluetooth') {
+              setPrinterConnected(false);
+              toast('Printer Bluetooth terputus', 'warning');
+            }
+          });
+        } catch (_) {}
+      }
+
+      return device;
+    },
+
+    async write(bytes) {
+      if (!this.characteristic) throw new Error('Printer Bluetooth belum terhubung');
+      const chunkSize = STORE.btChunkSize;
+      const delayMs = STORE.btChunkDelay;
+      const props = this.characteristic.properties || {};
+      const useNoResponse = !!props.writeWithoutResponse &&
+                             typeof this.characteristic.writeValueWithoutResponse === 'function';
+
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const slice = bytes.slice(i, Math.min(i + chunkSize, bytes.length));
+        try {
+          if (useNoResponse) {
+            await this.characteristic.writeValueWithoutResponse(slice);
+          } else {
+            await this.characteristic.writeValue(slice);
+          }
+        } catch (err) {
+          // Jika gagal dengan noResponse, coba write biasa
+          if (useNoResponse) {
+            try { await this.characteristic.writeValue(slice); }
+            catch (e2) { throw new Error('Gagal menulis ke printer: ' + (e2.message || 'unknown')); }
+          } else {
+            throw new Error('Gagal menulis ke printer: ' + (err.message || 'unknown'));
+          }
+        }
+        await sleep(delayMs);
+      }
+    },
+
+    async disconnect() {
+      try {
+        if (this.device && this.device.gatt && this.device.gatt.connected) {
+          this.device.gatt.disconnect();
+        }
+      } catch (_) {}
+      this.device = null; this.characteristic = null; this.deviceName = '';
+    },
+
+    async tryReconnect() {
+      // Web Bluetooth tidak mengizinkan auto-reconnect tanpa user gesture.
+      // getDevices() hanya ada di Chrome dengan flag eksperimental.
+      return false;
+    }
+  };
+
+  /* ===================== 15. PRINTER — WebUSB ===================== */
   const PrinterUSB = {
     device: null,
     endpoint: null,
     deviceName: '',
 
     async connect() {
-      if (!navigator.usb) throw new DOMException('WebUSB tidak didukung', 'NotSupportedError');
+      if (!hasUSBSupport()) throw new DOMException('WebUSB tidak didukung', 'NotSupportedError');
       if (!isSecureContext()) throw new DOMException('Halaman tidak berjalan di konteks aman (HTTPS/localhost)', 'SecurityError');
 
       let device;
@@ -811,9 +1129,7 @@ button { cursor: pointer; background: none; border: none; }
       } catch (err) {
         if (err.name === 'NotFoundError') {
           device = await navigator.usb.requestDevice({ acceptAllDevices: true });
-        } else {
-          throw err;
-        }
+        } else { throw err; }
       }
 
       await device.open();
@@ -823,7 +1139,7 @@ button { cursor: pointer; background: none; border: none; }
       for (const i of device.configuration.interfaces) {
         for (const alt of i.alternates) {
           const outEp = alt.endpoints.find(e => e.direction === 'out' && e.type === 'bulk');
-          if (outEp) { iface = { num: i.interfaceNumber, ep: outEp, altSetting: alt.alternateSetting }; break; }
+          if (outEp) { iface = { num: i.interfaceNumber, ep: outEp }; break; }
         }
         if (iface) break;
       }
@@ -846,14 +1162,15 @@ button { cursor: pointer; background: none; border: none; }
       this.endpoint = { number: iface.ep.endpointNumber };
       this.deviceName = device.productName || `USB ${device.vendorId.toString(16)}:${device.productId.toString(16)}`;
 
-      // PERBAIKAN: Cek apakah addEventListener tersedia sebelum memanggilnya
       if (device && typeof device.addEventListener === 'function') {
-        device.addEventListener('disconnect', () => {
-          if (state.printerType === 'usb') {
-            setPrinterConnected(false);
-            toast('Printer USB terputus', 'warning');
-          }
-        });
+        try {
+          device.addEventListener('disconnect', () => {
+            if (state.printerType === 'usb') {
+              setPrinterConnected(false);
+              toast('Printer USB terputus', 'warning');
+            }
+          });
+        } catch (_) {}
       }
 
       return device;
@@ -866,7 +1183,7 @@ button { cursor: pointer; background: none; border: none; }
         const slice = bytes.slice(i, Math.min(i + CHUNK, bytes.length));
         const result = await this.device.transferOut(this.endpoint.number, slice);
         if (result.status !== 'ok') throw new Error('USB transfer gagal: ' + result.status);
-        await new Promise(r => setTimeout(r, 3));
+        await sleep(3);
       }
     },
 
@@ -876,8 +1193,7 @@ button { cursor: pointer; background: none; border: none; }
     },
 
     async tryReconnect() {
-      if (!navigator.usb) return false;
-      if (!isSecureContext()) return false;
+      if (!hasUSBSupport() || !isSecureContext()) return false;
       try {
         const devices = await navigator.usb.getDevices();
         for (const d of devices) {
@@ -903,14 +1219,14 @@ button { cursor: pointer; background: none; border: none; }
     }
   };
 
-  /* ===================== 14. PRINTER — Web Serial ===================== */
+  /* ===================== 16. PRINTER — Web Serial ===================== */
   const PrinterSerial = {
     port: null,
     writer: null,
     deviceName: '',
 
     async connect() {
-      if (!navigator.serial) throw new DOMException('Web Serial tidak didukung', 'NotSupportedError');
+      if (!hasSerialSupport()) throw new DOMException('Web Serial tidak didukung', 'NotSupportedError');
       if (!isSecureContext()) throw new DOMException('Halaman tidak berjalan di konteks aman (HTTPS/localhost)', 'SecurityError');
 
       const port = await navigator.serial.requestPort();
@@ -919,7 +1235,6 @@ button { cursor: pointer; background: none; border: none; }
       this.port = port;
       this.writer = port.writable.getWriter();
       this.deviceName = 'Serial ' + STORE.serialBaudRate + ' baud';
-
       return port;
     },
 
@@ -929,9 +1244,9 @@ button { cursor: pointer; background: none; border: none; }
       for (let i = 0; i < bytes.length; i += CHUNK) {
         const slice = bytes.slice(i, Math.min(i + CHUNK, bytes.length));
         await this.writer.write(slice);
-        await new Promise(r => setTimeout(r, 6));
+        await sleep(6);
       }
-      await this.writer.ready.catch(() => {});
+      try { await this.writer.ready; } catch (_) {}
     },
 
     async disconnect() {
@@ -941,8 +1256,7 @@ button { cursor: pointer; background: none; border: none; }
     },
 
     async tryReconnect() {
-      if (!navigator.serial) return false;
-      if (!isSecureContext()) return false;
+      if (!hasSerialSupport() || !isSecureContext()) return false;
       try {
         const ports = await navigator.serial.getPorts();
         if (ports.length === 0) return false;
@@ -956,18 +1270,24 @@ button { cursor: pointer; background: none; border: none; }
     }
   };
 
-  /* ===================== 15. PRINTER UI ===================== */
-  function setPrinterConnected(connected, name) {
+  /* ===================== 17. PRINTER UI ===================== */
+  function setPrinterConnected(connected, name, type) {
     state.printerConnected = connected;
     state.printerName = name || '';
-    state.printerType = connected ? state.printerType : null;
-    el.statusPill.classList.toggle('connected', connected);
+    state.printerType = connected ? (type || state.printerType) : null;
+
+    el.statusPill.classList.toggle('connected', connected && state.printerType !== 'bluetooth');
+    el.statusPill.classList.toggle('bt-connected', connected && state.printerType === 'bluetooth');
+
     if (connected) {
-      const tag = state.printerType === 'usb' ? 'USB' : state.printerType === 'serial' ? 'Serial' : '';
+      const tag = state.printerType === 'usb' ? 'USB'
+                : state.printerType === 'serial' ? 'Serial'
+                : state.printerType === 'bluetooth' ? 'BT' : '';
       el.statusText.textContent = `Printer: ${name || 'Terhubung'}${tag ? ' (' + tag + ')' : ''}`;
     } else {
       el.statusText.textContent = 'Printer: Terputus';
     }
+
     el.btnConnect.innerHTML = connected
       ? '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="btn-connect-text">Terhubung</span>'
       : '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8zM12 18v4"/></svg><span class="btn-connect-text">Hubungkan Printer</span>';
@@ -975,29 +1295,11 @@ button { cursor: pointer; background: none; border: none; }
     attachRipple(el.btnConnect);
   }
 
-  async function connectPrinter() {
-    if (state.printerConnected) { toast('Printer sudah terhubung', 'info'); return; }
+  async function connectPrinterMethod(method) {
+    closeMethodModal();
 
-    // Cek apakah pengguna memakai HP
-    if (state.isMobile) {
-      toast('Printer USB hanya bisa disambungkan lewat Laptop/PC. Di HP, gunakan fitur "Simpan sebagai PDF" saat mencetak.', 'warning', 8000);
-      return;
-    }
-
-    if (!navigator.usb && !navigator.serial) {
-      toast('Browser tidak mendukung WebUSB/Web Serial. Gunakan Chrome/Edge terbaru di Laptop/PC.', 'error', 6000);
-      return;
-    }
-
-    if (!isSecureContext()) {
-      toast('Halaman harus diakses via HTTPS atau localhost. Akses saat ini: ' + location.protocol + '//' + location.hostname, 'error', 7000);
-      return;
-    }
-
-    const usbAllowed = isFeatureAllowedByPolicy('usb');
-    const serialAllowed = isFeatureAllowedByPolicy('serial');
-    if (!usbAllowed && !serialAllowed) {
-      toast('Header Permissions-Policy memblokir akses USB & Serial. Minta admin server untuk menambahkan: Permissions-Policy: usb=*, serial=*', 'error', 9000);
+    if (method === 'bluetooth' && state.isIOS) {
+      toast('iOS tidak mendukung Web Bluetooth. Gunakan Laptop/PC.', 'error', 6000);
       return;
     }
 
@@ -1005,67 +1307,42 @@ button { cursor: pointer; background: none; border: none; }
     el.btnConnect.innerHTML = '<span class="spinner"></span><span class="btn-connect-text">Menghubungkan…</span>';
 
     let lastErr = null;
-    let triedUSB = false;
-    let triedSerial = false;
-
-    if (navigator.usb && usbAllowed) {
-      triedUSB = true;
-      try {
+    try {
+      if (method === 'bluetooth') {
+        await PrinterBluetooth.connect();
+        setPrinterConnected(true, PrinterBluetooth.deviceName, 'bluetooth');
+        toast('Printer Bluetooth terhubung', 'success');
+      } else if (method === 'usb') {
         await PrinterUSB.connect();
-        state.printerType = 'usb';
-        setPrinterConnected(true, PrinterUSB.deviceName);
-        toast('Printer terhubung via USB', 'success');
-        el.btnConnect.disabled = false;
-        return;
-      } catch (err) {
-        lastErr = err;
-        if (err.name === 'NotFoundError') {
-          console.log('[USB] tidak ada perangkat, mencoba Serial');
-        } else if (err.name === 'SecurityError') {
-          console.log('[USB] SecurityError:', diagnoseSecurityError(err));
-          lastErr = new Error(diagnoseSecurityError(err));
-        } else {
-          console.log('[USB] gagal:', err.message);
-        }
-      }
-    }
-
-    if (navigator.serial && serialAllowed) {
-      triedSerial = true;
-      try {
+        setPrinterConnected(true, PrinterUSB.deviceName, 'usb');
+        toast('Printer USB terhubung', 'success');
+      } else if (method === 'serial') {
         await PrinterSerial.connect();
-        state.printerType = 'serial';
-        setPrinterConnected(true, PrinterSerial.deviceName);
-        toast('Printer terhubung via Serial', 'success');
-        el.btnConnect.disabled = false;
-        return;
-      } catch (err) {
-        if (err.name !== 'NotFoundError') lastErr = err;
-        if (err.name === 'SecurityError') {
-          lastErr = new Error(diagnoseSecurityError(err));
-        }
-        console.log('[Serial] gagal:', err.message);
-      }
-    }
-
-    let msg = 'Gagal terhubung ke printer';
-    if (lastErr) {
-      if (lastErr.name === 'SecurityError') {
-        msg = 'Akses ditolak: ' + lastErr.message + '. Pastikan halaman diakses via HTTPS dan header Permissions-Policy mengizinkan usb=* dan serial=*.';
-      } else if (lastErr.message && lastErr.message.includes('driver')) {
-        msg = lastErr.message;
-      } else if (lastErr.message && lastErr.message.includes('Interface')) {
-        msg = 'Interface printer dipakai driver sistem. Coba lagi dengan mode Serial.';
+        setPrinterConnected(true, PrinterSerial.deviceName, 'serial');
+        toast('Printer Serial terhubung', 'success');
       } else {
-        msg = lastErr.message || msg;
+        throw new Error('Metode tidak dikenal');
       }
-    } else if (!triedUSB && !triedSerial) {
-      msg = 'WebUSB/Web Serial tidak tersedia atau diblokir kebijakan.';
+    } catch (err) {
+      lastErr = err;
+      console.warn('[Connect] gagal:', err);
+      let msg = 'Gagal terhubung ke printer';
+      if (err && err.name === 'NotFoundError') {
+        msg = 'Perangkat tidak dipilih atau tidak ditemukan.';
+      } else if (err && err.name === 'SecurityError') {
+        msg = 'Akses ditolak: ' + (err.message || 'pastikan HTTPS dan izin Bluetooth diaktifkan.');
+      } else if (err && err.message) {
+        msg = err.message;
+      }
+      toast(msg, 'error', 7000);
+      setPrinterConnected(false);
+    } finally {
+      el.btnConnect.disabled = false;
+      if (!state.printerConnected) {
+        el.btnConnect.innerHTML = '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8zM12 18v4"/></svg><span class="btn-connect-text">Hubungkan Printer</span>';
+        attachRipple(el.btnConnect);
+      }
     }
-
-    toast(msg, 'error', 9000);
-    el.btnConnect.disabled = false;
-    setPrinterConnected(false);
   }
 
   async function printToConnectedPrinter() {
@@ -1088,12 +1365,13 @@ button { cursor: pointer; background: none; border: none; }
       tagline: STORE.tagline
     });
 
-    if (state.printerType === 'usb') await PrinterUSB.write(bytes);
+    if (state.printerType === 'bluetooth') await PrinterBluetooth.write(bytes);
+    else if (state.printerType === 'usb') await PrinterUSB.write(bytes);
     else if (state.printerType === 'serial') await PrinterSerial.write(bytes);
     else throw new Error('Tipe printer tidak dikenal');
   }
 
-  /* ===================== 16. FALLBACK — Browser Print Dialog ===================== */
+  /* ===================== 18. FALLBACK — Browser Print Dialog ===================== */
   function printFallback() {
     const total = cartTotal();
     const cash = state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || total, 10) : total;
@@ -1162,7 +1440,7 @@ button { cursor: pointer; background: none; border: none; }
     else iframe.addEventListener('load', () => setTimeout(run, 120), { once: true });
   }
 
-  /* ===================== 17. CONFIRM PAYMENT ===================== */
+  /* ===================== 19. CONFIRM PAYMENT ===================== */
   async function confirmPayment() {
     if (state.processing || state.cart.length === 0) return;
     const total = cartTotal();
@@ -1178,23 +1456,19 @@ button { cursor: pointer; background: none; border: none; }
     let printed = false;
     let usedFallback = false;
     try {
-      if (state.printerConnected && !state.isMobile) {
+      if (state.printerConnected) {
         await printToConnectedPrinter();
         printed = true;
         toast('Struk berhasil dicetak', 'success');
       } else {
-        if (state.isMobile) {
-          toast('Mencetak via dialog browser (mode HP)', 'info', 4200);
-        } else {
-          toast('Printer tidak terhubung. Cetak via dialog browser.', 'warning', 4200);
-        }
+        toast('Printer tidak terhubung. Cetak via dialog browser.', 'warning', 4200);
         printFallback();
         printed = true;
         usedFallback = true;
       }
     } catch (err) {
       console.warn('[Print] error:', err);
-      toast('Gagal cetak: ' + (err.message || 'unknown').slice(0, 80), 'error', 5000);
+      toast('Gagal cetak: ' + (err.message || 'unknown').slice(0, 100), 'error', 5000);
       printed = false;
     } finally {
       state.processing = false;
@@ -1203,7 +1477,7 @@ button { cursor: pointer; background: none; border: none; }
     }
 
     if (printed) {
-      await new Promise(r => setTimeout(r, usedFallback ? 600 : 900));
+      await sleep(usedFallback ? 600 : 900);
       state.cart = [];
       renderCart();
       updateBadges();
@@ -1212,7 +1486,7 @@ button { cursor: pointer; background: none; border: none; }
     }
   }
 
-  /* ===================== 18. EVENTS ===================== */
+  /* ===================== 20. EVENTS ===================== */
   function bindEvents() {
     el.menuGrid.addEventListener('click', (e) => {
       const card = e.target.closest('.menu-card'); if (!card) return;
@@ -1266,19 +1540,42 @@ button { cursor: pointer; background: none; border: none; }
     });
 
     el.btnConfirm.addEventListener('click', confirmPayment);
-    el.btnConnect.addEventListener('click', connectPrinter);
+
+    // Tombol "Hubungkan Printer" membuka modal pilihan metode
+    el.btnConnect.addEventListener('click', () => {
+      if (state.printerConnected) {
+        toast('Printer sudah terhubung: ' + (state.printerName || ''), 'info');
+        return;
+      }
+      openMethodModal();
+    });
+
+    el.btnMethodClose.addEventListener('click', closeMethodModal);
+    el.methodModal.addEventListener('click', (e) => { if (e.target === el.methodModal) closeMethodModal(); });
+
+    // Klik opsi metode
+    el.methodOptions.addEventListener('click', (e) => {
+      const opt = e.target.closest('.method-option'); if (!opt) return;
+      if (opt.disabled) return;
+      const method = opt.dataset.method;
+      connectPrinterMethod(method);
+    });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && el.modal.classList.contains('show')) closeModal();
+      if (e.key === 'Escape') {
+        if (el.modal.classList.contains('show')) closeModal();
+        else if (el.methodModal.classList.contains('show')) closeMethodModal();
+      }
     });
 
     const mo = new MutationObserver(() => bindRipples());
     mo.observe(el.menuGrid, { childList: true });
     mo.observe(el.cartBody, { childList: true });
     mo.observe(el.quickCash, { childList: true });
+    mo.observe(el.methodOptions, { childList: true });
   }
 
-  /* ===================== 19. REVEAL ===================== */
+  /* ===================== 21. REVEAL ===================== */
   function initReveal() {
     if (!('IntersectionObserver' in window) || REDUCED) {
       $$('.reveal').forEach(n => n.classList.add('in'));
@@ -1292,17 +1589,15 @@ button { cursor: pointer; background: none; border: none; }
     $$('.reveal').forEach(n => io.observe(n));
   }
 
-  /* ===================== 20. AUTO-RECONNECT & INIT ===================== */
+  /* ===================== 22. AUTO-RECONNECT & INIT ===================== */
   async function tryAutoReconnect() {
     if (!isSecureContext()) return;
-    if (state.isMobile) return; // Jangan coba reconnect di HP
-
+    // Bluetooth tidak mendukung auto-reconnect tanpa user gesture
     if (navigator.usb && isFeatureAllowedByPolicy('usb')) {
       try {
         const ok = await PrinterUSB.tryReconnect();
         if (ok) {
-          state.printerType = 'usb';
-          setPrinterConnected(true, PrinterUSB.deviceName);
+          setPrinterConnected(true, PrinterUSB.deviceName, 'usb');
           toast('Printer USB terhubung kembali', 'success');
           return;
         }
@@ -1312,8 +1607,7 @@ button { cursor: pointer; background: none; border: none; }
       try {
         const ok = await PrinterSerial.tryReconnect();
         if (ok) {
-          state.printerType = 'serial';
-          setPrinterConnected(true, PrinterSerial.deviceName);
+          setPrinterConnected(true, PrinterSerial.deviceName, 'serial');
           toast('Printer Serial terhubung kembali', 'success');
           return;
         }
@@ -1330,17 +1624,22 @@ button { cursor: pointer; background: none; border: none; }
     initReveal();
 
     // Info dukungan
-    if (state.isMobile) {
-      // Di HP, jangan tampilkan peringatan yang membingungkan. Cukup info saat mau print.
-    } else if (!navigator.usb && !navigator.serial) {
-      toast('Browser tidak mendukung WebUSB/Web Serial. Gunakan Chrome/Edge, atau cetak via dialog print.', 'warning', 7000);
-    } else if (!isSecureContext()) {
-      toast('Halaman harus diakses via HTTPS atau localhost untuk koneksi printer USB/Serial.', 'warning', 8000);
-    } else if (!isFeatureAllowedByPolicy('usb') && !isFeatureAllowedByPolicy('serial')) {
-      toast('Header Permissions-Policy memblokir akses USB & Serial. Hubungi admin server untuk menambahkan: Permissions-Policy: usb=*, serial=*', 'warning', 10000);
+    const btOk = hasBluetoothSupport();
+    const usbOk = hasUSBSupport();
+    const serialOk = hasSerialSupport();
+
+    if (state.isIOS) {
+      toast('iOS tidak mendukung Web Bluetooth. Gunakan Laptop/PC atau dialog print.', 'warning', 8000);
+    } else if (state.isMobile && !btOk) {
+      toast('Browser HP tidak mendukung Web Bluetooth. Gunakan Chrome Android terbaru.', 'warning', 8000);
+    } else if (!state.isMobile && !usbOk && !serialOk && !btOk) {
+      toast('Browser tidak mendukung koneksi printer. Gunakan Chrome/Edge terbaru.', 'warning', 8000);
     }
 
-    // Coba auto-reconnect ke perangkat yang sudah diizinkan sebelumnya (hanya laptop)
+    if (!isSecureContext() && (usbOk || serialOk || btOk)) {
+      toast('Koneksi printer butuh HTTPS atau localhost. Akses saat ini: ' + location.protocol, 'warning', 8000);
+    }
+
     setTimeout(tryAutoReconnect, 800);
   }
 
