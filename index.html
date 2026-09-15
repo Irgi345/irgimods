@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1A0E08">
+<meta name="description" content="Warung Cakrawala Sego Sambel — Pesan sego sambel khas kudus & cetak struk USB/Bluetooth">
+<title>Warung Cakrawala — Sego Sambel Khas Kudus</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #E63946; --primary-600: #C42A38; --primary-700: #A01F2C; --primary-soft: rgba(230,57,70,.14);
+  --accent: #F4A300; --accent-600: #D98F00; --accent-soft: rgba(244,163,0,.15);
+  --success: #22C55E; --success-soft: rgba(34,197,94,.14);
+  --danger: #EF4444; --danger-soft: rgba(239,68,68,.14);
+  --warning: #F59E0B; --warning-soft: rgba(245,158,11,.14); --info: #3B82F6; --bluetooth: #3B82F6; --bluetooth-soft: rgba(59,130,246,.14);
+  --purple: #A855F7; --purple-soft: rgba(168,85,247,.14);
+  --bg: #0F0805; --surface: rgba(255,240,225,.045); --surface-2: rgba(255,240,225,.075); --surface-3: rgba(255,240,225,.115);
+  --border: rgba(255,220,180,.10); --border-strong: rgba(255,220,180,.20);
+  --text: #FFF6EC; --text-2: #D4BFA9; --text-3: #8C7562;
+  --r-xs: 8px; --r-sm: 12px; --r: 16px; --r-lg: 20px; --r-xl: 28px; --r-full: 9999px;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.35), 0 1px 2px rgba(0,0,0,.25);
+  --shadow: 0 8px 24px rgba(0,0,0,.42), 0 2px 6px rgba(0,0,0,.28);
+  --shadow-lg: 0 22px 60px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.35);
+  --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+  --ease-smooth: cubic-bezier(0.4,0,0.2,1);
+  --t-fast: 150ms; --t: 220ms; --t-slow: 360ms;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Courier New', ui-monospace, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100dvh; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); overflow-x: hidden; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body::before, body::after { content: ''; position: fixed; border-radius: 50%; filter: blur(120px); opacity: .32; pointer-events: none; z-index: -1; }
+body::before { width: 480px; height: 480px; background: radial-gradient(circle, #E63946 0%, transparent 70%); top: -180px; left: -160px; animation: float1 18s ease-in-out infinite; }
+body::after { width: 520px; height: 520px; background: radial-gradient(circle, #F4A300 0%, transparent 70%); bottom: -220px; right: -200px; animation: float2 22s ease-in-out infinite; }
+@keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,40px) scale(1.08); } }
+@keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-50px,-30px) scale(1.06); } }
+img, svg { display: block; max-width: 100%; }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,220,180,.14); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,220,180,.26); }
+.app { max-width: 1240px; margin: 0 auto; }
+.main-grid { display: grid; grid-template-columns: minmax(0,1fr) 400px; gap: 22px; align-items: start; }
+@media (max-width: 980px) { .main-grid { grid-template-columns: 1fr; } }
+.icon { flex-shrink: 0; }
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+.btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 18px; border-radius: var(--r-sm); font-weight: 600; font-size: 14px; transition: transform var(--t) var(--ease-spring), box-shadow var(--t) var(--ease-smooth), background var(--t) var(--ease-smooth); user-select: none; -webkit-tap-highlight-color: transparent; }
+.btn:active { transform: scale(.955); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn:disabled:active { transform: none; }
+.ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,.45); transform: scale(0); animation: rippleAnim 620ms var(--ease-smooth) forwards; pointer-events: none; }
+@keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+.btn-primary { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%); color: #fff; box-shadow: 0 6px 18px rgba(230,57,70,.35), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(230,57,70,.5); }
+.btn-success { background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%); color: #fff; box-shadow: 0 6px 18px rgba(34,197,94,.32), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-success:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(34,197,94,.48); }
+.btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover:not(:disabled) { background: var(--surface-3); border-color: var(--border-strong); transform: translateY(-2px); }
+.btn-accent { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-600) 100%); color: #1F1200; font-weight: 700; box-shadow: 0 6px 18px rgba(244,163,0,.35), inset 0 1px 0 rgba(255,255,255,.4); }
+.btn-accent:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(244,163,0,.5); }
+.btn-bluetooth { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); color: #fff; font-weight: 700; box-shadow: 0 6px 18px rgba(59,130,246,.35), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-bluetooth:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(59,130,246,.5); }
+.btn-purple { background: linear-gradient(135deg, #A855F7 0%, #7E22CE 100%); color: #fff; font-weight: 700; box-shadow: 0 6px 18px rgba(168,85,247,.35), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-purple:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(168,85,247,.5); }
+.btn-block { width: 100%; }
+.btn-lg { padding: 15px 22px; font-size: 15px; border-radius: var(--r); }
+
+.header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 18px 24px; margin-bottom: 22px; background: linear-gradient(135deg, rgba(230,57,70,.14), rgba(244,163,0,.10)), var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); box-shadow: var(--shadow); }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-logo { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(135deg, var(--primary), var(--primary-700)); color: #fff; box-shadow: 0 8px 22px rgba(230,57,70,.45); position: relative; }
+.brand-text h1 { font-size: 19px; font-weight: 800; letter-spacing: -.3px; line-height: 1.15; }
+.brand-text h1 span { background: linear-gradient(90deg, var(--accent), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand-text p { font-size: 11.5px; color: var(--text-3); font-weight: 500; margin-top: 2px; }
+.brand-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; color: var(--accent); padding: 2px 8px; border-radius: var(--r-full); background: var(--accent-soft); border: 1px solid rgba(244,163,0,.25); margin-top: 4px; }
+.header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.queue-badge { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: var(--r-full); background: linear-gradient(135deg, rgba(168,85,247,.16), rgba(168,85,247,.08)); border: 1px solid rgba(168,85,247,.32); font-size: 12.5px; font-weight: 700; color: #D8B4FE; }
+.queue-badge .qb-icon { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--purple); color: #fff; font-size: 11px; font-weight: 800; }
+.queue-badge .qb-num { font-weight: 800; color: #fff; font-size: 14px; }
+.printer-status { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); font-size: 12.5px; font-weight: 600; color: var(--text-2); transition: all var(--t); max-width: 260px; }
+.status-pill span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 0 3px rgba(239,68,68,.18); transition: all var(--t); }
+.status-pill.connected { color: var(--success); border-color: rgba(34,197,94,.32); background: var(--success-soft); }
+.status-pill.connected .status-dot { background: var(--success); box-shadow: 0 0 0 3px rgba(34,197,94,.22), 0 0 12px rgba(34,197,94,.7); animation: pulseDot 2s ease-in-out infinite; }
+.status-pill.bt-connected { color: var(--bluetooth); border-color: rgba(59,130,246,.32); background: var(--bluetooth-soft); }
+.status-pill.bt-connected .status-dot { background: var(--bluetooth); box-shadow: 0 0 0 3px rgba(59,130,246,.22), 0 0 12px rgba(59,130,246,.7); animation: pulseDot 2s ease-in-out infinite; }
+@keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,.22), 0 0 12px rgba(34,197,94,.7); } 50% { box-shadow: 0 0 0 6px rgba(34,197,94,.06), 0 0 18px rgba(34,197,94,.9); } }
+
+/* CLOUD STATUS */
+.cloud-status { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); font-size: 12px; font-weight: 700; color: var(--text-3); transition: all var(--t); }
+.cloud-status .cloud-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.cloud-status.connecting { color: var(--warning); border-color: rgba(245,158,11,.32); background: var(--warning-soft); }
+.cloud-status.connecting .cloud-dot { animation: pulseDot 1.2s ease-in-out infinite; box-shadow: 0 0 0 3px rgba(245,158,11,.22), 0 0 12px rgba(245,158,11,.7); }
+.cloud-status.online { color: var(--success); border-color: rgba(34,197,94,.32); background: var(--success-soft); }
+.cloud-status.online .cloud-dot { box-shadow: 0 0 0 3px rgba(34,197,94,.22), 0 0 12px rgba(34,197,94,.7); animation: pulseDot 2s ease-in-out infinite; }
+.cloud-status.offline { color: var(--text-3); border-color: var(--border); background: var(--surface); }
+.cloud-status.error { color: var(--danger); border-color: rgba(239,68,68,.32); background: var(--danger-soft); }
+.cloud-status.syncing { color: var(--info); border-color: rgba(59,130,246,.32); background: var(--bluetooth-soft); }
+.cloud-status.syncing .cloud-dot { animation: pulseDot 0.8s ease-in-out infinite; box-shadow: 0 0 0 3px rgba(59,130,246,.22), 0 0 12px rgba(59,130,246,.7); }
+
+.menu-section { animation: fadeUp var(--t-slow) var(--ease-smooth) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.section-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.section-head h2 { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; letter-spacing: -.2px; }
+.section-head h2 .icon { color: var(--primary); }
+.category-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { position: relative; overflow: hidden; padding: 7px 14px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 12.5px; font-weight: 600; transition: all var(--t) var(--ease-spring); display: inline-flex; align-items: center; gap: 6px; }
+.chip:hover { background: var(--surface-3); color: var(--text); transform: translateY(-1px); }
+.chip.active { background: linear-gradient(135deg, var(--primary), var(--primary-600)); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(230,57,70,.4); }
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
+.menu-card { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 16px 14px 14px; border-radius: var(--r); background: linear-gradient(160deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); box-shadow: var(--shadow-sm); cursor: pointer; transition: transform var(--t) var(--ease-spring), box-shadow var(--t) var(--ease-smooth), border-color var(--t); text-align: center; animation: cardIn 420ms var(--ease-spring) both; animation-delay: var(--delay, 0ms); }
+@keyframes cardIn { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.menu-card:hover { transform: translateY(-4px); border-color: rgba(230,57,70,.45); box-shadow: 0 14px 36px rgba(0,0,0,.4), 0 0 0 1px rgba(230,57,70,.2); }
+.card-emoji { width: 58px; height: 58px; margin: 0 auto; border-radius: 50%; display: grid; place-items: center; font-size: 30px; background: radial-gradient(circle at 30% 30%, var(--surface-3), var(--surface)); border: 1px solid var(--border); transition: transform var(--t) var(--ease-spring); }
+.menu-card:hover .card-emoji { transform: scale(1.08) rotate(-4deg); }
+.menu-card h3 { font-size: 13.5px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.menu-card .price { font-size: 13px; font-weight: 700; color: var(--accent); }
+.menu-card .card-tag { position: absolute; top: 10px; left: 10px; font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--accent); padding: 2px 7px; border-radius: var(--r-full); background: var(--accent-soft); border: 1px solid rgba(244,163,0,.3); }
+.qty-badge { position: absolute; top: 10px; right: 10px; min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--r-full); background: linear-gradient(135deg, var(--primary), var(--primary-700)); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; box-shadow: 0 4px 12px rgba(230,57,70,.55); transform: scale(0); transition: transform var(--t) var(--ease-spring); pointer-events: none; }
+.qty-badge.show { transform: scale(1); }
+.qty-badge.bounce { animation: badgeBounce 420ms var(--ease-spring); }
+@keyframes badgeBounce { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.btn-add { width: 100%; padding: 8px 12px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); font-weight: 700; font-size: 12.5px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid rgba(230,57,70,.3); transition: all var(--t) var(--ease-spring); }
+.btn-add:hover { background: linear-gradient(135deg, var(--primary), var(--primary-600)); color: #fff; border-color: transparent; box-shadow: 0 8px 20px rgba(230,57,70,.45); }
+
+.cart-panel { position: sticky; top: 20px; border-radius: var(--r-lg); background: linear-gradient(165deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); box-shadow: var(--shadow-lg); overflow: hidden; animation: fadeUp var(--t-slow) var(--ease-smooth) 120ms both; }
+@media (max-width: 980px) { .cart-panel { position: static; } }
+.cart-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: linear-gradient(135deg, rgba(230,57,70,.16), rgba(244,163,0,.10)); border-bottom: 1px solid var(--border); }
+.cart-head-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; }
+.cart-head-title .icon { color: var(--primary); }
+.cart-count { padding: 4px 11px; border-radius: var(--r-full); background: var(--accent); color: #1F1200; font-size: 11.5px; font-weight: 800; }
+.cart-count.bounce { animation: badgeBounce 420ms var(--ease-spring); }
+.cart-body { max-height: 380px; overflow-y: auto; padding: 8px 14px; }
+.cart-empty { text-align: center; padding: 44px 20px; color: var(--text-3); }
+.cart-empty-icon { width: 68px; height: 68px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-3); animation: floatY 3s ease-in-out infinite; }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.cart-empty p { font-size: 13.5px; font-weight: 600; color: var(--text-2); }
+.cart-empty small { font-size: 11.5px; color: var(--text-3); display: block; margin-top: 4px; }
+.cart-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 12px 8px; border-bottom: 1px dashed var(--border); animation: itemIn 280ms var(--ease-spring) both; }
+.cart-item:last-child { border-bottom: none; }
+@keyframes itemIn { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: translateX(0); } }
+.ci-info .ci-name { font-size: 13.5px; font-weight: 700; color: var(--text); }
+.ci-info .ci-price { font-size: 11.5px; color: var(--text-3); }
+.qty-ctrl { display: inline-flex; align-items: center; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-full); padding: 3px; }
+.qty-btn { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: var(--text-2); transition: all var(--t-fast) var(--ease-spring); }
+.qty-btn:hover { background: var(--surface-3); color: var(--text); }
+.qty-btn.minus:hover { color: var(--danger); background: var(--danger-soft); }
+.qty-btn.plus:hover { color: var(--success); background: var(--success-soft); }
+.qty-val { min-width: 22px; text-align: center; font-size: 13px; font-weight: 800; }
+.ci-sub { font-size: 13.5px; font-weight: 800; color: var(--accent); min-width: 68px; text-align: right; }
+.cart-foot { padding: 18px 20px; background: linear-gradient(180deg, rgba(0,0,0,.22), transparent); border-top: 1px solid var(--border); }
+.total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.total-row .label { font-size: 12.5px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .6px; }
+.total-row .amount { font-size: 24px; font-weight: 800; background: linear-gradient(90deg, var(--accent), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.modal-overlay { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(8,3,2,.78); backdrop-filter: blur(10px); z-index: 1000; opacity: 0; visibility: hidden; transition: opacity var(--t) var(--ease-smooth), visibility var(--t); }
+.modal-overlay.show { opacity: 1; visibility: visible; }
+.modal { width: 100%; max-width: 480px; max-height: 92dvh; overflow-y: auto; border-radius: var(--r-xl); background: linear-gradient(170deg, #1E1209, #140B06); border: 1px solid var(--border-strong); box-shadow: var(--shadow-lg); transform: scale(.94) translateY(14px); opacity: 0; transition: transform var(--t-slow) var(--ease-spring), opacity var(--t); }
+.modal-overlay.show .modal { transform: scale(1) translateY(0); opacity: 1; }
+.modal.modal-wide { max-width: 560px; }
+.modal-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, rgba(230,57,70,.16), transparent); }
+.modal-head h2 { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; }
+.modal-head h2 .icon { color: var(--primary); }
+.icon-btn { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); color: var(--text-2); transition: all var(--t) var(--ease-spring); }
+.icon-btn:hover { background: var(--danger-soft); color: var(--danger); transform: rotate(90deg); }
+.modal-body { padding: 22px; }
+
+.method-options { display: flex; flex-direction: column; gap: 12px; }
+.method-option { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: var(--r); background: var(--surface); border: 1.5px solid var(--border); transition: all var(--t) var(--ease-spring); text-align: left; }
+.method-option:hover { transform: translateY(-2px); border-color: var(--border-strong); background: var(--surface-2); }
+.method-option.bt:hover { border-color: rgba(59,130,246,.5); }
+.method-option.usb:hover { border-color: rgba(244,163,0,.5); }
+.method-option.serial:hover { border-color: rgba(34,197,94,.5); }
+.method-icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; }
+.method-icon.bt { background: linear-gradient(135deg, #3B82F6, #1D4ED8); color: #fff; box-shadow: 0 6px 18px rgba(59,130,246,.4); }
+.method-icon.usb { background: linear-gradient(135deg, var(--accent), var(--accent-600)); color: #1F1200; box-shadow: 0 6px 18px rgba(244,163,0,.4); }
+.method-icon.serial { background: linear-gradient(135deg, #22C55E, #16A34A); color: #fff; box-shadow: 0 6px 18px rgba(34,197,94,.4); }
+.method-info { flex: 1; min-width: 0; }
+.method-info h3 { font-size: 14.5px; font-weight: 700; color: var(--text); margin-bottom: 3px; display: flex; align-items: center; gap: 8px; }
+.method-info p { font-size: 12px; color: var(--text-3); line-height: 1.4; }
+.method-badge { font-size: 9.5px; font-weight: 800; padding: 2px 7px; border-radius: var(--r-full); background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(244,163,0,.3); letter-spacing: .4px; }
+.method-badge.bt { background: var(--bluetooth-soft); color: var(--bluetooth); border-color: rgba(59,130,246,.3); }
+.method-arrow { color: var(--text-3); flex-shrink: 0; }
+.method-option:disabled { opacity: .55; cursor: not-allowed; }
+.method-option:disabled:hover { transform: none; }
+.method-note { margin-top: 16px; padding: 12px 14px; border-radius: var(--r-sm); background: var(--warning-soft); border: 1px solid rgba(245,158,11,.25); font-size: 11.5px; color: var(--text-2); display: flex; gap: 8px; align-items: flex-start; }
+.method-note .icon { color: var(--warning); margin-top: 1px; }
+
+.order-section { margin-bottom: 20px; }
+.order-type-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.order-type-chip { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 8px; border-radius: var(--r-sm); background: var(--surface); border: 1.5px solid var(--border); color: var(--text-3); font-weight: 700; font-size: 11.5px; transition: all var(--t) var(--ease-spring); text-align: center; }
+.order-type-chip:hover { color: var(--text); border-color: var(--border-strong); transform: translateY(-2px); }
+.order-type-chip.active { background: var(--purple-soft); border-color: var(--purple); color: #D8B4FE; box-shadow: 0 8px 22px rgba(168,85,247,.3); }
+.order-type-chip .otc-emoji { font-size: 20px; line-height: 1; }
+.order-detail { margin-top: 12px; padding: 14px; border-radius: var(--r-sm); background: var(--surface); border: 1px dashed var(--border); }
+.order-detail.hidden { display: none; }
+.form-field { margin-bottom: 12px; }
+.form-field:last-child { margin-bottom: 0; }
+.form-field label { display: block; font-size: 10.5px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; }
+.form-input { width: 100%; padding: 11px 14px; border-radius: 10px; background: var(--surface-2); border: 1.5px solid var(--border); color: var(--text); font-size: 14px; font-weight: 600; transition: all var(--t); }
+.form-input:focus { outline: none; border-color: var(--purple); background: var(--surface-3); box-shadow: 0 0 0 4px rgba(168,85,247,.16); }
+.form-input::placeholder { color: var(--text-3); font-weight: 500; }
+.form-input.error { border-color: var(--danger); box-shadow: 0 0 0 4px rgba(239,68,68,.16); }
+textarea.form-input { resize: vertical; min-height: 60px; font-family: var(--font); }
+.customer-suggestion { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 5px; }
+.customer-suggestion button { padding: 5px 10px; border-radius: var(--r-full); background: var(--purple-soft); color: #D8B4FE; border: 1px solid rgba(168,85,247,.3); font-size: 11px; font-weight: 600; transition: all var(--t); }
+.customer-suggestion button:hover { background: var(--purple); color: #fff; }
+
+.customer-list { display: flex; flex-direction: column; gap: 8px; max-height: 60dvh; overflow-y: auto; }
+.customer-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--border); transition: all var(--t); }
+.customer-item:hover { background: var(--surface-2); border-color: var(--border-strong); }
+.customer-avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--purple), #6D28D9); color: #fff; font-weight: 800; font-size: 15px; flex-shrink: 0; }
+.customer-info { flex: 1; min-width: 0; }
+.customer-info .cust-name { font-size: 13.5px; font-weight: 700; color: var(--text); }
+.customer-info .cust-phone { font-size: 11.5px; color: var(--text-3); }
+.customer-info .cust-address { font-size: 11px; color: var(--text-3); margin-top: 2px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.customer-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.customer-action-btn { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); color: var(--text-3); transition: all var(--t); }
+.customer-action-btn.use:hover { background: var(--success-soft); color: var(--success); }
+.customer-action-btn.del:hover { background: var(--danger-soft); color: var(--danger); }
+.customer-empty { text-align: center; padding: 40px 20px; color: var(--text-3); }
+.customer-empty-icon { width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border); }
+
+.history-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.history-filter-chip { padding: 6px 12px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 11.5px; font-weight: 600; transition: all var(--t); }
+.history-filter-chip:hover { background: var(--surface-3); color: var(--text); }
+.history-filter-chip.active { background: linear-gradient(135deg, var(--primary), var(--primary-600)); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(230,57,70,.4); }
+.history-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.history-summary-card { padding: 14px 16px; border-radius: var(--r-sm); background: linear-gradient(135deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); }
+.history-summary-card .hs-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--text-3); margin-bottom: 4px; }
+.history-summary-card .hs-value { font-size: 18px; font-weight: 800; color: var(--text); }
+.history-summary-card.accent .hs-value { background: linear-gradient(90deg, var(--accent), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.history-date-label { text-align: center; font-size: 12px; color: var(--text-3); margin-bottom: 12px; font-weight: 600; letter-spacing: .4px; }
+.history-list { display: flex; flex-direction: column; gap: 8px; max-height: 50dvh; overflow-y: auto; }
+.history-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--border); cursor: pointer; transition: all var(--t); }
+.history-item:hover { background: var(--surface-2); border-color: var(--border-strong); }
+.history-queue { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(135deg, var(--purple), #6D28D9); color: #fff; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+.history-info { flex: 1; min-width: 0; }
+.history-info .hi-title { font-size: 13.5px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 6px; }
+.history-info .hi-meta { font-size: 11px; color: var(--text-3); margin-top: 2px; display: flex; flex-wrap: wrap; gap: 8px; }
+.history-info .hi-meta span { display: inline-flex; align-items: center; gap: 3px; }
+.history-total { font-size: 14px; font-weight: 800; color: var(--accent); text-align: right; flex-shrink: 0; }
+.history-empty { text-align: center; padding: 40px 20px; color: var(--text-3); }
+.history-empty-icon { width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border); }
+.history-detail { display: none; margin-top: 8px; padding: 12px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px dashed var(--border); font-size: 12px; }
+.history-item.expanded .history-detail { display: block; }
+.history-detail .hd-row { display: flex; justify-content: space-between; padding: 3px 0; }
+.history-detail .hd-row.total { font-weight: 800; color: var(--accent); border-top: 1px solid var(--border); padding-top: 6px; margin-top: 6px; }
+.history-detail .hd-sec { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
+.history-detail .hd-sec-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-3); margin-bottom: 4px; }
+
+.badge-type { display: inline-block; padding: 1px 6px; border-radius: var(--r-full); font-size: 9.5px; font-weight: 700; letter-spacing: .3px; }
+.badge-type.dinein { background: rgba(168,85,247,.2); color: #D8B4FE; }
+.badge-type.takeaway { background: rgba(244,163,0,.2); color: #FCD34D; }
+.badge-type.delivery { background: rgba(59,130,246,.2); color: #93C5FD; }
+.badge-pay { display: inline-block; padding: 1px 6px; border-radius: var(--r-full); font-size: 9.5px; font-weight: 700; }
+.badge-pay.cash { background: rgba(34,197,94,.2); color: #86EFAC; }
+.badge-pay.qris { background: rgba(230,57,70,.2); color: #FCA5A5; }
+
+.receipt { background: #FFFCF4; color: #1A1A1A; border-radius: var(--r-sm); padding: 18px 16px; font-family: var(--font-mono); font-size: 12px; line-height: 1.65; margin-bottom: 20px; max-height: 260px; overflow-y: auto; box-shadow: 0 12px 36px rgba(0,0,0,.45); }
+.receipt .r-center { text-align: center; }
+.receipt .r-bold { font-weight: 700; }
+.receipt .r-line { border-top: 1px dashed #999; margin: 8px 0; }
+.receipt .r-row { display: flex; justify-content: space-between; gap: 12px; }
+.receipt .r-row span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.receipt .r-total { display: flex; justify-content: space-between; font-weight: 800; font-size: 14px; margin-top: 8px; padding-top: 8px; border-top: 1.5px solid #222; }
+.receipt .r-meta { font-size: 11px; }
+.receipt .r-tagline { font-size: 10px; font-style: italic; color: #A0522D; margin-top: 3px; }
+.receipt .r-queue { text-align: center; font-weight: 800; font-size: 20px; padding: 6px 0; margin: 4px 0; border-top: 1px dashed #999; border-bottom: 1px dashed #999; letter-spacing: 2px; }
+
+.field-label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 10px; }
+.pay-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.pay-method { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 10px; border-radius: var(--r-sm); background: var(--surface); border: 1.5px solid var(--border); color: var(--text-3); font-weight: 700; font-size: 13px; transition: all var(--t) var(--ease-spring); }
+.pay-method:hover { color: var(--text); border-color: var(--border-strong); transform: translateY(-2px); }
+.pay-method.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); box-shadow: 0 8px 22px rgba(230,57,70,.3); }
+.cash-group { margin-bottom: 16px; }
+.input-wrap { position: relative; display: flex; align-items: center; }
+.input-prefix { position: absolute; left: 14px; font-weight: 700; font-size: 15px; color: var(--text-3); pointer-events: none; }
+.input-field { width: 100%; padding: 14px 16px 14px 42px; border-radius: var(--r-sm); background: var(--surface); border: 1.5px solid var(--border); color: var(--text); font-size: 17px; font-weight: 700; transition: all var(--t); }
+.input-field:focus { outline: none; border-color: var(--primary); background: var(--surface-2); box-shadow: 0 0 0 4px rgba(230,57,70,.16); }
+.quick-cash { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.quick-cash button { padding: 6px 12px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 11.5px; font-weight: 700; transition: all var(--t); }
+.quick-cash button:hover { background: var(--accent-soft); color: var(--accent); border-color: rgba(244,163,0,.4); }
+.change-box { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; border-radius: var(--r-sm); background: var(--success-soft); border: 1px solid rgba(34,197,94,.3); margin-bottom: 18px; }
+.change-box.error { background: var(--danger-soft); border-color: rgba(239,68,68,.3); }
+.change-box .cl { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--text-3); }
+.change-box .cv { font-size: 18px; font-weight: 800; color: var(--success); }
+.change-box.error .cv { color: var(--danger); }
+.modal-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+
+.spinner { width: 16px; height: 16px; border: 2.5px solid rgba(255,255,255,.28); border-top-color: #fff; border-radius: 50%; animation: spin .65s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.toast-wrap { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; max-width: calc(100vw - 40px); pointer-events: none; }
+.toast { pointer-events: auto; display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: var(--r); background: linear-gradient(135deg, #241609, #180D06); border: 1px solid var(--border-strong); border-left: 3px solid var(--info); box-shadow: var(--shadow-lg); font-size: 13.5px; font-weight: 600; color: var(--text); min-width: 260px; max-width: 380px; animation: toastIn 340ms var(--ease-spring); }
+.toast.out { animation: toastOut 280ms var(--ease-smooth) forwards; }
+@keyframes toastIn { from { opacity: 0; transform: translateX(120%) scale(.9); } to { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes toastOut { to { opacity: 0; transform: translateX(120%) scale(.92); } }
+.toast.success { border-left-color: var(--success); } .toast.success .t-icon { color: var(--success); }
+.toast.error { border-left-color: var(--danger); } .toast.error .t-icon { color: var(--danger); }
+.toast.warning { border-left-color: var(--warning); } .toast.warning .t-icon { color: var(--warning); }
+.toast.info .t-icon { color: var(--info); }
+.toast .t-icon { flex-shrink: 0; }
+.toast .t-msg { flex: 1; line-height: 1.4; }
+
+.footer-info { max-width: 1240px; margin: 26px auto 8px; padding: 18px 22px; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--border); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; }
+.fi-item { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; color: var(--text-2); }
+.fi-item .icon { color: var(--primary); margin-top: 2px; }
+.fi-item strong { display: block; color: var(--text); font-weight: 700; margin-bottom: 2px; font-size: 13px; }
+
+@media (max-width: 640px) {
+  body { padding: 14px; }
+  .header { padding: 14px 16px; border-radius: var(--r); }
+  .brand-logo { width: 42px; height: 42px; }
+  .brand-text h1 { font-size: 15.5px; }
+  .status-pill { font-size: 11.5px; padding: 7px 12px; max-width: 180px; }
+  .btn-connect-text { display: none; }
+  .menu-grid { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; }
+  .card-emoji { width: 50px; height: 50px; font-size: 26px; }
+  .modal-actions { grid-template-columns: 1fr; }
+  .toast-wrap { top: 12px; right: 12px; left: 12px; max-width: none; }
+  .toast { min-width: 0; }
+  .order-type-chip { font-size: 10.5px; padding: 10px 4px; }
+  .queue-badge { font-size: 11px; padding: 7px 11px; }
+  .queue-badge .qb-num { font-size: 13px; }
+  .history-summary { grid-template-columns: 1fr; }
+  .cloud-status { font-size: 10.5px; padding: 7px 10px; }
+}
+@media print { body * { visibility: hidden !important; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } body::before, body::after { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="header" role="banner">
+    <div class="brand">
+      <div class="brand-logo" aria-hidden="true">
+        <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11h18"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 4c-1.5 1-2 2-2 3h4c0-1-.5-2-2-3z"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Cakrawala <span>Sego Sambel</span></h1>
+        <p>Khas Kudus · Sejak 2015</p>
+        <span class="brand-tag">
+          <svg class="icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          Pedasnya Bikin Nagih
+        </span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="queue-badge" id="queueBadge" title="Nomor antrian saat ini (reset setiap refresh)">
+        <span class="qb-icon">#</span>
+        <span>Antrian</span>
+        <span class="qb-num" id="queueNum">0</span>
+      </div>
+      <div class="cloud-status offline" id="cloudStatus" title="Status sinkronisasi antar HP">
+        <span class="cloud-dot"></span>
+        <span id="cloudStatusText">Cloud: Off</span>
+      </div>
+      <button type="button" class="btn btn-primary" id="btnHistory" aria-label="Riwayat transaksi">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 3"/></svg>
+        <span class="btn-connect-text">Riwayat</span>
+      </button>
+      <button type="button" class="btn btn-purple" id="btnCustomers" aria-label="Daftar pelanggan">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="btn-connect-text">Pelanggan</span>
+      </button>
+      <div class="printer-status">
+        <div class="status-pill" id="statusPill" role="status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="statusText">Printer: Terputus</span>
+        </div>
+        <button type="button" class="btn btn-accent" id="btnConnect" aria-label="Hubungkan ke printer">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8zM12 18v4"/></svg>
+          <span class="btn-connect-text">Hubungkan Printer</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-grid">
+    <section class="menu-section" aria-labelledby="menuTitle">
+      <div class="section-head">
+        <h2 id="menuTitle">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          Menu Sego Sambel
+        </h2>
+        <div class="category-chips" id="chips" role="tablist" aria-label="Filter kategori"></div>
+      </div>
+      <div class="menu-grid" id="menuGrid" role="list"></div>
+    </section>
+
+    <aside class="cart-panel" aria-labelledby="cartTitle">
+      <div class="cart-head">
+        <div class="cart-head-title" id="cartTitle">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          Pesanan Anda
+        </div>
+        <span class="cart-count" id="cartCount" aria-live="polite">0 item</span>
+      </div>
+      <div class="cart-body" id="cartBody" role="region" aria-label="Daftar pesanan"></div>
+      <div class="cart-foot">
+        <div class="total-row">
+          <span class="label">Total</span>
+          <span class="amount" id="totalAmount" aria-live="polite">Rp 0</span>
+        </div>
+        <button type="button" class="btn btn-success btn-block btn-lg" id="btnPay" disabled aria-label="Bayar dan cetak struk">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          Bayar & Cetak Struk
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <section class="footer-info reveal" aria-label="Informasi warung">
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div><strong>Alamat Warung</strong>Jl. Jend. Ahmad Yani No.1, Getas</div>
+    </div>
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+      <div><strong>Telepon / WA</strong>0896-5361-8380</div>
+    </div>
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <div><strong>Jam Buka</strong>Setiap Hari · 10.00 – 22.00 WIB</div>
+    </div>
+    <div class="fi-item">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" x2="21" y1="6" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <div><strong>Layanan</strong>Dine-in · Take Away · Delivery</div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal Pilih Metode Koneksi -->
+<div class="modal-overlay" id="methodModal" role="dialog" aria-modal="true" aria-labelledby="methodTitle" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h2 id="methodTitle">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+        Pilih Metode Koneksi
+      </h2>
+      <button type="button" class="icon-btn" id="btnMethodClose" aria-label="Tutup">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="method-options" id="methodOptions">
+        <button type="button" class="method-option bt" data-method="bluetooth" id="optBluetooth">
+          <div class="method-icon bt">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+          </div>
+          <div class="method-info">
+            <h3>Bluetooth <span class="method-badge bt">HP & Laptop</span></h3>
+            <p>Sambungkan printer thermal Bluetooth. Direkomendasikan untuk HP Android.</p>
+          </div>
+          <svg class="icon method-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <button type="button" class="method-option usb" data-method="usb" id="optUSB">
+          <div class="method-icon usb">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8zM12 18v4"/></svg>
+          </div>
+          <div class="method-info">
+            <h3>USB <span class="method-badge">Laptop/PC</span></h3>
+            <p>Kabel USB ke printer thermal. Hanya berfungsi di Chrome/Edge desktop.</p>
+          </div>
+          <svg class="icon method-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <button type="button" class="method-option serial" data-method="serial" id="optSerial">
+          <div class="method-icon serial">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><path d="M6 12h.01M10 12h.01M14 12h.01"/></svg>
+          </div>
+          <div class="method-info">
+            <h3>Serial (COM) <span class="method-badge">Laptop/PC</span></h3>
+            <p>Kabel USB-Serial. Untuk Windows bila mode USB terblokir driver.</p>
+          </div>
+          <svg class="icon method-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="method-note" id="methodNote">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span id="methodNoteText">Pastikan printer sudah <strong>dipairing</strong> di Pengaturan Bluetooth HP/Laptop sebelum menghubungkan.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Pembayaran -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h2 id="modalTitle">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        Pembayaran
+      </h2>
+      <button type="button" class="icon-btn" id="btnClose" aria-label="Tutup">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="receipt" id="receipt" aria-label="Pratinjau struk"></div>
+
+      <div class="order-section">
+        <label class="field-label">Tipe Pesanan</label>
+        <div class="order-type-chips" role="radiogroup" id="orderTypeChips">
+          <button type="button" class="order-type-chip active" data-ot="dinein" role="radio" aria-checked="true">
+            <span class="otc-emoji">🍽️</span>
+            <span>Dine In</span>
+          </button>
+          <button type="button" class="order-type-chip" data-ot="takeaway" role="radio" aria-checked="false">
+            <span class="otc-emoji">🥡</span>
+            <span>Take Away</span>
+          </button>
+          <button type="button" class="order-type-chip" data-ot="delivery" role="radio" aria-checked="false">
+            <span class="otc-emoji">🛵</span>
+            <span>Delivery</span>
+          </button>
+        </div>
+
+        <div class="order-detail" id="detailDineIn">
+          <div class="form-field">
+            <label for="inputTable">Nomor Meja <span style="color:var(--danger)">*</span></label>
+            <input type="text" class="form-input" id="inputTable" placeholder="Contoh: 05" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="order-detail hidden" id="detailDelivery">
+          <div class="form-field">
+            <label for="inputCustName">Nama Pelanggan <span style="color:var(--danger)">*</span></label>
+            <input type="text" class="form-input" id="inputCustName" placeholder="Nama penerima" autocomplete="off">
+            <div class="customer-suggestion" id="custSuggestName"></div>
+          </div>
+          <div class="form-field">
+            <label for="inputCustPhone">No. HP / WhatsApp <span style="color:var(--danger)">*</span></label>
+            <input type="tel" class="form-input" id="inputCustPhone" placeholder="0812xxxxxxxx" autocomplete="off" inputmode="numeric">
+          </div>
+          <div class="form-field">
+            <label for="inputCustAddress">Alamat Lengkap <span style="color:var(--danger)">*</span></label>
+            <textarea class="form-input" id="inputCustAddress" placeholder="Jl. Contoh No. 12, RT/RW, Kelurahan, Kecamatan" autocomplete="off"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label class="field-label">Metode Pembayaran</label>
+        <div class="pay-methods" role="radiogroup">
+          <button type="button" class="pay-method active" id="btnCash" role="radio" aria-checked="true">
+            <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+            Tunai
+          </button>
+          <button type="button" class="pay-method" id="btnQris" role="radio" aria-checked="false">
+            <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+            QRIS
+          </button>
+        </div>
+      </div>
+
+      <div class="cash-group" id="cashGroup">
+        <label class="field-label" for="inputCash">Uang Diterima</label>
+        <div class="input-wrap">
+          <span class="input-prefix">Rp</span>
+          <input type="text" inputmode="numeric" class="input-field" id="inputCash" placeholder="0" autocomplete="off">
+        </div>
+        <div class="quick-cash" id="quickCash"></div>
+      </div>
+      <div class="change-box" id="changeBox" style="display:none;">
+        <span class="cl" id="changeLabel">Kembalian</span>
+        <span class="cv" id="changeVal">Rp 0</span>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost btn-lg" id="btnCancel">Batal</button>
+        <button type="button" class="btn btn-primary btn-lg" id="btnConfirm" disabled>
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          Cetak & Bayar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Daftar Pelanggan -->
+<div class="modal-overlay" id="customerModal" role="dialog" aria-modal="true" aria-labelledby="customerTitle" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h2 id="customerTitle">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Daftar Pelanggan Delivery
+      </h2>
+      <button type="button" class="icon-btn" id="btnCustomerClose" aria-label="Tutup">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="customer-list" id="customerList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Riwayat Transaksi -->
+<div class="modal-overlay" id="historyModal" role="dialog" aria-modal="true" aria-labelledby="historyTitle" aria-hidden="true">
+  <div class="modal modal-wide" role="document">
+    <div class="modal-head">
+      <h2 id="historyTitle">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 3"/></svg>
+        Riwayat Transaksi
+      </h2>
+      <button type="button" class="icon-btn" id="btnHistoryClose" aria-label="Tutup">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="history-filters" id="historyFilters"></div>
+      <div class="history-summary" id="historySummary"></div>
+      <div class="history-date-label" id="historyDateLabel"></div>
+      <div class="history-list" id="historyList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap" role="region" aria-label="Notifikasi" aria-live="polite"></div>
+
+<script>
+'use strict';
+(() => {
+
+  /* ============================================================
+     KONFIGURASI CLOUD SYNC — RIWAYAT SAMA DI SEMUA HP
+     ============================================================
+     ✅ Sudah dikonfigurasi dengan Firebase project: cakrawala-e9983
+     ✅ enabled: true → sinkronisasi antar HP AKTIF
+
+     Strategi sinkronisasi:
+     - RIWAYAT: append-only merge. Tidak ada transaksi yang dihapus.
+     - PELANGGAN: union merge berdasarkan phone. Delete disinkronkan.
+     - Offline-first: localStorage tetap jadi sumber lokal.
+     - Real-time: setiap perubahan cloud langsung update UI semua device.
+     ============================================================ */
+  const FIREBASE_CONFIG = {
+    enabled: true,
+    config: {
+      apiKey: "AIzaSyBvKscmaAI8CqEuUajLhd_Ez2sgfL03N3U",
+      authDomain: "cakrawala-e9983.firebaseapp.com",
+      databaseURL: "https://cakrawala-e9983-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "cakrawala-e9983",
+      storageBucket: "cakrawala-e9983.firebasestorage.app",
+      messagingSenderId: "667636405981",
+      appId: "1:667636405981:web:9ecad8bc4109751834ed34"
+    },
+    // Semua HP HARUS memakai storeId yang sama agar tersinkron
+    storeId: "warung-cakrawala-sego-sambel-kudus"
+  };
+
+  /* ===================== 1. CONFIG ===================== */
+  const STORE = Object.freeze({
+    name: 'WARUNG CAKRAWALA',
+    subtitle: 'Sego Sambel Khas Kudus',
+    address: 'Jl. Jend. Ahmad Yani No.1, Getas',
+    phone: '0896-5361-8380',
+    paperWidth: 32,
+    hasCutter: false,
+    footer: 'Matur Nuwun',
+    tagline: 'Pedasnya Bikin Nagih',
+    serialBaudRate: 9600,
+    btChunkSize: 100,
+    btChunkDelay: 30,
+    qrisImageUrl: 'https://ik.imagekit.io/IrgxyMods/Proyek%20Baru%20257%20_3418887_.png',
+    storageKeys: {
+      customers: 'cakrawala_customers',
+      history: 'cakrawala_history'
+    },
+    maxCustomers: 200,
+    maxHistory: 5000
+  });
+
+  /* ===================== 2. MENU ===================== */
+  const MENU = Object.freeze([
+    { id: 1, nama: 'Nasi Putih 1', harga: 15000, emoji: '🍚', kategori: 'sego' },
+    { id: 2, nama: 'Nasi Putih ½', harga: 15000, emoji: '🍚', kategori: 'sego' },
+    { id: 3, nama: 'Sego Sambel Ijo', harga: 16000, emoji: '🌶️', kategori: 'sego' },
+    { id: 4, nama: 'Sego Sambel Matah', harga: 18000, emoji: '🌶️', kategori: 'sego', tag: 'Pedes!' },
+    { id: 5, nama: 'Sego Sambel Bawang Telur', harga: 18000, emoji: '🍳', kategori: 'sego' },
+    { id: 6, nama: 'Sego Sambel Komplit', harga: 25000, emoji: '🍛', kategori: 'sego', tag: 'Favorite' },
+    { id: 7, nama: 'Ayam Goreng', harga: 12000, emoji: '🍗', kategori: 'lauk' },
+    { id: 8, nama: 'Bebek Goreng', harga: 25000, emoji: '🦆', kategori: 'lauk', tag: 'Spesial' },
+    { id: 9, nama: 'Ikan Nila Goreng', harga: 18000, emoji: '🐟', kategori: 'lauk' },
+    { id: 10, nama: 'Ikan Lele Goreng', harga: 10000, emoji: '🐟', kategori: 'lauk' },
+    { id: 11, nama: 'Telur Dadar', harga: 5000, emoji: '🍳', kategori: 'lauk' },
+    { id: 12, nama: 'Tempe Goreng', harga: 3000, emoji: '🟫', kategori: 'lauk' },
+    { id: 13, nama: 'Tahu Goreng', harga: 3000, emoji: '🟨', kategori: 'lauk' },
+    { id: 14, nama: 'Es Teh Manis', harga: 5000, emoji: '🧊', kategori: 'minuman', tag: 'Best Seller' },
+    { id: 15, nama: 'Teh Hangat', harga: 4000, emoji: '🍵', kategori: 'minuman' },
+    { id: 16, nama: 'Es Jeruk', harga: 6000, emoji: '🍊', kategori: 'minuman' },
+    { id: 17, nama: 'Jeruk Hangat', harga: 5000, emoji: '🍊', kategori: 'minuman' },
+    { id: 18, nama: 'Es Air Putih', harga: 2000, emoji: '💧', kategori: 'minuman' },
+    { id: 19, nama: 'Air Putih Hangat', harga: 2000, emoji: '💧', kategori: 'minuman' }
+  ]);
+
+  const CATEGORIES = Object.freeze([
+    { key: 'all', label: 'Semua' },
+    { key: 'sego', label: 'Sego Sambel' },
+    { key: 'lauk', label: 'Lauk' },
+    { key: 'minuman', label: 'Minuman' }
+  ]);
+
+  const ORDER_TYPES = Object.freeze({
+    dinein: { label: 'DINE IN', short: 'Dine In', icon: '🍽️' },
+    takeaway: { label: 'TAKE AWAY', short: 'Take Away', icon: '🥡' },
+    delivery: { label: 'DELIVERY', short: 'Delivery', icon: '🛵' }
+  });
+
+  const HISTORY_FILTERS = Object.freeze([
+    { key: 'today', label: 'Hari Ini' },
+    { key: '1d', label: '1 Hari Lalu' },
+    { key: '2d', label: '2 Hari Lalu' },
+    { key: '3d', label: '3 Hari Lalu' },
+    { key: '4d', label: '4 Hari Lalu' },
+    { key: '5d', label: '5 Hari Lalu' },
+    { key: '6d', label: '6 Hari Lalu' },
+    { key: '1w', label: '1 Minggu Lalu' },
+    { key: '1m', label: '1 Bulan Lalu' },
+    { key: '1y', label: '1 Tahun Lalu' }
+  ]);
+
+  const MAX_QTY = 99;
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===================== 3. STATE ===================== */
+  const state = {
+    cart: [],
+    filter: 'all',
+    payment: 'cash',
+    invoice: null,
+    queueNumber: 0,
+    orderType: 'dinein',
+    tableNumber: '',
+    customerName: '',
+    customerPhone: '',
+    customerAddress: '',
+    customers: [],
+    history: [],
+    historyFilter: 'today',
+    printerConnected: false,
+    printerType: null,
+    printerName: '',
+    processing: false,
+    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+    isIOS: /iPhone|iPad|iPod/i.test(navigator.userAgent),
+    cloud: {
+      enabled: false,
+      ready: false,
+      db: null,
+      mod: null,
+      historyRef: null,
+      customersRef: null,
+      unsubHistory: null,
+      unsubCustomers: null,
+      firstHistorySync: true,
+      firstCustomerSync: true,
+      pendingUploads: 0,
+      lastSyncAt: null
+    }
+  };
+
+  /* ===================== 4. DOM ===================== */
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  const el = {
+    menuGrid: $('#menuGrid'), chips: $('#chips'),
+    cartBody: $('#cartBody'), cartCount: $('#cartCount'), totalAmount: $('#totalAmount'),
+    btnPay: $('#btnPay'),
+    queueBadge: $('#queueBadge'), queueNum: $('#queueNum'),
+    cloudStatus: $('#cloudStatus'), cloudStatusText: $('#cloudStatusText'),
+    statusPill: $('#statusPill'), statusText: $('#statusText'), btnConnect: $('#btnConnect'),
+    btnCustomers: $('#btnCustomers'),
+    btnHistory: $('#btnHistory'),
+    methodModal: $('#methodModal'), btnMethodClose: $('#btnMethodClose'),
+    methodOptions: $('#methodOptions'),
+    optBluetooth: $('#optBluetooth'), optUSB: $('#optUSB'), optSerial: $('#optSerial'),
+    methodNote: $('#methodNote'), methodNoteText: $('#methodNoteText'),
+    modal: $('#modal'), receipt: $('#receipt'), btnClose: $('#btnClose'),
+    btnCancel: $('#btnCancel'), btnConfirm: $('#btnConfirm'),
+    inputCash: $('#inputCash'), quickCash: $('#quickCash'),
+    changeBox: $('#changeBox'), changeVal: $('#changeVal'), changeLabel: $('#changeLabel'),
+    cashGroup: $('#cashGroup'), btnCash: $('#btnCash'), btnQris: $('#btnQris'),
+    orderTypeChips: $('#orderTypeChips'),
+    detailDineIn: $('#detailDineIn'), detailDelivery: $('#detailDelivery'),
+    inputTable: $('#inputTable'),
+    inputCustName: $('#inputCustName'), inputCustPhone: $('#inputCustPhone'), inputCustAddress: $('#inputCustAddress'),
+    custSuggestName: $('#custSuggestName'),
+    customerModal: $('#customerModal'), btnCustomerClose: $('#btnCustomerClose'), customerList: $('#customerList'),
+    historyModal: $('#historyModal'), btnHistoryClose: $('#btnHistoryClose'),
+    historyFilters: $('#historyFilters'), historySummary: $('#historySummary'),
+    historyDateLabel: $('#historyDateLabel'), historyList: $('#historyList'),
+    toastWrap: $('#toastWrap')
+  };
+
+  /* ===================== 5. UTILS ===================== */
+  const formatRp = (n) => 'Rp ' + (n || 0).toLocaleString('id-ID');
+  const formatNum = (n) => (n || 0).toLocaleString('id-ID');
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  const debounce = (fn, delay = 200) => { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); }; };
+  const pad2 = (n) => String(n).padStart(2, '0');
+  const pad3 = (n) => String(n).padStart(3, '0');
+  const formatDateTime = (d = new Date()) => `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}/${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  const formatTime = (d) => `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  const formatDateLong = (d) => {
+    const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+  };
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+  const dateKey = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+
+  function getHistoryDate(filterKey) {
+    const now = new Date();
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    switch (filterKey) {
+      case 'today': break;
+      case '1d': d.setDate(d.getDate() - 1); break;
+      case '2d': d.setDate(d.getDate() - 2); break;
+      case '3d': d.setDate(d.getDate() - 3); break;
+      case '4d': d.setDate(d.getDate() - 4); break;
+      case '5d': d.setDate(d.getDate() - 5); break;
+      case '6d': d.setDate(d.getDate() - 6); break;
+      case '1w': d.setDate(d.getDate() - 7); break;
+      case '1m': d.setMonth(d.getMonth() - 1); break;
+      case '1y': d.setFullYear(d.getFullYear() - 1); break;
+      default: break;
+    }
+    return d;
+  }
+
+  const makeInvoice = () => {
+    const d = new Date();
+    const date = `${d.getFullYear()}${pad2(d.getMonth()+1)}${pad2(d.getDate())}`;
+    const time = `${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
+    const rand = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+    const dev = (navigator.userAgent || '').length.toString(36).slice(-3);
+    return `CKR-${date}-${time}-${rand}-${dev}`;
+  };
+
+  function isSecureContext() {
+    if (typeof window.isSecureContext === 'boolean' && !window.isSecureContext) return false;
+    const proto = location.protocol;
+    const host = location.hostname;
+    const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host.endsWith('.localhost');
+    if (proto === 'https:' || (proto === 'http:' && isLocal)) return true;
+    if (proto === 'file:') return true;
+    return false;
+  }
+
+  function isFeatureAllowedByPolicy(feature) {
+    try {
+      if (document.featurePolicy && typeof document.featurePolicy.allowsFeature === 'function') {
+        return document.featurePolicy.allowsFeature(feature);
+      }
+    } catch (_) {}
+    return true;
+  }
+
+  const hasBluetoothSupport = () => typeof navigator !== 'undefined' && typeof navigator.bluetooth !== 'undefined';
+  const hasUSBSupport      = () => typeof navigator !== 'undefined' && typeof navigator.usb !== 'undefined';
+  const hasSerialSupport   = () => typeof navigator !== 'undefined' && typeof navigator.serial !== 'undefined';
+
+  /* ===================== 6. QUEUE ===================== */
+  function initQueue() {
+    state.queueNumber = 0;
+    updateQueueBadge();
+  }
+  function getNextQueueNumber() {
+    state.queueNumber += 1;
+    updateQueueBadge();
+    return state.queueNumber;
+  }
+  function updateQueueBadge() {
+    if (el.queueNum) el.queueNum.textContent = String(state.queueNumber);
+  }
+
+  /* ===================== 7. CLOUD SYNC ===================== */
+  function setCloudStatus(mode, text) {
+    if (!el.cloudStatus) return;
+    el.cloudStatus.className = 'cloud-status ' + mode;
+    if (el.cloudStatusText) el.cloudStatusText.textContent = text || 'Cloud';
+  }
+
+  async function loadFirebaseSDK() {
+    try {
+      const [appMod, dbMod] = await Promise.all([
+        import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js'),
+        import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js')
+      ]);
+      return { ...appMod, ...dbMod };
+    } catch (err) {
+      console.warn('[Cloud] Gagal memuat Firebase SDK:', err);
+      return null;
+    }
+  }
+
+  function mergeHistoryLocal(local, cloud) {
+    const map = new Map();
+    for (const tx of (local || [])) {
+      if (tx && tx.invoice) map.set(tx.invoice, tx);
+    }
+    for (const tx of (cloud || [])) {
+      if (tx && tx.invoice) map.set(tx.invoice, tx);
+    }
+    return Array.from(map.values()).sort((a, b) => {
+      const ta = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+      const tb = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+      return tb - ta;
+    });
+  }
+
+  function mergeCustomersLocal(local, cloud) {
+    const map = new Map();
+    for (const c of (local || [])) {
+      if (c && c.phone) map.set(c.phone, c);
+    }
+    for (const c of (cloud || [])) {
+      if (!c || !c.phone) continue;
+      const existing = map.get(c.phone);
+      if (!existing) { map.set(c.phone, c); continue; }
+      const et = existing.lastOrder ? new Date(existing.lastOrder).getTime() : 0;
+      const ct = c.lastOrder ? new Date(c.lastOrder).getTime() : 0;
+      if (ct >= et) map.set(c.phone, c);
+    }
+    return Array.from(map.values()).sort((a, b) => {
+      const at = a.lastOrder ? new Date(a.lastOrder).getTime() : 0;
+      const bt = b.lastOrder ? new Date(b.lastOrder).getTime() : 0;
+      return bt - at;
+    });
+  }
+
+  function saveLocalHistory() {
+    try {
+      if (state.history.length > STORE.maxHistory) state.history.length = STORE.maxHistory;
+      localStorage.setItem(STORE.storageKeys.history, JSON.stringify(state.history));
+    } catch (_) {}
+  }
+  function saveLocalCustomers() {
+    try {
+      if (state.customers.length > STORE.maxCustomers) state.customers.length = STORE.maxCustomers;
+      localStorage.setItem(STORE.storageKeys.customers, JSON.stringify(state.customers));
+    } catch (_) {}
+  }
+
+  async function initCloudSync() {
+    if (!FIREBASE_CONFIG.enabled) {
+      setCloudStatus('offline', 'Cloud: Off');
+      return;
+    }
+    if (!FIREBASE_CONFIG.config.databaseURL) {
+      setCloudStatus('error', 'Cloud: Config kosong');
+      console.warn('[Cloud] databaseURL kosong.');
+      return;
+    }
+    setCloudStatus('connecting', 'Cloud: Menghubungkan…');
+    const mod = await loadFirebaseSDK();
+    if (!mod) {
+      setCloudStatus('error', 'Cloud: SDK gagal');
+      toast('Gagal memuat Firebase SDK. Periksa koneksi internet.', 'error', 6000);
+      return;
+    }
+    try {
+      const app = mod.initializeApp(FIREBASE_CONFIG.config);
+      const db = mod.getDatabase(app);
+      state.cloud.mod = mod;
+      state.cloud.db = db;
+      state.cloud.enabled = true;
+
+      const basePath = `stores/${FIREBASE_CONFIG.storeId}`;
+      const historyRef = mod.ref(db, `${basePath}/history`);
+      const customersRef = mod.ref(db, `${basePath}/customers`);
+      state.cloud.historyRef = historyRef;
+      state.cloud.customersRef = customersRef;
+
+      let firstHistory = true;
+      state.cloud.unsubHistory = mod.onValue(historyRef, async (snap) => {
+        const cloudObj = snap.val() || {};
+        const cloudArr = Object.values(cloudObj).filter(Boolean);
+
+        if (firstHistory) {
+          firstHistory = false;
+          const cloudSet = new Set(cloudArr.map(tx => tx.invoice).filter(Boolean));
+          const localOnly = state.history.filter(tx => tx && tx.invoice && !cloudSet.has(tx.invoice));
+          if (localOnly.length > 0) {
+            state.cloud.pendingUploads += localOnly.length;
+            setCloudStatus('syncing', `Cloud: Upload ${localOnly.length}…`);
+            for (const tx of localOnly) {
+              try { await mod.set(mod.ref(db, `${basePath}/history/${tx.invoice}`), tx); }
+              catch (e) { console.warn('[Cloud] Gagal upload tx:', tx.invoice, e); }
+              state.cloud.pendingUploads -= 1;
+            }
+          }
+        }
+
+        const merged = mergeHistoryLocal(state.history, cloudArr);
+        const changed = merged.length !== state.history.length
+          || merged.some((tx, i) => !state.history[i] || state.history[i].invoice !== tx.invoice);
+        state.history = merged;
+        saveLocalHistory();
+
+        if (changed) {
+          if (el.historyModal.classList.contains('show')) renderHistory();
+        }
+        setCloudStatus('online', `Cloud: Tersinkron (${merged.length})`);
+        state.cloud.lastSyncAt = Date.now();
+        state.cloud.ready = true;
+      }, (err) => {
+        console.warn('[Cloud] history listener error:', err);
+        setCloudStatus('error', 'Cloud: Error baca');
+      });
+
+      let firstCustomers = true;
+      state.cloud.unsubCustomers = mod.onValue(customersRef, async (snap) => {
+        const cloudObj = snap.val() || {};
+        const cloudArr = Object.values(cloudObj).filter(Boolean);
+
+        if (firstCustomers) {
+          firstCustomers = false;
+          const cloudSet = new Set(cloudArr.map(c => c.phone).filter(Boolean));
+          const localOnly = state.customers.filter(c => c && c.phone && !cloudSet.has(c.phone));
+          for (const c of localOnly) {
+            try { await mod.set(mod.ref(db, `${basePath}/customers/${encodeKey(c.phone)}`), c); }
+            catch (e) { console.warn('[Cloud] Gagal upload customer:', c.phone, e); }
+          }
+        }
+
+        const merged = mergeCustomersLocal(state.customers, cloudArr);
+        state.customers = merged;
+        saveLocalCustomers();
+        if (el.customerModal.classList.contains('show')) renderCustomerList();
+        if (el.custSuggestName && el.modal.classList.contains('show')) renderCustomerSuggestions();
+      }, (err) => {
+        console.warn('[Cloud] customers listener error:', err);
+      });
+
+      setCloudStatus('online', 'Cloud: Terhubung');
+      toast('☁️ Cloud sync aktif — riwayat tersinkron antar HP', 'success', 4000);
+
+    } catch (err) {
+      console.warn('[Cloud] init error:', err);
+      setCloudStatus('error', 'Cloud: Gagal init');
+      toast('Cloud sync gagal: ' + (err.message || 'error'), 'error', 6000);
+    }
+  }
+
+  function encodeKey(s) {
+    return String(s).replace(/[.#$\[\]\/]/g, '_');
+  }
+
+  async function cloudSaveTransaction(tx) {
+    if (!state.cloud.enabled || !state.cloud.mod) return;
+    try {
+      const mod = state.cloud.mod;
+      const path = `stores/${FIREBASE_CONFIG.storeId}/history/${tx.invoice}`;
+      await mod.set(mod.ref(state.cloud.db, path), tx);
+    } catch (err) {
+      console.warn('[Cloud] saveTransaction gagal:', err);
+    }
+  }
+
+  async function cloudSaveCustomer(cust) {
+    if (!state.cloud.enabled || !state.cloud.mod) return;
+    try {
+      const mod = state.cloud.mod;
+      const path = `stores/${FIREBASE_CONFIG.storeId}/customers/${encodeKey(cust.phone)}`;
+      await mod.set(mod.ref(state.cloud.db, path), cust);
+    } catch (err) {
+      console.warn('[Cloud] saveCustomer gagal:', err);
+    }
+  }
+
+  async function cloudDeleteCustomer(phone) {
+    if (!state.cloud.enabled || !state.cloud.mod) return;
+    try {
+      const mod = state.cloud.mod;
+      const path = `stores/${FIREBASE_CONFIG.storeId}/customers/${encodeKey(phone)}`;
+      await mod.remove(mod.ref(state.cloud.db, path));
+    } catch (err) {
+      console.warn('[Cloud] deleteCustomer gagal:', err);
+    }
+  }
+
+  /* ===================== 8. CUSTOMERS ===================== */
+  function loadCustomers() {
+    try {
+      const raw = localStorage.getItem(STORE.storageKeys.customers);
+      const list = raw ? JSON.parse(raw) : [];
+      state.customers = Array.isArray(list) ? list : [];
+    } catch (_) { state.customers = []; }
+  }
+
+  function saveCustomer(cust) {
+    if (!cust || !cust.phone) return;
+    const idx = state.customers.findIndex(c => c.phone === cust.phone);
+    const entry = {
+      name: (cust.name || '').trim(),
+      phone: (cust.phone || '').trim(),
+      address: (cust.address || '').trim(),
+      lastOrder: new Date().toISOString()
+    };
+    if (idx >= 0) {
+      state.customers[idx] = { ...state.customers[idx], ...entry };
+      const [item] = state.customers.splice(idx, 1);
+      state.customers.unshift(item);
+    } else {
+      state.customers.unshift(entry);
+    }
+    if (state.customers.length > STORE.maxCustomers) state.customers.length = STORE.maxCustomers;
+    saveLocalCustomers();
+    cloudSaveCustomer(entry);
+  }
+
+  function deleteCustomer(phone) {
+    state.customers = state.customers.filter(c => c.phone !== phone);
+    saveLocalCustomers();
+    cloudDeleteCustomer(phone);
+  }
+
+  function findCustomerByPhone(phone) {
+    return state.customers.find(c => c.phone === phone);
+  }
+
+  function searchCustomers(query, limit = 6) {
+    if (!query) return state.customers.slice(0, limit);
+    const q = query.toLowerCase().trim();
+    if (!q) return state.customers.slice(0, limit);
+    return state.customers.filter(c =>
+      (c.name && c.name.toLowerCase().includes(q)) ||
+      (c.phone && c.phone.includes(q))
+    ).slice(0, limit);
+  }
+
+  /* ===================== 9. HISTORY ===================== */
+  function loadHistory() {
+    try {
+      const raw = localStorage.getItem(STORE.storageKeys.history);
+      const list = raw ? JSON.parse(raw) : [];
+      state.history = Array.isArray(list) ? list : [];
+      state.history.sort((a, b) => {
+        const ta = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+        const tb = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+        return tb - ta;
+      });
+    } catch (_) { state.history = []; }
+  }
+
+  function saveTransaction(tx) {
+    if (!tx || !tx.invoice) return;
+    if (!state.history.some(h => h.invoice === tx.invoice)) {
+      state.history.unshift(tx);
+    }
+    if (state.history.length > STORE.maxHistory) state.history.length = STORE.maxHistory;
+    saveLocalHistory();
+    cloudSaveTransaction(tx);
+  }
+
+  function getHistoryByDateKey(key) {
+    return state.history
+      .filter(tx => tx.dateKey === key)
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  }
+
+  function renderHistoryFilters() {
+    el.historyFilters.innerHTML = HISTORY_FILTERS.map(f => {
+      const active = state.historyFilter === f.key;
+      return `<button type="button" class="history-filter-chip ${active ? 'active' : ''}" data-hfilter="${f.key}">${escapeHtml(f.label)}</button>`;
+    }).join('');
+    bindRipples(el.historyFilters);
+  }
+
+  function renderHistorySummary(list) {
+    const totalTx = list.length;
+    const totalRevenue = list.reduce((s, tx) => s + (tx.total || 0), 0);
+    el.historySummary.innerHTML = `
+      <div class="history-summary-card">
+        <div class="hs-label">Jumlah Transaksi</div>
+        <div class="hs-value">${totalTx}</div>
+      </div>
+      <div class="history-summary-card accent">
+        <div class="hs-label">Total Pendapatan</div>
+        <div class="hs-value">${formatRp(totalRevenue)}</div>
+      </div>
+    `;
+  }
+
+  function renderHistoryList(list) {
+    if (list.length === 0) {
+      el.historyList.innerHTML = `
+        <div class="history-empty">
+          <div class="history-empty-icon">
+            <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <p>Belum ada transaksi</p>
+          <small>Transaksi yang berhasil akan tampil di sini (dan tersinkron antar HP).</small>
+        </div>
+      `;
+      return;
+    }
+    el.historyList.innerHTML = list.map(tx => {
+      const ot = ORDER_TYPES[tx.orderType] || ORDER_TYPES.dinein;
+      const payClass = tx.paymentMethod === 'cash' ? 'cash' : 'qris';
+      const payLabel = tx.paymentMethod === 'cash' ? 'TUNAI' : 'QRIS';
+      const timeStr = tx.timestamp ? formatTime(new Date(tx.timestamp)) : '--:--';
+      const itemsSummary = (tx.items || []).map(i => `${escapeHtml(i.name)} x${i.qty}`).join(', ');
+      const itemsDetail = (tx.items || []).map(i =>
+        `<div class="hd-row"><span>${escapeHtml(i.name)} x${i.qty} @ ${formatNum(i.price)}</span><span>${formatNum(i.price * i.qty)}</span></div>`
+      ).join('');
+      let orderInfo = '';
+      if (tx.orderType === 'dinein' && tx.tableNumber) {
+        orderInfo = `<div class="hd-row"><span>Meja</span><span>${escapeHtml(tx.tableNumber)}</span></div>`;
+      } else if (tx.orderType === 'delivery') {
+        orderInfo = `
+          <div class="hd-row"><span>Nama</span><span>${escapeHtml(tx.customerName || '-')}</span></div>
+          <div class="hd-row"><span>HP</span><span>${escapeHtml(tx.customerPhone || '-')}</span></div>
+          <div class="hd-row"><span>Alamat</span><span style="text-align:right;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(tx.customerAddress || '-')}</span></div>
+        `;
+      }
+      const cashInfo = tx.paymentMethod === 'cash'
+        ? `<div class="hd-row"><span>Tunai</span><span>${formatNum(tx.cash || 0)}</span></div>
+           <div class="hd-row"><span>Kembali</span><span>${formatNum(tx.change || 0)}</span></div>`
+        : '';
+      return `
+        <div class="history-item" data-id="${escapeHtml(tx.invoice)}">
+          <div class="history-queue">#${pad3(tx.queueNumber || 0)}</div>
+          <div class="history-info">
+            <div class="hi-title">
+              ${escapeHtml(tx.invoice || '-')}
+              <span class="badge-type ${tx.orderType || 'dinein'}">${escapeHtml(ot.short)}</span>
+            </div>
+            <div class="hi-meta">
+              <span>🕐 ${timeStr}</span>
+              <span class="badge-pay ${payClass}">${payLabel}</span>
+            </div>
+            <div class="hi-meta" style="margin-top:4px">
+              <span style="color:var(--text-2)">${itemsSummary || '-'}</span>
+            </div>
+            <div class="history-detail">
+              <div class="hd-sec-title">Detail Pesanan</div>
+              ${itemsDetail}
+              <div class="hd-row total"><span>TOTAL</span><span>${formatNum(tx.total || 0)}</span></div>
+              <div class="hd-sec">
+                <div class="hd-sec-title">Info</div>
+                <div class="hd-row"><span>Tipe</span><span>${escapeHtml(ot.label)}</span></div>
+                ${orderInfo}
+                ${cashInfo}
+              </div>
+            </div>
+          </div>
+          <div class="history-total">${formatNum(tx.total || 0)}</div>
+        </div>
+      `;
+    }).join('');
+    bindRipples(el.historyList);
+  }
+
+  function renderHistory() {
+    renderHistoryFilters();
+    const targetDate = getHistoryDate(state.historyFilter);
+    const key = dateKey(targetDate);
+    const list = getHistoryByDateKey(key);
+    el.historyDateLabel.textContent = `📅 ${formatDateLong(targetDate)}`;
+    renderHistorySummary(list);
+    renderHistoryList(list);
+  }
+
+  function openHistoryModal() {
+    renderHistory();
+    el.historyModal.classList.add('show');
+    el.historyModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeHistoryModal() {
+    el.historyModal.classList.remove('show');
+    el.historyModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  /* ===================== 10. TOAST ===================== */
+  const TOAST_ICONS = {
+    success: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+    error: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>',
+    warning: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>',
+    info: '<svg class="icon t-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>'
+  };
+  function toast(message, type = 'info', duration = 3200) {
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `${TOAST_ICONS[type] || TOAST_ICONS.info}<span class="t-msg">${escapeHtml(message)}</span>`;
+    el.toastWrap.appendChild(t);
+    setTimeout(() => { t.classList.add('out'); t.addEventListener('animationend', () => t.remove(), { once: true }); }, duration);
+  }
+
+  /* ===================== 11. RIPPLE ===================== */
+  function attachRipple(node) {
+    if (!node || node.dataset.ripple === '1') return;
+    node.dataset.ripple = '1';
+    node.addEventListener('pointerdown', (e) => {
+      if (REDUCED) return;
+      const rect = node.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const span = document.createElement('span');
+      span.className = 'ripple';
+      span.style.width = span.style.height = size + 'px';
+      span.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      span.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      node.appendChild(span);
+      span.addEventListener('animationend', () => span.remove(), { once: true });
+    });
+  }
+  function bindRipples(root = document) {
+    $$('.btn, .chip, .pay-method, .qty-btn, .icon-btn, .btn-add, .quick-cash button, .method-option, .order-type-chip, .customer-action-btn, .customer-suggestion button, .history-filter-chip', root).forEach(attachRipple);
+  }
+
+  /* ===================== 12. RENDER MENU ===================== */
+  function renderChips() {
+    el.chips.innerHTML = CATEGORIES.map(c => `
+      <button type="button" class="chip ${state.filter === c.key ? 'active' : ''}" data-cat="${c.key}" role="tab" aria-selected="${state.filter === c.key}">${escapeHtml(c.label)}</button>
+    `).join('');
+  }
+
+  function renderMenu() {
+    const data = state.filter === 'all' ? MENU : MENU.filter(m => m.kategori === state.filter);
+    el.menuGrid.innerHTML = data.map((m, i) => `
+      <article class="menu-card" role="listitem" tabindex="0" data-id="${m.id}" style="--delay:${Math.min(i * 35, 400)}ms" aria-label="${escapeHtml(m.nama)}, ${formatRp(m.harga)}">
+        ${m.tag ? `<span class="card-tag">${escapeHtml(m.tag)}</span>` : ''}
+        <span class="qty-badge" data-badge="${m.id}">0</span>
+        <div class="card-emoji" aria-hidden="true">${m.emoji}</div>
+        <h3>${escapeHtml(m.nama)}</h3>
+        <div class="price">${formatRp(m.harga)}</div>
+        <button type="button" class="btn-add" data-add="${m.id}">
+          <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Tambah
+        </button>
+      </article>
+    `).join('');
+    bindRipples(el.menuGrid);
+    updateBadges();
+  }
+
+  /* ===================== 13. CART ===================== */
+  const cartTotal = () => state.cart.reduce((s, i) => s + i.harga * i.qty, 0);
+  const cartQtyTot = () => state.cart.reduce((s, i) => s + i.qty, 0);
+  const findCart = (id) => state.cart.find(c => c.id === id);
+
+  function addToCart(id) {
+    const menu = MENU.find(m => m.id === id); if (!menu) return;
+    const item = findCart(id);
+    if (item) {
+      if (item.qty >= MAX_QTY) { toast('Batas maksimum tercapai', 'warning'); return; }
+      item.qty += 1;
+    } else {
+      state.cart.push({ id, nama: menu.nama, harga: menu.harga, qty: 1 });
+    }
+    renderCart(); updateBadges(); bounceBadge(id);
+  }
+
+  function decreaseQty(id) {
+    const item = findCart(id); if (!item) return;
+    if (item.qty > 1) item.qty -= 1;
+    else state.cart = state.cart.filter(c => c.id !== id);
+    renderCart(); updateBadges();
+  }
+
+  function updateBadges() {
+    MENU.forEach(m => {
+      const badge = el.menuGrid.querySelector(`[data-badge="${m.id}"]`); if (!badge) return;
+      const item = findCart(m.id);
+      const q = item ? item.qty : 0;
+      badge.textContent = q;
+      badge.classList.toggle('show', q > 0);
+    });
+  }
+
+  function bounceBadge(id) {
+    const badge = el.menuGrid.querySelector(`[data-badge="${id}"]`);
+    if (badge && !REDUCED) { badge.classList.remove('bounce'); void badge.offsetWidth; badge.classList.add('bounce'); }
+    if (!REDUCED) { el.cartCount.classList.remove('bounce'); void el.cartCount.offsetWidth; el.cartCount.classList.add('bounce'); }
+  }
+
+  function renderCart() {
+    if (state.cart.length === 0) {
+      el.cartBody.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon"><svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div><p>Belum ada pesanan</p><small>Pilih sego sambel favoritmu dulu 🍚</small></div>`;
+      el.cartCount.textContent = '0 item';
+      el.totalAmount.textContent = 'Rp 0';
+      el.btnPay.disabled = true;
+      return;
+    }
+    el.cartBody.innerHTML = state.cart.map(item => `
+      <div class="cart-item" data-row="${item.id}">
+        <div class="ci-info">
+          <div class="ci-name">${escapeHtml(item.nama)}</div>
+          <div class="ci-price">${formatRp(item.harga)}</div>
+        </div>
+        <div class="qty-ctrl">
+          <button type="button" class="qty-btn minus" data-act="minus" data-id="${item.id}" aria-label="Kurangi">
+            <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </button>
+          <span class="qty-val">${item.qty}</span>
+          <button type="button" class="qty-btn plus" data-act="plus" data-id="${item.id}" aria-label="Tambah">
+            <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </button>
+        </div>
+        <div class="ci-sub">${formatRp(item.harga * item.qty)}</div>
+      </div>
+    `).join('');
+    bindRipples(el.cartBody);
+    el.cartCount.textContent = `${cartQtyTot()} item`;
+    el.totalAmount.textContent = formatRp(cartTotal());
+    el.btnPay.disabled = false;
+  }
+
+  /* ===================== 14. RECEIPT PREVIEW ===================== */
+  function buildReceiptHTML() {
+    const total = cartTotal();
+    const rows = state.cart.map(i => `<div class="r-row"><span>${escapeHtml(i.nama)} x${i.qty}</span><span>${(i.harga * i.qty).toLocaleString('id-ID')}</span></div>`).join('');
+    const cash = state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || '0', 10) : 0;
+    const change = state.payment === 'cash' ? cash - total : 0;
+    const ot = ORDER_TYPES[state.orderType] || ORDER_TYPES.dinein;
+    let orderInfo = '';
+    if (state.orderType === 'dinein' && state.tableNumber) {
+      orderInfo = `<div class="r-row r-meta"><span>Meja</span><span>${escapeHtml(state.tableNumber)}</span></div>`;
+    } else if (state.orderType === 'delivery') {
+      const nm = state.customerName || '-';
+      const ph = state.customerPhone || '-';
+      const ad = state.customerAddress || '-';
+      orderInfo = `
+        <div class="r-row r-meta"><span>Nama</span><span>${escapeHtml(nm)}</span></div>
+        <div class="r-row r-meta"><span>HP</span><span>${escapeHtml(ph)}</span></div>
+        <div class="r-row r-meta"><span>Alamat</span><span style="text-align:right;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(ad)}</span></div>
+      `;
+    }
+    const nextQueue = state.queueNumber + 1;
+    return `
+      <div class="r-center r-bold">${escapeHtml(STORE.name)}</div>
+      <div class="r-center r-tagline">${escapeHtml(STORE.subtitle)}</div>
+      <div class="r-center r-meta">${escapeHtml(STORE.address)}</div>
+      <div class="r-center r-meta">Telp: ${escapeHtml(STORE.phone)}</div>
+      <div class="r-queue">ANTRIAN #${pad3(nextQueue)}</div>
+      <div class="r-row r-meta"><span>No:</span><span>${escapeHtml(state.invoice || '-')}</span></div>
+      <div class="r-row r-meta"><span>Tanggal:</span><span>${formatDateTime()}</span></div>
+      <div class="r-row r-meta"><span>Tipe:</span><span>${ot.label}</span></div>
+      ${orderInfo}
+      <div class="r-row r-meta"><span>Metode:</span><span>${state.payment === 'cash' ? 'TUNAI' : 'QRIS'}</span></div>
+      <div class="r-line"></div>
+      ${rows}
+      <div class="r-total"><span>TOTAL</span><span>${total.toLocaleString('id-ID')}</span></div>
+      ${state.payment === 'cash' && cash > 0 ? `<div class="r-row r-meta" style="margin-top:6px"><span>Tunai</span><span>${cash.toLocaleString('id-ID')}</span></div><div class="r-row r-meta"><span>Kembali</span><span>${change.toLocaleString('id-ID')}</span></div>` : ''}
+    `;
+  }
+  const refreshReceipt = () => { el.receipt.innerHTML = buildReceiptHTML(); };
+
+  /* ===================== 15. ORDER TYPE UI ===================== */
+  function updateOrderTypeUI() {
+    $$('.order-type-chip', el.orderTypeChips).forEach(chip => {
+      const isActive = chip.dataset.ot === state.orderType;
+      chip.classList.toggle('active', isActive);
+      chip.setAttribute('aria-checked', String(isActive));
+    });
+    el.detailDineIn.classList.toggle('hidden', state.orderType !== 'dinein');
+    el.detailDelivery.classList.toggle('hidden', state.orderType !== 'delivery');
+    el.inputTable.classList.remove('error');
+    el.inputCustName.classList.remove('error');
+    el.inputCustPhone.classList.remove('error');
+    el.inputCustAddress.classList.remove('error');
+    refreshReceipt();
+    updateConfirmButtonState();
+  }
+
+  function renderCustomerSuggestions() {
+    const q = el.inputCustName.value.trim();
+    const list = searchCustomers(q, 5);
+    if (list.length === 0) { el.custSuggestName.innerHTML = ''; return; }
+    el.custSuggestName.innerHTML = list.map(c =>
+      `<button type="button" data-cust-phone="${escapeHtml(c.phone)}" title="${escapeHtml(c.address || '')}">${escapeHtml(c.name || c.phone)}</button>`
+    ).join('');
+    bindRipples(el.custSuggestName);
+  }
+
+  function fillCustomerByPhone(phone) {
+    const c = findCustomerByPhone(phone);
+    if (!c) return;
+    el.inputCustName.value = c.name || '';
+    el.inputCustPhone.value = c.phone || '';
+    el.inputCustAddress.value = c.address || '';
+  }
+
+  /* ===================== 16. MODAL PEMBAYARAN ===================== */
+  function openModal() {
+    if (state.cart.length === 0) { toast('Keranjang masih kosong', 'warning'); return; }
+    state.invoice = makeInvoice();
+    state.payment = 'cash';
+    state.orderType = 'dinein';
+    state.tableNumber = '';
+    state.customerName = '';
+    state.customerPhone = '';
+    state.customerAddress = '';
+    el.inputCash.value = '';
+    el.inputTable.value = '';
+    el.inputCustName.value = '';
+    el.inputCustPhone.value = '';
+    el.inputCustAddress.value = '';
+    el.custSuggestName.innerHTML = '';
+    refreshReceipt(); updatePaymentUI(); updateChange(); renderQuickCash();
+    updateOrderTypeUI();
+    el.modal.classList.add('show');
+    el.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => { try { el.inputTable.focus(); } catch(_) {} }, 220);
+  }
+  function closeModal() {
+    if (state.processing) return;
+    el.modal.classList.remove('show');
+    el.modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    state.invoice = null;
+  }
+  function updatePaymentUI() {
+    const isCash = state.payment === 'cash';
+    el.btnCash.classList.toggle('active', isCash);
+    el.btnQris.classList.toggle('active', !isCash);
+    el.btnCash.setAttribute('aria-checked', String(isCash));
+    el.btnQris.setAttribute('aria-checked', String(!isCash));
+    el.cashGroup.style.display = isCash ? 'block' : 'none';
+    refreshReceipt();
+    updateConfirmButtonState();
+  }
+  function updateChange() {
+    const total = cartTotal();
+    if (state.payment === 'qris') { el.changeBox.style.display = 'none'; updateConfirmButtonState(); refreshReceipt(); return; }
+    const raw = el.inputCash.value.replace(/[^\d]/g, '');
+    const cash = parseInt(raw || '0', 10);
+    if (!cash) { el.changeBox.style.display = 'none'; updateConfirmButtonState(); refreshReceipt(); return; }
+    const change = cash - total;
+    el.changeBox.style.display = 'flex';
+    el.changeBox.classList.toggle('error', change < 0);
+    el.changeLabel.textContent = change < 0 ? 'Kurang' : 'Kembalian';
+    el.changeVal.textContent = formatRp(Math.abs(change));
+    updateConfirmButtonState();
+    refreshReceipt();
+  }
+  function updateConfirmButtonState() {
+    if (state.processing) { el.btnConfirm.disabled = true; return; }
+    const total = cartTotal();
+    let ok = true;
+    if (state.payment === 'cash') {
+      const cash = parseInt(el.inputCash.value.replace(/[^\d]/g, '') || '0', 10);
+      ok = ok && cash >= total && total > 0;
+    }
+    if (state.orderType === 'dinein') {
+      ok = ok && el.inputTable.value.trim().length > 0;
+    } else if (state.orderType === 'delivery') {
+      ok = ok && el.inputCustName.value.trim().length > 0
+              && el.inputCustPhone.value.trim().length > 0
+              && el.inputCustAddress.value.trim().length > 0;
+    }
+    el.btnConfirm.disabled = !ok;
+  }
+  function renderQuickCash() {
+    const total = cartTotal();
+    const base = [ total, Math.ceil(total/5000)*5000, Math.ceil(total/10000)*10000, Math.ceil(total/50000)*50000, Math.ceil(total/100000)*100000 ];
+    const uniq = Array.from(new Set(base.filter(v => v >= total))).slice(0, 5);
+    el.quickCash.innerHTML = uniq.map(v => `<button type="button" data-cash="${v}">${formatRp(v)}</button>`).join('');
+    bindRipples(el.quickCash);
+  }
+
+  /* ===================== 17. MODAL METODE KONEKSI ===================== */
+  function openMethodModal() {
+    el.optBluetooth.disabled = false;
+    el.optUSB.disabled = false;
+    el.optSerial.disabled = false;
+    const btOk = hasBluetoothSupport();
+    const usbOk = hasUSBSupport();
+    const serialOk = hasSerialSupport();
+    if (state.isMobile) {
+      el.methodOptions.appendChild(el.optBluetooth);
+    } else {
+      el.methodOptions.appendChild(el.optUSB);
+      el.methodOptions.appendChild(el.optSerial);
+      el.methodOptions.appendChild(el.optBluetooth);
+    }
+    if (!btOk) el.optBluetooth.disabled = true;
+    if (!usbOk) el.optUSB.disabled = true;
+    if (!serialOk) el.optSerial.disabled = true;
+    let note = '';
+    if (state.isIOS) note = 'iOS tidak mendukung Web Bluetooth. Gunakan Laptop/PC atau dialog print.';
+    else if (state.isMobile && !btOk) note = 'Browser HP tidak mendukung Web Bluetooth. Gunakan Chrome Android terbaru.';
+    else if (!state.isMobile && !usbOk && !serialOk && !btOk) note = 'Browser tidak mendukung koneksi printer. Gunakan Chrome/Edge terbaru.';
+    else if (state.isMobile) note = 'Direkomendasikan: <strong>Bluetooth</strong>. Pastikan printer sudah dipairing di Pengaturan Bluetooth HP.';
+    else note = 'Direkomendasikan: <strong>USB</strong> untuk laptop. Bila printer terblokir driver, gunakan Serial.';
+    el.methodNoteText.innerHTML = note;
+    el.methodModal.classList.add('show');
+    el.methodModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMethodModal() {
+    el.methodModal.classList.remove('show');
+    el.methodModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  /* ===================== 18. MODAL PELANGGAN ===================== */
+  function openCustomerModal() {
+    renderCustomerList();
+    el.customerModal.classList.add('show');
+    el.customerModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCustomerModal() {
+    el.customerModal.classList.remove('show');
+    el.customerModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function renderCustomerList() {
+    if (state.customers.length === 0) {
+      el.customerList.innerHTML = `
+        <div class="customer-empty">
+          <div class="customer-empty-icon">
+            <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p>Belum ada pelanggan tersimpan</p>
+          <small>Pelanggan akan tersimpan otomatis saat Anda mengisi data delivery.</small>
+        </div>
+      `;
+      return;
+    }
+    el.customerList.innerHTML = state.customers.map(c => {
+      const initial = (c.name || c.phone || '?').trim().charAt(0).toUpperCase();
+      const lastOrder = c.lastOrder ? new Date(c.lastOrder) : null;
+      const lastOrderStr = lastOrder && !isNaN(lastOrder)
+        ? `${pad2(lastOrder.getDate())}/${pad2(lastOrder.getMonth()+1)}/${lastOrder.getFullYear()}`
+        : '';
+      return `
+        <div class="customer-item" data-phone="${escapeHtml(c.phone)}">
+          <div class="customer-avatar">${escapeHtml(initial)}</div>
+          <div class="customer-info">
+            <div class="cust-name">${escapeHtml(c.name || '(Tanpa Nama)')}</div>
+            <div class="cust-phone">${escapeHtml(c.phone)}${lastOrderStr ? ' · Terakhir: ' + lastOrderStr : ''}</div>
+            ${c.address ? `<div class="cust-address" title="${escapeHtml(c.address)}">${escapeHtml(c.address)}</div>` : ''}
+          </div>
+          <div class="customer-actions">
+            <button type="button" class="customer-action-btn use" data-action="use" data-phone="${escapeHtml(c.phone)}" title="Gunakan data">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </button>
+            <button type="button" class="customer-action-btn del" data-action="del" data-phone="${escapeHtml(c.phone)}" title="Hapus">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    bindRipples(el.customerList);
+  }
+
+  /* ===================== 19. ESC/POS ===================== */
+  function canvasToEscPosRaster(canvas) {
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    const imgData = ctx.getImageData(0, 0, width, height);
+    const pixels = imgData.data;
+    const widthBytes = Math.ceil(width / 8);
+    const rasterData = new Uint8Array(widthBytes * height);
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const i = (y * width + x) * 4;
+        const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2], a = pixels[i + 3];
+        let luminance;
+        if (a < 128) luminance = 255;
+        else luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+        if (luminance < 128) {
+          const byteIndex = y * widthBytes + (x >> 3);
+          const bitIndex = 7 - (x & 7);
+          rasterData[byteIndex] |= (1 << bitIndex);
+        }
+      }
+    }
+    const xL = widthBytes & 0xFF, xH = (widthBytes >> 8) & 0xFF;
+    const yL = height & 0xFF, yH = (height >> 8) & 0xFF;
+    const header = Uint8Array.from([0x1D, 0x76, 0x30, 0x00, xL, xH, yL, yH]);
+    const result = new Uint8Array(header.length + rasterData.length);
+    result.set(header, 0);
+    result.set(rasterData, header.length);
+    return result;
+  }
+
+  async function loadQrisImageAsRaster() {
+    try {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      const loaded = new Promise((resolve, reject) => {
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('Gagal memuat gambar QRIS'));
+      });
+      img.src = STORE.qrisImageUrl;
+      await loaded;
+      const maxWidth = 256;
+      const scale = Math.min(1, maxWidth / img.naturalWidth);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.naturalWidth * scale);
+      canvas.height = Math.round(img.naturalHeight * scale);
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      return canvasToEscPosRaster(canvas);
+    } catch (err) {
+      console.warn('[QRIS] Gagal memuat gambar:', err);
+      return null;
+    }
+  }
+
+  async function buildEscPosReceipt(data) {
+    const W = STORE.paperWidth;
+    const parts = [];
+    const push = (...b) => parts.push(Uint8Array.from(b));
+    const pushArr = (a) => parts.push(a);
+    const lf = () => push(0x0A);
+    const ascii = (s) => {
+      const clean = String(s).replace(/[^\x20-\x7E]/g, '?');
+      const a = new Uint8Array(clean.length);
+      for (let i = 0; i < clean.length; i++) a[i] = clean.charCodeAt(i) & 0x7F;
+      return a;
+    };
+    const line  = (s = '') => { pushArr(ascii(s)); lf(); };
+    const align = (n) => push(0x1B, 0x61, n);
+    const bold  = (on) => push(0x1B, 0x45, on ? 1 : 0);
+    const size  = (n) => push(0x1D, 0x21, n);
+    const feed  = (n) => push(0x1B, 0x64, n);
+    const init  = () => push(0x1B, 0x40);
+    const centerText = (s, width) => {
+      s = String(s);
+      if (s.length >= width) return s.slice(0, width);
+      const totalSpaces = width - s.length;
+      const leftSpaces = Math.floor(totalSpaces / 2);
+      const rightSpaces = totalSpaces - leftSpaces;
+      return ' '.repeat(leftSpaces) + s + ' '.repeat(rightSpaces);
+    };
+    const wrap = (s, width) => {
+      s = String(s);
+      const words = s.split(/\s+/);
+      const lines = [];
+      let cur = '';
+      for (const w of words) {
+        if (!w) continue;
+        if ((cur ? cur + ' ' + w : w).length <= width) cur = cur ? cur + ' ' + w : w;
+        else { if (cur) lines.push(cur); cur = w.length > width ? w.slice(0, width) : w; }
+      }
+      if (cur) lines.push(cur);
+      return lines.length ? lines : [''];
+    };
+    const lr = (l, r) => {
+      l = String(l); r = String(r);
+      if (l.length + r.length + 1 > W) {
+        const maxL = Math.max(0, W - r.length - 1);
+        l = l.length > maxL ? l.slice(0, maxL) : l;
+      }
+      const space = Math.max(1, W - l.length - r.length);
+      return l + ' '.repeat(space) + r;
+    };
+    const hr = () => line('-'.repeat(W));
+
+    init();
+    align(0);
+    size(0x11); bold(true);
+    line(centerText('WARUNG', 16));
+    line(centerText('CAKRAWALA', 16));
+    size(0x00); bold(false);
+    line(centerText(data.storeSubtitle, W));
+    line(centerText(data.storeAddress, W));
+    line(centerText('Telp: ' + data.storePhone, W));
+    hr();
+    size(0x11); bold(true);
+    line(centerText('ANTRIAN', 16));
+    line(centerText('#' + pad3(data.queueNumber), 16));
+    size(0x00); bold(false);
+    hr();
+    align(0);
+    line(lr('No.', data.invoice));
+    line(lr('Tgl', data.date));
+    line(lr('Kasir', data.cashier));
+    line(lr('Tipe', data.orderTypeLabel));
+    if (data.orderType === 'dinein' && data.tableNumber) {
+      line(lr('Meja', data.tableNumber));
+    } else if (data.orderType === 'delivery') {
+      if (data.customerName) wrap('Nama: ' + data.customerName, W).forEach(l => line(l));
+      if (data.customerPhone) line(lr('HP', data.customerPhone));
+      if (data.customerAddress) {
+        line('Alamat:');
+        wrap(data.customerAddress, W).forEach(l => line(' ' + l));
+      }
+    }
+    line(lr('Bayar', data.paymentMethod === 'cash' ? 'TUNAI' : 'QRIS'));
+    hr();
+    data.items.forEach(it => {
+      const sub = it.qty * it.price;
+      wrap(it.name, W).forEach(l => line(l));
+      line(lr(`  ${it.qty} x ${formatNum(it.price)}`, formatNum(sub)));
+    });
+    hr();
+    bold(true); line(lr('TOTAL', formatNum(data.total))); bold(false);
+    if (data.paymentMethod === 'cash') {
+      line(lr('TUNAI', formatNum(data.cash)));
+      line(lr('KEMBALI', formatNum(data.change)));
+    }
+    hr();
+    if (data.paymentMethod === 'qris') {
+      const qrisRaster = await loadQrisImageAsRaster();
+      if (qrisRaster) {
+        align(1);
+        pushArr(qrisRaster);
+        lf();
+        align(0);
+      } else {
+        line(centerText('[Gagal memuat QRIS]', W));
+      }
+    }
+    align(0);
+    line(centerText(data.footer, W));
+    line(centerText('~ Terima Kasih ~', W));
+    line(centerText(data.tagline, W));
+    feed(4);
+
+    let total = 0; for (const p of parts) total += p.length;
+    const out = new Uint8Array(total);
+    let off = 0;
+    for (const p of parts) { out.set(p, off); off += p.length; }
+    return out;
+  }
+
+  /* ===================== 20. PRINTER — Bluetooth ===================== */
+  const PrinterBluetooth = {
+    device: null, characteristic: null, deviceName: '',
+    SERVICES: [
+      '000018f0-0000-1000-8000-00805f9b34fb',
+      '0000ff00-0000-1000-8000-00805f9b34fb',
+      '0000ffe0-0000-1000-8000-00805f9b34fb',
+      '0000fff0-0000-1000-8000-00805f9b34fb',
+      '0000ff10-0000-1000-8000-00805f9b34fb',
+      'e7810a71-73ae-499d-8c15-faa9aef0c3f2',
+      '49535343-fe7d-4ae5-8fa9-9fafd205e455',
+      '0000fee7-0000-1000-8000-00805f9b34fb'
+    ],
+    async connect() {
+      if (!hasBluetoothSupport()) throw new DOMException('Web Bluetooth tidak didukung di browser ini', 'NotSupportedError');
+      if (!isSecureContext()) throw new DOMException('Halaman tidak berjalan di konteks aman (HTTPS/localhost)', 'SecurityError');
+      let device;
+      try {
+        device = await navigator.bluetooth.requestDevice({
+          filters: [
+            ...this.SERVICES.map(s => ({ services: [s] })),
+            { namePrefix: 'Printer' }, { namePrefix: 'Thermal' }, { namePrefix: 'POS' },
+            { namePrefix: 'RPP' }, { namePrefix: 'PT-' }, { namePrefix: 'BlueTooth Printer' },
+            { namePrefix: 'BT' }, { namePrefix: 'MTP' }, { namePrefix: 'XP-' },
+            { namePrefix: 'GP-' }, { namePrefix: 'Gprinter' }
+          ],
+          optionalServices: this.SERVICES
+        });
+      } catch (err) {
+        if (err.name === 'NotFoundError') {
+          try { device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true, optionalServices: this.SERVICES }); }
+          catch (e2) { throw e2; }
+        } else throw err;
+      }
+      if (!device) throw new Error('Tidak ada perangkat Bluetooth yang dipilih');
+      let server;
+      try { server = await device.gatt.connect(); }
+      catch (err) { throw new Error('Gagal konek ke GATT server: ' + (err.message || 'unknown')); }
+      let characteristic = null;
+      let services = [];
+      try { services = await server.getPrimaryServices(); } catch (_) { services = []; }
+      for (const service of services) {
+        let chars = [];
+        try { chars = await service.getCharacteristics(); } catch (_) { continue; }
+        for (const ch of chars) {
+          const props = ch.properties || {};
+          if (props.write || props.writeWithoutResponse) { characteristic = ch; break; }
+        }
+        if (characteristic) break;
+      }
+      if (!characteristic) {
+        for (const svcUUID of this.SERVICES) {
+          try {
+            const svc = await server.getPrimaryService(svcUUID);
+            const chars = await svc.getCharacteristics();
+            for (const ch of chars) {
+              const props = ch.properties || {};
+              if (props.write || props.writeWithoutResponse) { characteristic = ch; break; }
+            }
+            if (characteristic) break;
+          } catch (_) {}
+        }
+      }
+      if (!characteristic) {
+        try { device.gatt.disconnect(); } catch (_) {}
+        throw new Error('Tidak menemukan characteristic untuk menulis data ke printer Bluetooth');
+      }
+      this.device = device;
+      this.characteristic = characteristic;
+      this.deviceName = device.name || 'Bluetooth Printer';
+      if (device && typeof device.addEventListener === 'function') {
+        try {
+          device.addEventListener('gattserverdisconnected', () => {
+            if (state.printerType === 'bluetooth') {
+              setPrinterConnected(false);
+              toast('Printer Bluetooth terputus', 'warning');
+            }
+          });
+        } catch (_) {}
+      }
+      return device;
+    },
+    async write(bytes) {
+      if (!this.characteristic) throw new Error('Printer Bluetooth belum terhubung');
+      const chunkSize = STORE.btChunkSize;
+      const delayMs = STORE.btChunkDelay;
+      const props = this.characteristic.properties || {};
+      const useNoResponse = !!props.writeWithoutResponse && typeof this.characteristic.writeValueWithoutResponse === 'function';
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const slice = bytes.slice(i, Math.min(i + chunkSize, bytes.length));
+        try {
+          if (useNoResponse) await this.characteristic.writeValueWithoutResponse(slice);
+          else await this.characteristic.writeValue(slice);
+        } catch (err) {
+          if (useNoResponse) {
+            try { await this.characteristic.writeValue(slice); }
+            catch (e2) { throw new Error('Gagal menulis ke printer: ' + (e2.message || 'unknown')); }
+          } else {
+            throw new Error('Gagal menulis ke printer: ' + (err.message || 'unknown'));
+          }
+        }
+        await sleep(delayMs);
+      }
+    },
+    async disconnect() {
+      try { if (this.device && this.device.gatt && this.device.gatt.connected) this.device.gatt.disconnect(); } catch (_) {}
+      this.device = null; this.characteristic = null; this.deviceName = '';
+    },
+    async tryReconnect() { return false; }
+  };
+
+  /* ===================== 21. PRINTER — WebUSB ===================== */
+  const PrinterUSB = {
+    device: null, endpoint: null, deviceName: '',
+    async connect() {
+      if (!hasUSBSupport()) throw new DOMException('WebUSB tidak didukung', 'NotSupportedError');
+      if (!isSecureContext()) throw new DOMException('Halaman tidak berjalan di konteks aman (HTTPS/localhost)', 'SecurityError');
+      let device;
+      try {
+        device = await navigator.usb.requestDevice({
+          filters: [{ classCode: 7 }, { classCode: 0xFF }, { classCode: 0x07, subclassCode: 1 }]
+        });
+      } catch (err) {
+        if (err.name === 'NotFoundError') device = await navigator.usb.requestDevice({ acceptAllDevices: true });
+        else throw err;
+      }
+      await device.open();
+      if (device.configuration === null) await device.selectConfiguration(1);
+      let iface = null;
+      for (const i of device.configuration.interfaces) {
+        for (const alt of i.alternates) {
+          const outEp = alt.endpoints.find(e => e.direction === 'out' && e.type === 'bulk');
+          if (outEp) { iface = { num: i.interfaceNumber, ep: outEp }; break; }
+        }
+        if (iface) break;
+      }
+      if (!iface) {
+        try { await device.close(); } catch (_) {}
+        throw new Error('Tidak ada bulk-OUT endpoint pada printer ini');
+      }
+      try { await device.claimInterface(iface.num); }
+      catch (err) {
+        try { await device.close(); } catch (_) {}
+        if (err.name === 'NetworkError' || String(err.message).includes('claim')) {
+          throw new Error('Interface printer sedang dipakai aplikasi lain (driver sistem). Gunakan mode Serial.');
+        }
+        throw err;
+      }
+      this.device = device;
+      this.endpoint = { number: iface.ep.endpointNumber };
+      this.deviceName = device.productName || `USB ${device.vendorId.toString(16)}:${device.productId.toString(16)}`;
+      if (device && typeof device.addEventListener === 'function') {
+        try {
+          device.addEventListener('disconnect', () => {
+            if (state.printerType === 'usb') {
+              setPrinterConnected(false);
+              toast('Printer USB terputus', 'warning');
+            }
+          });
+        } catch (_) {}
+      }
+      return device;
+    },
+    async write(bytes) {
+      if (!this.endpoint || !this.device) throw new Error('Printer USB belum terhubung');
+      const CHUNK = 64;
+      for (let i = 0; i < bytes.length; i += CHUNK) {
+        const slice = bytes.slice(i, Math.min(i + CHUNK, bytes.length));
+        const result = await this.device.transferOut(this.endpoint.number, slice);
+        if (result.status !== 'ok') throw new Error('USB transfer gagal: ' + result.status);
+        await sleep(3);
+      }
+    },
+    async disconnect() {
+      try { if (this.device) await this.device.close(); } catch (_) {}
+      this.device = null; this.endpoint = null; this.deviceName = '';
+    },
+    async tryReconnect() {
+      if (!hasUSBSupport() || !isSecureContext()) return false;
+      try {
+        const devices = await navigator.usb.getDevices();
+        for (const d of devices) {
+          try {
+            await d.open();
+            if (d.configuration === null) await d.selectConfiguration(1);
+            for (const i of d.configuration.interfaces) {
+              for (const alt of i.alternates) {
+                const outEp = alt.endpoints.find(e => e.direction === 'out' && e.type === 'bulk');
+                if (outEp) {
+                  try { await d.claimInterface(i.interfaceNumber); } catch (_) { await d.close(); continue; }
+                  this.device = d;
+                  this.endpoint = { number: outEp.endpointNumber };
+                  this.deviceName = d.productName || 'USB Printer';
+                  return true;
+                }
+              }
+            }
+          } catch (_) { try { await d.close(); } catch (__) {} }
+        }
+      } catch (_) {}
+      return false;
+    }
+  };
+
+  /* ===================== 22. PRINTER — Serial ===================== */
+  const PrinterSerial = {
+    port: null, writer: null, deviceName: '',
+    async connect() {
+      if (!hasSerialSupport()) throw new DOMException('Web Serial tidak didukung', 'NotSupportedError');
+      if (!isSecureContext()) throw new DOMException('Halaman tidak berjalan di konteks aman (HTTPS/localhost)', 'SecurityError');
+      const port = await navigator.serial.requestPort();
+      await port.open({ baudRate: STORE.serialBaudRate, dataBits: 8, stopBits: 1, parity: 'none', flowControl: 'none' });
+      this.port = port;
+      this.writer = port.writable.getWriter();
+      this.deviceName = 'Serial ' + STORE.serialBaudRate + ' baud';
+      return port;
+    },
+    async write(bytes) {
+      if (!this.writer) throw new Error('Printer Serial belum terhubung');
+      const CHUNK = 64;
+      for (let i = 0; i < bytes.length; i += CHUNK) {
+        const slice = bytes.slice(i, Math.min(i + CHUNK, bytes.length));
+        await this.writer.write(slice);
+        await sleep(6);
+      }
+      try { await this.writer.ready; } catch (_) {}
+    },
+    async disconnect() {
+      try { if (this.writer) { this.writer.releaseLock(); this.writer = null; } } catch (_) {}
+      try { if (this.port) await this.port.close(); } catch (_) {}
+      this.port = null; this.deviceName = '';
+    },
+    async tryReconnect() {
+      if (!hasSerialSupport() || !isSecureContext()) return false;
+      try {
+        const ports = await navigator.serial.getPorts();
+        if (ports.length === 0) return false;
+        const port = ports[0];
+        await port.open({ baudRate: STORE.serialBaudRate, dataBits: 8, stopBits: 1, parity: 'none', flowControl: 'none' });
+        this.port = port;
+        this.writer = port.writable.getWriter();
+        this.deviceName = 'Serial ' + STORE.serialBaudRate + ' baud';
+        return true;
+      } catch (_) { return false; }
+    }
+  };
+
+  /* ===================== 23. PRINTER UI ===================== */
+  function setPrinterConnected(connected, name, type) {
+    state.printerConnected = connected;
+    state.printerName = name || '';
+    state.printerType = connected ? (type || state.printerType) : null;
+    el.statusPill.classList.toggle('connected', connected && state.printerType !== 'bluetooth');
+    el.statusPill.classList.toggle('bt-connected', connected && state.printerType === 'bluetooth');
+    if (connected) {
+      const tag = state.printerType === 'usb' ? 'USB' : state.printerType === 'serial' ? 'Serial' : state.printerType === 'bluetooth' ? 'BT' : '';
+      el.statusText.textContent = `Printer: ${name || 'Terhubung'}${tag ? ' (' + tag + ')' : ''}`;
+    } else {
+      el.statusText.textContent = 'Printer: Terputus';
+    }
+    el.btnConnect.innerHTML = connected
+      ? '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="btn-connect-text">Terhubung</span>'
+      : '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8zM12 18v4"/></svg><span class="btn-connect-text">Hubungkan Printer</span>';
+    el.btnConnect.dataset.ripple = '0';
+    attachRipple(el.btnConnect);
+  }
+
+  async function connectPrinterMethod(method) {
+    closeMethodModal();
+    if (method === 'bluetooth' && state.isIOS) {
+      toast('iOS tidak mendukung Web Bluetooth. Gunakan Laptop/PC.', 'error', 6000);
+      return;
+    }
+    el.btnConnect.disabled = true;
+    el.btnConnect.innerHTML = '<span class="spinner"></span><span class="btn-connect-text">Menghubungkan…</span>';
+    try {
+      if (method === 'bluetooth') {
+        await PrinterBluetooth.connect();
+        setPrinterConnected(true, PrinterBluetooth.deviceName, 'bluetooth');
+        toast('Printer Bluetooth terhubung', 'success');
+      } else if (method === 'usb') {
+        await PrinterUSB.connect();
+        setPrinterConnected(true, PrinterUSB.deviceName, 'usb');
+        toast('Printer USB terhubung', 'success');
+      } else if (method === 'serial') {
+        await PrinterSerial.connect();
+        setPrinterConnected(true, PrinterSerial.deviceName, 'serial');
+        toast('Printer Serial terhubung', 'success');
+      } else throw new Error('Metode tidak dikenal');
+    } catch (err) {
+      console.warn('[Connect] gagal:', err);
+      let msg = 'Gagal terhubung ke printer';
+      if (err && err.name === 'NotFoundError') msg = 'Perangkat tidak dipilih atau tidak ditemukan.';
+      else if (err && err.name === 'SecurityError') msg = 'Akses ditolak: ' + (err.message || 'pastikan HTTPS dan izin Bluetooth diaktifkan.');
+      else if (err && err.message) msg = err.message;
+      toast(msg, 'error', 7000);
+      setPrinterConnected(false);
+    } finally {
+      el.btnConnect.disabled = false;
+      if (!state.printerConnected) {
+        el.btnConnect.innerHTML = '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8zM12 18v4"/></svg><span class="btn-connect-text">Hubungkan Printer</span>';
+        attachRipple(el.btnConnect);
+      }
+    }
+  }
+
+  async function printToConnectedPrinter() {
+    const total = cartTotal();
+    const cash = state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || total, 10) : total;
+    const change = state.payment === 'cash' ? cash - total : 0;
+    const bytes = await buildEscPosReceipt({
+      storeName: STORE.name, storeSubtitle: STORE.subtitle,
+      storeAddress: STORE.address, storePhone: STORE.phone,
+      invoice: state.invoice, date: formatDateTime(), cashier: 'Kasir Cakrawala',
+      paymentMethod: state.payment, orderType: state.orderType,
+      orderTypeLabel: (ORDER_TYPES[state.orderType] || ORDER_TYPES.dinein).label,
+      tableNumber: state.tableNumber, customerName: state.customerName,
+      customerPhone: state.customerPhone, customerAddress: state.customerAddress,
+      queueNumber: state.queueNumber,
+      items: state.cart.map(i => ({ name: i.nama, qty: i.qty, price: i.harga })),
+      total, cash, change, footer: STORE.footer, tagline: STORE.tagline
+    });
+    if (state.printerType === 'bluetooth') await PrinterBluetooth.write(bytes);
+    else if (state.printerType === 'usb') await PrinterUSB.write(bytes);
+    else if (state.printerType === 'serial') await PrinterSerial.write(bytes);
+    else throw new Error('Tipe printer tidak dikenal');
+  }
+
+  /* ===================== 24. FALLBACK PRINT ===================== */
+  function printFallback() {
+    const total = cartTotal();
+    const cash = state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || total, 10) : total;
+    const change = state.payment === 'cash' ? cash - total : 0;
+    const ot = ORDER_TYPES[state.orderType] || ORDER_TYPES.dinein;
+    const rows = state.cart.map(i => `
+      <tr>
+        <td>${escapeHtml(i.nama)}<br><small>&nbsp;&nbsp;${i.qty} x ${formatNum(i.harga)}</small></td>
+        <td style="text-align:right;vertical-align:top">${formatNum(i.harga * i.qty)}</td>
+      </tr>`).join('');
+    let orderInfoHtml = '';
+    if (state.orderType === 'dinein' && state.tableNumber) {
+      orderInfoHtml = `<div class="row"><span>Meja</span><span>${escapeHtml(state.tableNumber)}</span></div>`;
+    } else if (state.orderType === 'delivery') {
+      orderInfoHtml = `
+        <div class="row"><span>Nama</span><span>${escapeHtml(state.customerName || '-')}</span></div>
+        <div class="row"><span>HP</span><span>${escapeHtml(state.customerPhone || '-')}</span></div>
+        <div class="row"><span>Alamat</span><span style="text-align:right;max-width:60%">${escapeHtml(state.customerAddress || '-')}</span></div>
+      `;
+    }
+    const qrisHtml = state.payment === 'qris'
+      ? `<div style="text-align:center;margin:10px 0"><img src="${escapeHtml(STORE.qrisImageUrl)}" alt="QRIS" style="width:150px;height:150px;object-fit:contain;" crossorigin="anonymous"></div>`
+      : '';
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Struk ${escapeHtml(state.invoice)}</title>
+    <style>
+      * { margin:0; padding:0; box-sizing:border-box; }
+      body { font-family:'Courier New',monospace; font-size:12px; width:58mm; margin:0 auto; padding:6px; color:#000; }
+      .c { text-align:center; } .b { font-weight:700; }
+      .tag { font-size:10px; font-style:italic; color:#A0522D; margin-top:2px; }
+      .line { border-top:1px dashed #000; margin:6px 0; }
+      .queue { text-align:center; font-weight:800; font-size:22px; letter-spacing:3px; padding:4px 0; border-top:1px dashed #000; border-bottom:1px dashed #000; margin:6px 0; }
+      table { width:100%; border-collapse:collapse; }
+      td { padding:1px 0; font-size:11px; }
+      .tot { display:flex; justify-content:space-between; font-weight:700; font-size:13px; border-top:1px solid #000; margin-top:6px; padding-top:6px; }
+      .row { display:flex; justify-content:space-between; font-size:11px; }
+    </style></head><body>
+      <div class="c b">${escapeHtml(STORE.name)}</div>
+      <div class="c tag">${escapeHtml(STORE.subtitle)}</div>
+      <div class="c">${escapeHtml(STORE.address)}</div>
+      <div class="c">Telp: ${escapeHtml(STORE.phone)}</div>
+      <div class="queue">ANTRIAN #${pad3(state.queueNumber)}</div>
+      <div class="row"><span>No.</span><span>${escapeHtml(state.invoice)}</span></div>
+      <div class="row"><span>Tgl</span><span>${formatDateTime()}</span></div>
+      <div class="row"><span>Kasir</span><span>Kasir Cakrawala</span></div>
+      <div class="row"><span>Tipe</span><span>${ot.label}</span></div>
+      ${orderInfoHtml}
+      <div class="row"><span>Bayar</span><span>${state.payment === 'cash' ? 'TUNAI' : 'QRIS'}</span></div>
+      <div class="line"></div>
+      <table>${rows}</table>
+      <div class="line"></div>
+      <div class="tot"><span>TOTAL</span><span>${formatNum(total)}</span></div>
+      ${state.payment === 'cash' ? `
+        <div class="row"><span>Tunai</span><span>${formatNum(cash)}</span></div>
+        <div class="row"><span>Kembali</span><span>${formatNum(change)}</span></div>
+      ` : ''}
+      ${qrisHtml}
+      <div class="line"></div>
+      <div class="c">${escapeHtml(STORE.footer)}</div>
+      <div class="c">~ Terima Kasih ~</div>
+      <div class="c tag">${escapeHtml(STORE.tagline)}</div>
+    </body></html>`;
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('aria-hidden', 'true');
+    iframe.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0;pointer-events:none;';
+    document.body.appendChild(iframe);
+    const doc = iframe.contentWindow.document;
+    doc.open(); doc.write(html); doc.close();
+    const cleanup = () => { setTimeout(() => { try { iframe.remove(); } catch (_) {} }, 500); };
+    const run = () => {
+      try { iframe.contentWindow.focus(); iframe.contentWindow.print(); }
+      catch (e) { console.warn('[Print] fallback error:', e); toast('Gagal membuka dialog print', 'error'); }
+      try { iframe.contentWindow.addEventListener('afterprint', cleanup, { once: true }); } catch (_) {}
+      setTimeout(cleanup, 60000);
+    };
+    if (iframe.contentWindow.document.readyState === 'complete') setTimeout(run, 120);
+    else iframe.addEventListener('load', () => setTimeout(run, 120), { once: true });
+  }
+
+  /* ===================== 25. CONFIRM PAYMENT ===================== */
+  async function confirmPayment() {
+    if (state.processing || state.cart.length === 0) return;
+
+    if (state.orderType === 'dinein') {
+      const table = el.inputTable.value.trim();
+      if (!table) {
+        el.inputTable.classList.add('error');
+        toast('Nomor meja wajib diisi untuk Dine In', 'error');
+        el.inputTable.focus();
+        return;
+      }
+      state.tableNumber = table;
+    } else if (state.orderType === 'delivery') {
+      const name = el.inputCustName.value.trim();
+      const phone = el.inputCustPhone.value.trim();
+      const address = el.inputCustAddress.value.trim();
+      let errorMsg = '';
+      if (!name) { el.inputCustName.classList.add('error'); errorMsg = 'Nama pelanggan wajib diisi'; }
+      else if (!phone) { el.inputCustPhone.classList.add('error'); errorMsg = 'No. HP wajib diisi'; }
+      else if (!address) { el.inputCustAddress.classList.add('error'); errorMsg = 'Alamat wajib diisi'; }
+      if (errorMsg) { toast(errorMsg, 'error'); return; }
+      state.customerName = name;
+      state.customerPhone = phone;
+      state.customerAddress = address;
+      saveCustomer({ name, phone, address });
+    } else {
+      state.tableNumber = '';
+      state.customerName = '';
+      state.customerPhone = '';
+      state.customerAddress = '';
+    }
+
+    const total = cartTotal();
+    if (state.payment === 'cash') {
+      const cash = parseInt(el.inputCash.value.replace(/[^\d]/g, '') || '0', 10);
+      if (cash < total) { toast('Uang kurang dari total', 'error'); return; }
+    }
+
+    const newQueue = getNextQueueNumber();
+    state.queueNumber = newQueue;
+
+    const txSnapshot = {
+      invoice: state.invoice,
+      timestamp: new Date().toISOString(),
+      dateKey: dateKey(new Date()),
+      queueNumber: newQueue,
+      orderType: state.orderType,
+      tableNumber: state.tableNumber,
+      customerName: state.customerName,
+      customerPhone: state.customerPhone,
+      customerAddress: state.customerAddress,
+      items: state.cart.map(i => ({ name: i.nama, qty: i.qty, price: i.harga })),
+      total: total,
+      paymentMethod: state.payment,
+      cash: state.payment === 'cash' ? parseInt(el.inputCash.value.replace(/[^\d]/g, '') || '0', 10) : 0,
+      change: state.payment === 'cash' ? (parseInt(el.inputCash.value.replace(/[^\d]/g, '') || '0', 10) - total) : 0
+    };
+
+    state.processing = true;
+    el.btnConfirm.disabled = true;
+    el.btnConfirm.innerHTML = '<span class="spinner"></span> Memproses…';
+
+    let printed = false;
+    let usedFallback = false;
+    try {
+      if (state.printerConnected) {
+        await printToConnectedPrinter();
+        printed = true;
+        toast('Struk berhasil dicetak. Antrian #' + pad3(newQueue), 'success');
+      } else {
+        toast('Printer tidak terhubung. Cetak via dialog browser.', 'warning', 4200);
+        printFallback();
+        printed = true;
+        usedFallback = true;
+      }
+    } catch (err) {
+      console.warn('[Print] error:', err);
+      toast('Gagal cetak: ' + (err.message || 'unknown').slice(0, 100), 'error', 5000);
+      printed = false;
+    } finally {
+      state.processing = false;
+      el.btnConfirm.disabled = false;
+      el.btnConfirm.innerHTML = `<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg> Cetak & Bayar`;
+    }
+
+    if (printed) {
+      saveTransaction(txSnapshot);
+      await sleep(usedFallback ? 600 : 900);
+      state.cart = [];
+      renderCart();
+      updateBadges();
+      closeModal();
+      toast('Pembayaran berhasil. Antrian #' + pad3(newQueue) + '. Matur nuwun! 🙏', 'success', 4500);
+    }
+  }
+
+  /* ===================== 26. EVENTS ===================== */
+  function bindEvents() {
+    el.menuGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('.menu-card'); if (!card) return;
+      addToCart(parseInt(card.dataset.id, 10));
+    });
+    el.menuGrid.addEventListener('keydown', (e) => {
+      const card = e.target.closest('.menu-card'); if (!card) return;
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); addToCart(parseInt(card.dataset.id, 10)); }
+    });
+    el.chips.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip'); if (!chip) return;
+      state.filter = chip.dataset.cat;
+      $$('.chip', el.chips).forEach(c => {
+        const active = c.dataset.cat === state.filter;
+        c.classList.toggle('active', active);
+        c.setAttribute('aria-selected', String(active));
+      });
+      renderMenu();
+    });
+    el.cartBody.addEventListener('click', (e) => {
+      const btn = e.target.closest('.qty-btn'); if (!btn) return;
+      const id = parseInt(btn.dataset.id, 10);
+      if (btn.dataset.act === 'plus') addToCart(id); else decreaseQty(id);
+    });
+    el.btnPay.addEventListener('click', openModal);
+    el.btnClose.addEventListener('click', closeModal);
+    el.btnCancel.addEventListener('click', closeModal);
+    el.modal.addEventListener('click', (e) => { if (e.target === el.modal) closeModal(); });
+    el.btnCash.addEventListener('click', () => { state.payment = 'cash'; updatePaymentUI(); updateChange(); });
+    el.btnQris.addEventListener('click', () => { state.payment = 'qris'; updatePaymentUI(); updateChange(); });
+
+    el.orderTypeChips.addEventListener('click', (e) => {
+      const chip = e.target.closest('.order-type-chip'); if (!chip) return;
+      state.orderType = chip.dataset.ot;
+      updateOrderTypeUI();
+      setTimeout(() => {
+        if (state.orderType === 'dinein') el.inputTable.focus();
+        else if (state.orderType === 'delivery') el.inputCustName.focus();
+      }, 100);
+    });
+    el.inputTable.addEventListener('input', () => { el.inputTable.classList.remove('error'); updateConfirmButtonState(); refreshReceipt(); });
+    el.inputCustName.addEventListener('input', () => {
+      el.inputCustName.classList.remove('error');
+      updateConfirmButtonState();
+      renderCustomerSuggestions();
+      refreshReceipt();
+    });
+    el.inputCustPhone.addEventListener('input', () => {
+      el.inputCustPhone.classList.remove('error');
+      const raw = el.inputCustPhone.value.replace(/[^\d+]/g, '');
+      el.inputCustPhone.value = raw;
+      updateConfirmButtonState();
+      refreshReceipt();
+      const found = findCustomerByPhone(raw);
+      if (found) {
+        if (!el.inputCustName.value.trim()) el.inputCustName.value = found.name || '';
+        if (!el.inputCustAddress.value.trim()) el.inputCustAddress.value = found.address || '';
+        refreshReceipt(); updateConfirmButtonState();
+      }
+    });
+    el.inputCustAddress.addEventListener('input', () => {
+      el.inputCustAddress.classList.remove('error');
+      updateConfirmButtonState();
+      refreshReceipt();
+    });
+    el.custSuggestName.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-cust-phone]'); if (!b) return;
+      fillCustomerByPhone(b.dataset.custPhone);
+      el.custSuggestName.innerHTML = '';
+      updateConfirmButtonState();
+      refreshReceipt();
+    });
+
+    const onCashInput = debounce(() => {
+      const raw = el.inputCash.value.replace(/[^\d]/g, '');
+      el.inputCash.value = raw ? parseInt(raw, 10).toLocaleString('id-ID') : '';
+      updateChange();
+    }, 140);
+    el.inputCash.addEventListener('input', onCashInput);
+    el.quickCash.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-cash]'); if (!b) return;
+      el.inputCash.value = parseInt(b.dataset.cash, 10).toLocaleString('id-ID');
+      updateChange();
+    });
+    el.inputCash.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !el.btnConfirm.disabled) confirmPayment();
+    });
+    el.btnConfirm.addEventListener('click', confirmPayment);
+
+    el.btnConnect.addEventListener('click', () => {
+      if (state.printerConnected) { toast('Printer sudah terhubung: ' + (state.printerName || ''), 'info'); return; }
+      openMethodModal();
+    });
+    el.btnMethodClose.addEventListener('click', closeMethodModal);
+    el.methodModal.addEventListener('click', (e) => { if (e.target === el.methodModal) closeMethodModal(); });
+    el.methodOptions.addEventListener('click', (e) => {
+      const opt = e.target.closest('.method-option'); if (!opt) return;
+      if (opt.disabled) return;
+      connectPrinterMethod(opt.dataset.method);
+    });
+
+    el.btnCustomers.addEventListener('click', openCustomerModal);
+    el.btnCustomerClose.addEventListener('click', closeCustomerModal);
+    el.customerModal.addEventListener('click', (e) => { if (e.target === el.customerModal) closeCustomerModal(); });
+    el.customerList.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]'); if (!btn) return;
+      const phone = btn.dataset.phone;
+      if (btn.dataset.action === 'use') {
+        if (el.modal.classList.contains('show')) {
+          state.orderType = 'delivery';
+          updateOrderTypeUI();
+          fillCustomerByPhone(phone);
+          updateConfirmButtonState();
+          refreshReceipt();
+          closeCustomerModal();
+          toast('Data pelanggan dimuat', 'success');
+        } else {
+          fillCustomerByPhone(phone);
+          closeCustomerModal();
+          toast('Data pelanggan siap. Klik Bayar untuk memesan.', 'info');
+        }
+      } else if (btn.dataset.action === 'del') {
+        deleteCustomer(phone);
+        renderCustomerList();
+        toast('Pelanggan dihapus', 'info');
+      }
+    });
+
+    el.btnHistory.addEventListener('click', openHistoryModal);
+    el.btnHistoryClose.addEventListener('click', closeHistoryModal);
+    el.historyModal.addEventListener('click', (e) => { if (e.target === el.historyModal) closeHistoryModal(); });
+    el.historyFilters.addEventListener('click', (e) => {
+      const chip = e.target.closest('.history-filter-chip'); if (!chip) return;
+      state.historyFilter = chip.dataset.hfilter;
+      renderHistory();
+    });
+    el.historyList.addEventListener('click', (e) => {
+      const item = e.target.closest('.history-item'); if (!item) return;
+      item.classList.toggle('expanded');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (el.modal.classList.contains('show')) closeModal();
+        else if (el.methodModal.classList.contains('show')) closeMethodModal();
+        else if (el.customerModal.classList.contains('show')) closeCustomerModal();
+        else if (el.historyModal.classList.contains('show')) closeHistoryModal();
+      }
+    });
+
+    const mo = new MutationObserver(() => bindRipples());
+    mo.observe(el.menuGrid, { childList: true });
+    mo.observe(el.cartBody, { childList: true });
+    mo.observe(el.quickCash, { childList: true });
+    mo.observe(el.methodOptions, { childList: true });
+    mo.observe(el.customerList, { childList: true });
+    mo.observe(el.custSuggestName, { childList: true });
+    mo.observe(el.historyFilters, { childList: true });
+    mo.observe(el.historyList, { childList: true });
+  }
+
+  /* ===================== 27. REVEAL ===================== */
+  function initReveal() {
+    if (!('IntersectionObserver' in window) || REDUCED) {
+      $$('.reveal').forEach(n => n.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    $$('.reveal').forEach(n => io.observe(n));
+  }
+
+  /* ===================== 28. AUTO-RECONNECT & INIT ===================== */
+  async function tryAutoReconnect() {
+    if (!isSecureContext()) return;
+    if (navigator.usb && isFeatureAllowedByPolicy('usb')) {
+      try {
+        const ok = await PrinterUSB.tryReconnect();
+        if (ok) {
+          setPrinterConnected(true, PrinterUSB.deviceName, 'usb');
+          toast('Printer USB terhubung kembali', 'success');
+          return;
+        }
+      } catch (_) {}
+    }
+    if (navigator.serial && isFeatureAllowedByPolicy('serial')) {
+      try {
+        const ok = await PrinterSerial.tryReconnect();
+        if (ok) {
+          setPrinterConnected(true, PrinterSerial.deviceName, 'serial');
+          toast('Printer Serial terhubung kembali', 'success');
+          return;
+        }
+      } catch (_) {}
+    }
+  }
+
+  function init() {
+    initQueue();
+    loadCustomers();
+    loadHistory();
+
+    renderChips();
+    renderMenu();
+    renderCart();
+    renderQuickCash();
+    try { updateOrderTypeUI(); } catch (_) {}
+    bindEvents();
+    initReveal();
+
+    const btOk = hasBluetoothSupport();
+    const usbOk = hasUSBSupport();
+    const serialOk = hasSerialSupport();
+
+    if (state.isIOS) {
+      toast('iOS tidak mendukung Web Bluetooth. Gunakan Laptop/PC atau dialog print.', 'warning', 8000);
+    } else if (state.isMobile && !btOk) {
+      toast('Browser HP tidak mendukung Web Bluetooth. Gunakan Chrome Android terbaru.', 'warning', 8000);
+    } else if (!state.isMobile && !usbOk && !serialOk && !btOk) {
+      toast('Browser tidak mendukung koneksi printer. Gunakan Chrome/Edge terbaru.', 'warning', 8000);
+    }
+    if (!isSecureContext() && (usbOk || serialOk || btOk)) {
+      toast('Koneksi printer butuh HTTPS atau localhost. Akses saat ini: ' + location.protocol, 'warning', 8000);
+    }
+
+    setTimeout(() => toast('Antrian direset. Transaksi berikutnya = #001', 'info', 3500), 1200);
+
+    // Init cloud sync
+    initCloudSync();
+
+    setTimeout(tryAutoReconnect, 800);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
+
+})();
+</script>
+</body>
+</html>
