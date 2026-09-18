@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+<meta name="theme-color" content="#0A0604">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="app-version" content="v3-pwd201110">
+<title>Login - Warung Cakrawala Sego Sambel</title>
+
+<!-- ⚠️ HAPUS 3 BARIS DI BAWAH INI SAAT PRODUKSI (hanya untuk development) -->
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;800&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   1. TOKENS & RESET
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --cw-primary:#E63946;
+  --cw-primary-600:#C42A38;
+  --cw-primary-700:#A01F2C;
+  --cw-accent:#F4A300;
+  --cw-accent-600:#D98F00;
+  --cw-purple:#A855F7;
+  --cw-purple-600:#8B33E0;
+  --cw-success:#22C55E;
+  --cw-danger:#EF4444;
+
+  --cw-bg:#0A0604;
+  --cw-bg-2:#120A06;
+  --cw-surface:rgba(255,240,225,.05);
+  --cw-surface-2:rgba(255,240,225,.085);
+  --cw-surface-3:rgba(255,240,225,.13);
+  --cw-border:rgba(255,220,180,.10);
+  --cw-border-strong:rgba(255,220,180,.20);
+
+  --cw-text:#FFF6EC;
+  --cw-text-2:#D4BFA9;
+  --cw-text-3:#A89078;
+
+  --cw-r-sm:8px;
+  --cw-r:20px;
+  --cw-r-lg:26px;
+  --cw-r-full:9999px;
+
+  --cw-ease:cubic-bezier(.4,0,.2,1);
+  --cw-spring:cubic-bezier(.34,1.56,.64,1);
+  --cw-out:cubic-bezier(.22,.8,.3,1);
+  --cw-t:220ms;
+
+  --cw-font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --cw-mono:'JetBrains Mono','Courier New',monospace;
+
+  --cw-shadow-card:
+    0 30px 80px rgba(0,0,0,.62),
+    0 0 120px rgba(230,57,70,.07),
+    inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html,body{height:100%}
+
+body{
+  font-family:var(--cw-font);
+  background:var(--cw-bg);
+  color:var(--cw-text);
+  min-height:100dvh;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--cw-accent);outline-offset:3px;border-radius:10px}
+
+/* ── Background layer ─────────────────────────────────────────── */
+.cw-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% -10%, #1B0F08 0%, transparent 60%),
+    radial-gradient(ellipse 100% 80% at 100% 110%, #170C06 0%, transparent 60%),
+    var(--cw-bg);
+}
+.cw-bg::after{
+  content:'';position:absolute;inset:0;opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+.cw-blob{
+  position:absolute;border-radius:50%;filter:blur(120px);
+  will-change:transform;opacity:.30;
+}
+.cw-blob--merah{
+  width:520px;height:520px;top:-200px;left:-180px;
+  background:radial-gradient(circle,#E63946 0%,transparent 70%);
+  animation:cw-float1 24s ease-in-out infinite;
+}
+.cw-blob--emas{
+  width:560px;height:560px;bottom:-250px;right:-220px;opacity:.26;
+  background:radial-gradient(circle,#F4A300 0%,transparent 70%);
+  animation:cw-float2 28s ease-in-out infinite;
+}
+@keyframes cw-float1{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(60px,44px,0) scale(1.08)}
+}
+@keyframes cw-float2{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(-54px,-34px,0) scale(1.06)}
+}
+
+/* ── Entrance stagger ────────────────────────────────────────── */
+@keyframes cw-rise{
+  from{opacity:0;transform:translate3d(0,18px,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+.cw-rise{
+  animation:cw-rise 680ms var(--cw-out) backwards;
+  animation-delay:var(--d,0ms);
+  will-change:transform,opacity;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. SHELL / SPLIT LAYOUT
+   ═══════════════════════════════════════════════════════════════════ */
+body.cw-boot .cw-login{display:none}
+
+.cw-shell{
+  position:relative;z-index:2;
+  min-height:100dvh;
+  display:grid;
+  grid-template-columns:1fr;
+}
+
+@media (min-width:960px){
+  .cw-shell{grid-template-columns:1.02fr .98fr}
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   3. HERO PANEL (kiri — desktop only)
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-hero{
+  display:none;
+  position:relative;
+  overflow:hidden;
+  padding:52px 56px 42px;
+  flex-direction:column;
+  justify-content:space-between;
+  border-right:1px solid var(--cw-border);
+}
+@media (min-width:960px){.cw-hero{display:flex}}
+
+.cw-hero__grid{
+  position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,220,180,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,220,180,.05) 1px,transparent 1px);
+  background-size:58px 58px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 45% 45%,#000 10%,transparent 78%);
+  mask-image:radial-gradient(ellipse 80% 70% at 45% 45%,#000 10%,transparent 78%);
+}
+.cw-hero__orb{
+  position:absolute;
+  width:640px;height:640px;
+  top:50%;left:38%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  pointer-events:none;
+  background:conic-gradient(from 200deg,
+    rgba(230,57,70,.16),rgba(244,163,0,.10),
+    rgba(230,57,70,0),rgba(168,85,247,.10),
+    rgba(230,57,70,.16));
+  filter:blur(90px);
+  animation:cw-orbSpin 40s linear infinite;
+  will-change:transform;
+}
+@keyframes cw-orbSpin{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+.cw-hero__ring{
+  position:absolute;
+  width:420px;height:420px;
+  top:50%;left:38%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px dashed rgba(255,220,180,.10);
+  pointer-events:none;
+  animation:cw-ringSpin 60s linear infinite;
+}
+.cw-hero__ring--b{
+  width:560px;height:560px;
+  border-style:solid;
+  border-color:rgba(255,220,180,.055);
+  animation-duration:90s;
+  animation-direction:reverse;
+}
+@keyframes cw-ringSpin{
+  from{transform:translate(-50%,-50%) rotate(0)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+.cw-hero__top,
+.cw-hero__body,
+.cw-hero__foot{position:relative;z-index:1}
+
+.cw-hero__top{display:flex;align-items:center;gap:13px}
+
+.cw-logo{position:relative;width:52px;height:52px;flex:0 0 auto}
+.cw-logo__ring{
+  position:absolute;inset:-5px;border-radius:20px;
+  background:conic-gradient(from 0turn,
+    rgba(244,163,0,.95),rgba(230,57,70,0),
+    rgba(230,57,70,.95),rgba(244,163,0,0),
+    rgba(244,163,0,.95));
+  filter:blur(6px);opacity:.85;
+  animation:cw-spin 8s linear infinite;
+  will-change:transform;
+}
+@keyframes cw-spin{to{transform:rotate(360deg)}}
+.cw-logo__core{
+  position:absolute;inset:0;
+  border-radius:18px 18px 18px 6px;
+  display:grid;place-items:center;
+  font-size:26px;line-height:1;
+  background:linear-gradient(135deg,var(--cw-primary),var(--cw-primary-700));
+  box-shadow:0 12px 30px rgba(230,57,70,.42),inset 0 1px 0 rgba(255,255,255,.22);
+}
+.cw-hero__wordmark{
+  font-size:17px;font-weight:900;letter-spacing:-.4px;color:var(--cw-text);
+}
+.cw-hero__wordmark small{
+  display:block;font-size:10.5px;font-weight:600;
+  letter-spacing:.6px;text-transform:uppercase;color:var(--cw-text-3);
+  margin-top:1px;
+}
+
+.cw-hero__body{max-width:520px}
+.cw-hero__eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 12px;margin-bottom:22px;
+  font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--cw-accent);
+  background:rgba(244,163,0,.10);
+  border:1px solid rgba(244,163,0,.28);
+  border-radius:var(--cw-r-full);
+}
+.cw-hero__eyebrow i{
+  width:6px;height:6px;border-radius:50%;background:var(--cw-accent);
+  box-shadow:0 0 10px var(--cw-accent);
+  animation:cw-blink 2.2s ease-in-out infinite;
+}
+@keyframes cw-blink{0%,100%{opacity:1}50%{opacity:.35}}
+
+.cw-hero__title{
+  font-size:clamp(34px,3.6vw,52px);
+  font-weight:900;line-height:1.04;letter-spacing:-2px;
+  margin-bottom:20px;
+}
+.cw-hero__title span{
+  background:linear-gradient(100deg,var(--cw-accent) 0%,var(--cw-primary) 55%,#FF8A5B 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.cw-hero__desc{
+  font-size:15px;line-height:1.65;color:var(--cw-text-2);
+  max-width:420px;margin-bottom:30px;
+}
+
+.cw-hero__features{
+  list-style:none;display:flex;flex-direction:column;gap:13px;
+}
+.cw-hero__features li{
+  display:flex;align-items:center;gap:12px;
+  font-size:13.5px;font-weight:600;color:var(--cw-text-2);
+}
+.cw-hero__features b{color:var(--cw-text);font-weight:800}
+.cw-feat{
+  width:32px;height:32px;flex:0 0 auto;
+  display:grid;place-items:center;
+  border-radius:11px 11px 11px 4px;
+  background:var(--cw-surface-2);
+  border:1px solid var(--cw-border);
+  font-size:15px;
+}
+
+.cw-hero__foot{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  font-size:11px;font-weight:600;color:var(--cw-text-3);
+  padding-top:22px;
+  border-top:1px dashed var(--cw-border);
+}
+.cw-hero__foot span:last-child{color:rgba(244,163,0,.75)}
+
+/* ═══════════════════════════════════════════════════════════════════
+   4. PANEL KANAN (form)
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-panel{
+  display:flex;align-items:center;justify-content:center;
+  padding:26px 18px calc(30px + env(safe-area-inset-bottom));
+  min-height:100dvh;
+}
+@media (min-width:960px){
+  .cw-panel{padding:48px 56px}
+}
+
+/* ── Card ────────────────────────────────────────────────────── */
+.cw-card{
+  position:relative;overflow:hidden;
+  width:100%;max-width:432px;
+  padding:32px 28px 22px;
+  border-radius:var(--cw-r-lg) var(--cw-r-lg) var(--cw-r-lg) var(--cw-r-sm);
+  background:linear-gradient(168deg,rgba(36,22,13,.90),rgba(12,7,4,.955));
+  border:1px solid var(--cw-border-strong);
+  backdrop-filter:blur(26px) saturate(165%);
+  -webkit-backdrop-filter:blur(26px) saturate(165%);
+  box-shadow:var(--cw-shadow-card);
+  transition:opacity 260ms var(--cw-ease),
+             transform 300ms var(--cw-ease),
+             filter 260ms var(--cw-ease);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .cw-card{background:linear-gradient(168deg,#22150C,#0C0704)}
+}
+
+.cw-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2.5px;
+  background:linear-gradient(90deg,transparent,var(--cw-accent),var(--cw-primary),transparent);
+  background-size:200% 100%;
+  animation:cw-shimmer 5s linear infinite;
+}
+@keyframes cw-shimmer{
+  0%{background-position:-200% 0}
+  100%{background-position:200% 0}
+}
+.cw-card--out{
+  opacity:0;
+  transform:perspective(1200px) scale(1.05) rotateX(8deg);
+  filter:blur(6px);
+  pointer-events:none;
+}
+
+/* ── Mini header (mobile only) ───────────────────────────────── */
+.cw-minihead{
+  display:none;align-items:center;justify-content:center;gap:10px;
+  margin-bottom:24px;
+  font-size:13px;font-weight:800;letter-spacing:-.2px;color:var(--cw-text-2);
+}
+.cw-minihead b{color:var(--cw-text)}
+.cw-minihead__logo{
+  width:34px;height:34px;flex:0 0 auto;
+  display:grid;place-items:center;font-size:17px;
+  border-radius:12px 12px 12px 4px;
+  background:linear-gradient(135deg,var(--cw-primary),var(--cw-primary-700));
+  box-shadow:0 8px 20px rgba(230,57,70,.4);
+}
+@media (max-width:959px){.cw-minihead{display:flex}}
+
+/* ── Head ────────────────────────────────────────────────────── */
+.cw-head{margin-bottom:24px;text-align:center}
+.cw-head h1{
+  font-size:26px;font-weight:900;letter-spacing:-.8px;
+  line-height:1.15;margin-bottom:7px;
+}
+.cw-head p{font-size:13px;font-weight:500;color:var(--cw-text-3)}
+
+/* ═══════════════════════════════════════════════════════════════════
+   5. ROLE SELECTOR
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-label{
+  font-size:10.5px;font-weight:800;color:var(--cw-text-3);
+  text-transform:uppercase;letter-spacing:.8px;
+  text-align:center;margin-bottom:11px;
+}
+
+.cw-roles{
+  display:grid;grid-template-columns:1fr 1fr;gap:11px;
+  margin-bottom:20px;
+}
+@media (max-width:359px){.cw-roles{grid-template-columns:1fr}}
+
+.cw-role{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:7px;
+  min-height:138px;
+  padding:18px 12px;
+  border-radius:var(--cw-r) var(--cw-r) var(--cw-r) var(--cw-r-sm);
+  background:var(--cw-surface);
+  border:1.5px solid var(--cw-border);
+  color:var(--cw-text-2);
+  cursor:pointer;
+  text-align:center;
+  -webkit-tap-highlight-color:transparent;
+  transition:
+    transform 400ms var(--cw-spring),
+    background 250ms var(--cw-ease),
+    border-color 250ms var(--cw-ease),
+    box-shadow 250ms var(--cw-ease),
+    opacity 250ms var(--cw-ease),
+    filter 250ms var(--cw-ease);
+  will-change:transform;
+}
+.cw-role:hover{
+  transform:translate3d(0,-4px,0) scale(1.02);
+  background:var(--cw-surface-2);
+  border-color:var(--cw-border-strong);
+}
+.cw-role:active{transform:translate3d(0,-2px,0) scale(.99)}
+
+.cw-role__glow{
+  position:absolute;inset:-40%;
+  border-radius:50%;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 400ms var(--cw-ease);
+  background:radial-gradient(circle at 50% 0%,var(--role-glow,rgba(230,57,70,.35)),transparent 65%);
+  filter:blur(26px);
+}
+.cw-role.is-active .cw-role__glow{opacity:1}
+
+.cw-role__emoji{
+  font-size:34px;line-height:1;
+  position:relative;z-index:1;
+  filter:grayscale(.55) opacity(.72);
+  transition:transform 420ms var(--cw-spring),filter 300ms var(--cw-ease);
+  will-change:transform;
+}
+.cw-role__title{
+  position:relative;z-index:1;
+  font-size:14.5px;font-weight:800;letter-spacing:-.2px;color:var(--cw-text);
+}
+.cw-role__sub{
+  position:relative;z-index:1;
+  font-size:10.5px;font-weight:600;line-height:1.35;color:var(--cw-text-3);
+  max-width:130px;
+}
+
+/* per-role accent */
+.cw-role[data-role="pembeli"]{--role-glow:rgba(230,57,70,.42)}
+.cw-role[data-role="kasir"]  {--role-glow:rgba(168,85,247,.45)}
+
+/* state: active */
+.cw-role.is-active{
+  transform:translate3d(0,-4px,0) scale(1.02);
+}
+.cw-role[data-role="pembeli"].is-active{
+  background:linear-gradient(150deg,rgba(230,57,70,.26),rgba(244,163,0,.10));
+  border-color:var(--cw-primary);
+  box-shadow:0 16px 38px rgba(230,57,70,.34),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.cw-role[data-role="kasir"].is-active{
+  background:linear-gradient(150deg,rgba(168,85,247,.28),rgba(168,85,247,.08));
+  border-color:var(--cw-purple);
+  box-shadow:0 16px 38px rgba(168,85,247,.36),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.cw-role.is-active .cw-role__emoji{filter:none;transform:scale(1.16)}
+.cw-role.is-active .cw-role__title{color:#fff}
+.cw-role.is-active .cw-role__sub{color:rgba(255,255,255,.74)}
+
+/* state: dimmed (saat ada yang terpilih) */
+.cw-roles.has-active .cw-role:not(.is-active){
+  opacity:.5;
+  filter:grayscale(.55);
+}
+.cw-roles.has-active .cw-role:not(.is-active):hover{
+  opacity:.82;
+  filter:grayscale(.15);
+}
+
+/* checkmark */
+.cw-role__check{
+  position:absolute;top:9px;right:9px;z-index:2;
+  width:22px;height:22px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--cw-primary);color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+  opacity:0;transform:scale(0) rotate(-45deg);
+  transition:opacity 200ms var(--cw-ease),
+             transform 420ms var(--cw-spring);
+}
+.cw-role[data-role="kasir"] .cw-role__check{background:var(--cw-purple)}
+.cw-role.is-active .cw-role__check{opacity:1;transform:scale(1) rotate(0)}
+
+/* ═══════════════════════════════════════════════════════════════════
+   6. PASSWORD
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-passbox{
+  max-height:0;opacity:0;overflow:hidden;margin-bottom:0;
+  transition:max-height 420ms var(--cw-out),
+             opacity 280ms var(--cw-ease),
+             margin 420ms var(--cw-out);
+}
+.cw-passbox.is-open{max-height:200px;opacity:1;margin-bottom:18px}
+
+.cw-passbox__label{
+  display:block;font-size:10.5px;font-weight:800;color:var(--cw-text-3);
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;
+}
+.cw-passwrap{position:relative}
+.cw-passwrap__lock{
+  position:absolute;left:15px;top:50%;transform:translateY(-50%);
+  color:var(--cw-text-3);pointer-events:none;
+  transition:color var(--cw-t) var(--cw-ease);
+}
+.cw-pass{
+  width:100%;
+  padding:15px 48px 15px 44px;
+  border-radius:15px;
+  background:var(--cw-surface-2);
+  border:1.5px solid var(--cw-border);
+  color:var(--cw-text);
+  font-family:var(--cw-font);
+  font-size:16px;font-weight:600;letter-spacing:.14em;
+  transition:border-color var(--cw-t) var(--cw-ease),
+             background-color var(--cw-t) var(--cw-ease),
+             box-shadow var(--cw-t) var(--cw-ease);
+}
+.cw-pass::placeholder{color:var(--cw-text-3);opacity:.5;letter-spacing:.22em}
+.cw-pass:focus{
+  outline:none;
+  border-color:var(--cw-purple);
+  background:var(--cw-surface-3);
+  box-shadow:0 0 0 4px rgba(168,85,247,.16);
+}
+.cw-passwrap:focus-within .cw-passwrap__lock{color:var(--cw-purple)}
+.cw-pass.is-error{
+  border-color:var(--cw-danger);
+  box-shadow:0 0 0 4px rgba(239,68,68,.16);
+  animation:cw-shake 480ms var(--cw-ease);
+}
+@keyframes cw-shake{
+  0%,100%{transform:translate3d(0,0,0)}
+  20%{transform:translate3d(-10px,0,0)}
+  40%{transform:translate3d(10px,0,0)}
+  60%{transform:translate3d(-6px,0,0)}
+  80%{transform:translate3d(6px,0,0)}
+}
+.cw-passwrap__toggle{
+  position:absolute;right:9px;top:50%;transform:translateY(-50%);
+  width:34px;height:34px;border:0;border-radius:50%;
+  display:grid;place-items:center;
+  background:transparent;color:var(--cw-text-3);cursor:pointer;
+  transition:background-color var(--cw-t) var(--cw-ease),color var(--cw-t) var(--cw-ease);
+}
+.cw-passwrap__toggle:hover{background:var(--cw-surface-3);color:var(--cw-text-2)}
+
+.cw-error{
+  display:flex;align-items:center;gap:6px;
+  min-height:17px;margin-top:9px;
+  font-size:11.5px;font-weight:700;color:var(--cw-danger);
+  opacity:0;transform:translate3d(0,-4px,0);
+  transition:opacity 220ms var(--cw-ease),transform 220ms var(--cw-ease);
+}
+.cw-error svg{flex:0 0 auto}
+.cw-error.is-show{opacity:1;transform:translate3d(0,0,0)}
+
+/* ═══════════════════════════════════════════════════════════════════
+   7. SUBMIT BUTTON
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-btn{
+  position:relative;overflow:hidden;
+  width:100%;padding:16px 22px;
+  border:0;
+  border-radius:var(--cw-r) var(--cw-r) var(--cw-r) var(--cw-r-sm);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  font-size:15px;font-weight:800;letter-spacing:.1px;
+  color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,var(--cw-primary),var(--cw-primary-600));
+  box-shadow:0 14px 34px rgba(230,57,70,.38),inset 0 1px 0 rgba(255,255,255,.18);
+  -webkit-tap-highlight-color:transparent;
+  transition:transform var(--cw-t) var(--cw-spring),
+             box-shadow var(--cw-t) var(--cw-ease),
+             opacity var(--cw-t) var(--cw-ease),
+             background 300ms var(--cw-ease);
+  will-change:transform;
+}
+.cw-btn:disabled{
+  opacity:.42;cursor:not-allowed;transform:none;
+  box-shadow:0 8px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.10);
+}
+.cw-btn:not(:disabled):hover{
+  transform:translate3d(0,-2px,0);
+  box-shadow:0 20px 46px rgba(230,57,70,.52),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.cw-btn:not(:disabled):active{transform:scale(.975)}
+.cw-btn--success{
+  background:linear-gradient(135deg,#22C55E,#16A34A);
+  box-shadow:0 14px 34px rgba(34,197,94,.42),inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.cw-ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.42);
+  transform:scale(0);opacity:.9;
+  pointer-events:none;
+  animation:cw-rippleAnim 620ms var(--cw-ease) forwards;
+}
+.cw-ripple--gold{
+  background:radial-gradient(circle,rgba(244,163,0,.9),rgba(244,163,0,0) 70%);
+}
+@keyframes cw-rippleAnim{to{transform:scale(4);opacity:0}}
+
+.cw-spinner{
+  width:16px;height:16px;flex:0 0 auto;
+  border:2.5px solid rgba(255,255,255,.28);
+  border-top-color:#fff;border-radius:50%;
+  animation:cw-spin .65s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   8. FOOTER CARD
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-footer{
+  margin-top:22px;padding-top:18px;
+  border-top:1px dashed var(--cw-border);
+  text-align:center;font-size:10.5px;font-weight:500;color:var(--cw-text-3);
+}
+.cw-footer__divider{
+  display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:10px;
+}
+.cw-footer__divider::before,
+.cw-footer__divider::after{
+  content:'';flex:0 1 64px;height:1px;background:var(--cw-border);
+}
+.cw-footer__divider span{font-size:14px;opacity:.65}
+
+.cw-footer__version{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:8px;padding:3px 9px;
+  font-family:var(--cw-mono);
+  font-size:9.5px;font-weight:600;letter-spacing:.4px;
+  color:rgba(244,163,0,.85);
+  background:rgba(244,163,0,.08);
+  border:1px solid rgba(244,163,0,.20);
+  border-radius:9999px;
+}
+.cw-footer__version::before{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--cw-success);
+  box-shadow:0 0 6px var(--cw-success);
+  animation:cw-blink 2.4s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   9. TOAST
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-toasts{
+  position:fixed;top:calc(18px + env(safe-area-inset-top));
+  left:18px;right:18px;z-index:2000;
+  max-width:420px;margin:0 auto;
+  display:flex;flex-direction:column;gap:8px;
+  pointer-events:none;
+}
+.cw-toast{
+  pointer-events:auto;
+  display:flex;align-items:center;gap:10px;
+  padding:13px 16px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#241609,#180D06);
+  border:1px solid var(--cw-border-strong);
+  border-left:3px solid var(--cw-danger);
+  box-shadow:0 18px 44px rgba(0,0,0,.6);
+  font-size:13px;font-weight:600;color:var(--cw-text);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  animation:cw-toastIn 340ms var(--cw-spring) both;
+}
+.cw-toast svg{flex:0 0 auto;color:var(--cw-danger)}
+.cw-toast--success{border-left-color:var(--cw-success)}
+.cw-toast--success svg{color:var(--cw-success)}
+.cw-toast.is-out{animation:cw-toastOut 260ms var(--cw-ease) forwards}
+@keyframes cw-toastIn{
+  from{opacity:0;transform:translate3d(0,-16px,0) scale(.94)}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+@keyframes cw-toastOut{
+  to{opacity:0;transform:translate3d(0,-16px,0) scale(.94)}
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   10. PARTIKEL
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-burst{position:fixed;inset:0;z-index:1400;pointer-events:none;overflow:hidden}
+.cw-burst i{
+  position:absolute;display:block;border-radius:50%;
+  will-change:transform,opacity;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   11. APP MODE + IFRAME
+   ═══════════════════════════════════════════════════════════════════ */
+body.cw-appmode{overflow:hidden;background:var(--cw-bg)}
+body.cw-appmode .cw-bg{display:none}
+
+.cw-frame{
+  position:fixed;inset:0;z-index:100;
+  width:100vw;height:100dvh;
+  border:0;display:none;background:var(--cw-bg);
+  opacity:0;transform:scale(.985);
+  transition:opacity 340ms ease-out,transform 340ms ease-out;
+  will-change:transform,opacity;
+}
+.cw-frame.is-active{display:block}
+.cw-frame.is-ready{opacity:1;transform:scale(1)}
+
+/* ═══════════════════════════════════════════════════════════════════
+   12. LOADING OVERLAY
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-loader{
+  position:fixed;inset:0;z-index:1500;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 42%,var(--cw-glow,rgba(230,57,70,.18)),rgba(6,3,2,.97) 66%);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity 300ms var(--cw-ease),transform 300ms var(--cw-ease),visibility 0s 300ms;
+}
+.cw-loader.is-show{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transition:opacity 300ms var(--cw-ease),transform 300ms var(--cw-ease),visibility 0s 0s;
+}
+.cw-loader.is-out{opacity:0;transform:scale(1.1);pointer-events:none}
+.cw-loader--pembeli{--cw-glow:rgba(230,57,70,.20)}
+.cw-loader--kasir{--cw-glow:rgba(168,85,247,.22)}
+
+.cw-loader__inner{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:0 24px}
+.cw-loader__emoji{font-size:34px;line-height:1;animation:cw-logoFloat 2.6s ease-in-out infinite}
+@keyframes cw-logoFloat{
+  0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
+  50%{transform:translate3d(0,-7px,0) rotate(-3deg)}
+}
+.cw-loader__spin{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid rgba(244,163,0,.16);
+  border-top-color:var(--cw-accent);
+  border-right-color:var(--cw-primary);
+  animation:cw-spin .85s linear infinite;
+  box-shadow:0 0 42px rgba(244,163,0,.3);
+}
+.cw-loader--kasir .cw-loader__spin{
+  border-top-color:var(--cw-purple);
+  border-right-color:var(--cw-primary);
+  box-shadow:0 0 42px rgba(168,85,247,.35);
+}
+.cw-loader__text{
+  font-size:13px;font-weight:700;letter-spacing:.4px;color:var(--cw-text-2);
+  animation:cw-pulseFade 1.6s ease-in-out infinite;
+}
+@keyframes cw-pulseFade{0%,100%{opacity:.55}50%{opacity:1}}
+
+.cw-progress{
+  width:180px;height:3px;border-radius:99px;overflow:hidden;
+  background:rgba(255,240,225,.12);
+}
+.cw-progress__bar{
+  width:100%;height:100%;
+  transform:scaleX(0);transform-origin:left center;
+  background:linear-gradient(90deg,var(--cw-accent),var(--cw-primary));
+  will-change:transform;
+}
+.cw-loader--kasir .cw-progress__bar{
+  background:linear-gradient(90deg,var(--cw-purple),var(--cw-primary));
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   13. LOGOUT FAB
+   ═══════════════════════════════════════════════════════════════════ */
+.cw-fab{
+  position:fixed;
+  /* ← UBAH: posisi default tetap di kanan-bawah sampai JS mengeset left/top */
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  right:calc(16px + env(safe-area-inset-right));
+  z-index:9000;
+  display:inline-flex;align-items:center;justify-content:flex-start;gap:10px;
+  height:48px;width:48px;
+  padding:0 0 0 15px;
+  overflow:hidden;
+  border-radius:22px 22px 22px 8px;
+  border:1.5px solid rgba(255,255,255,.18);
+  background:linear-gradient(135deg,rgba(230,57,70,.94),rgba(164,28,38,.98));
+  backdrop-filter:blur(18px) saturate(180%);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);
+  color:#fff;cursor:pointer;
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,255,255,.05),
+    0 0 42px rgba(230,57,70,.32),
+    inset 0 1px 0 rgba(255,255,255,.22);
+  opacity:0;
+  transform:translate3d(0,28px,0) scale(.4) rotate(-45deg);
+  pointer-events:none;
+  -webkit-tap-highlight-color:transparent;
+  will-change:transform,opacity,width;
+  transition:
+    width 420ms var(--cw-spring),
+    padding 420ms var(--cw-spring),
+    opacity 380ms var(--cw-ease),
+    transform 480ms var(--cw-spring),
+    box-shadow 260ms var(--cw-ease),
+    background 300ms var(--cw-ease);
+  /* ← UBAH: dukung drag — jangan scroll halaman saat menyentuh FAB */
+  touch-action:none;
+  /* ← UBAH: cursor grab sebagai indikasi bisa di-drag */
+  cursor:grab;
+  /* ← UBAH: cegah seleksi teks label saat drag */
+  user-select:none;
+  -webkit-user-select:none;
+}
+.cw-fab__aura{
+  position:absolute;inset:-24px;border-radius:inherit;
+  background:conic-gradient(from 0turn,transparent 55%,rgba(244,163,0,.65),rgba(230,57,70,.95),transparent);
+  filter:blur(12px);opacity:0;z-index:0;pointer-events:none;
+  transition:opacity 400ms var(--cw-ease),filter 400ms var(--cw-ease);
+  animation:cwFabAuraSpin 6s linear infinite;
+  will-change:transform;
+}
+@keyframes cwFabAuraSpin{to{transform:rotate(360deg)}}
+
+.cw-fab::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.30) 50%,transparent 60%);
+  background-size:220% 100%;background-position:-220% 0;
+  pointer-events:none;opacity:0;z-index:2;
+  transition:opacity 300ms var(--cw-ease);
+}
+.cw-fab.is-show::after{opacity:1;animation:cwFabShimmer 5s linear infinite}
+@keyframes cwFabShimmer{
+  0%{background-position:-220% 0}
+  55%{background-position:220% 0}
+  100%{background-position:220% 0}
+}
+
+.cw-fab__icon{
+  display:grid;place-items:center;flex:0 0 auto;
+  position:relative;z-index:1;
+  transition:transform 380ms var(--cw-spring);
+  will-change:transform;
+}
+.cw-fab__label{
+  flex:0 0 auto;
+  font-size:13.5px;font-weight:700;letter-spacing:-.1px;
+  white-space:nowrap;color:#fff;
+  opacity:0;transform:translateX(-10px);
+  position:relative;z-index:1;
+  transition:opacity 220ms var(--cw-ease) 60ms,
+             transform 320ms var(--cw-spring) 60ms;
+}
+
+.cw-fab.is-show{
+  opacity:1;pointer-events:auto;
+  transform:translate3d(0,0,0) scale(1) rotate(0deg);
+  animation:cwFabBreathe 3.6s ease-in-out infinite;
+}
+.cw-fab.is-show .cw-fab__aura{opacity:.7}
+@keyframes cwFabBreathe{
+  0%,100%{
+    box-shadow:
+      0 10px 28px rgba(0,0,0,.55),
+      0 0 0 1px rgba(255,255,255,.05),
+      0 0 42px rgba(230,57,70,.32),
+      inset 0 1px 0 rgba(255,255,255,.22);
+  }
+  50%{
+    box-shadow:
+      0 12px 32px rgba(0,0,0,.6),
+      0 0 0 1px rgba(255,255,255,.08),
+      0 0 62px rgba(230,57,70,.55),
+      inset 0 1px 0 rgba(255,255,255,.28);
+  }
+}
+
+@media (hover:hover){
+  .cw-fab.is-show:hover{
+    width:148px;padding:0 18px 0 15px;
+    animation:none;
+    background:linear-gradient(135deg,rgba(230,57,70,1),rgba(196,42,56,1));
+    box-shadow:
+      0 18px 44px rgba(0,0,0,.6),
+      0 0 0 1px rgba(255,255,255,.08),
+      0 0 68px rgba(230,57,70,.6),
+      inset 0 1px 0 rgba(255,255,255,.28);
+  }
+  .cw-fab.is-show:hover .cw-fab__label{opacity:1;transform:translateX(0)}
+  .cw-fab.is-show:hover .cw-fab__icon{transform:rotate(-8deg) scale(1.08)}
+  .cw-fab.is-show:hover .cw-fab__aura{opacity:1;filter:blur(8px)}
+
+  /* ← UBAH: FAB di sisi kanan → saat hover melebar, geser ke kiri
+     agar sisi kanan tidak keluar viewport. */
+  .cw-fab--right.is-show:hover{
+    transform:translate3d(-100px,0,0) scale(1) rotate(0deg);
+  }
+}
+
+.cw-fab.is-show:active{transform:scale(.94);transition-duration:120ms}
+.cw-fab.is-show:active .cw-fab__icon{transform:rotate(-14deg) scale(.95)}
+
+.cw-fab:focus-visible{
+  outline:2px solid var(--cw-accent);outline-offset:3px;
+  border-radius:22px 22px 22px 8px;
+}
+.cw-fab.is-cancel{
+  animation:cw-shake 320ms var(--cw-ease);
+  border-color:rgba(239,68,68,.9);
+}
+.cw-fab.is-show.is-success{
+  background:linear-gradient(135deg,#22C55E,#16A34A);
+  box-shadow:
+    0 12px 32px rgba(34,197,94,.55),
+    0 0 62px rgba(34,197,94,.5),
+    inset 0 1px 0 rgba(255,255,255,.3);
+}
+.cw-fab.is-leaving{
+  pointer-events:none;
+  animation:none !important;
+  opacity:0 !important;
+  transform:translate3d(0,20px,0) scale(.4) rotate(45deg) !important;
+  width:48px !important;
+  padding:0 0 0 15px !important;
+  transition:
+    opacity 360ms var(--cw-ease) 80ms,
+    transform 420ms cubic-bezier(.6,-.28,.74,.05) 80ms,
+    width 260ms var(--cw-ease),
+    padding 260ms var(--cw-ease) !important;
+}
+.cw-fab.is-leaving .cw-fab__label{opacity:0;transform:translateX(-10px);transition-duration:120ms}
+.cw-fab.is-leaving .cw-fab__icon{
+  transform:rotate(90deg) scale(.6);
+  transition:transform 360ms cubic-bezier(.6,-.28,.74,.05);
+}
+.cw-fab.is-leaving .cw-fab__aura{opacity:0;transition:opacity 200ms var(--cw-ease)}
+.cw-fab.is-leaving::after{opacity:0;animation:none}
+
+@media (hover:none){
+  .cw-fab.is-show:active{width:148px;padding:0 18px 0 15px;transform:scale(.96)}
+  .cw-fab.is-show:active .cw-fab__label{opacity:1;transform:translateX(0)}
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   13b. DRAGGABLE FAB — STATE KELAS & OVERLAY  ← UBAH
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Saat drag: hilangkan semua transition, tampilkan cursor grabbing,
+   turunkan opacity sedikit, dan scale sedikit naik sebagai feedback. */
+.cw-fab.cw-fab--dragging{
+  cursor:grabbing !important;
+  transition:none !important;
+  opacity:.85 !important;
+  transform:scale(1.05) !important;
+  animation:none !important;
+}
+.cw-fab.cw-fab--dragging::after{animation:none !important;opacity:0 !important}
+
+/* Saat snap: transisi elastic pada left/top */
+.cw-fab.cw-fab--snapping{
+  transition:
+    left 380ms cubic-bezier(.34,1.56,.64,1),
+    top 380ms cubic-bezier(.34,1.56,.64,1),
+    width 420ms var(--cw-spring),
+    padding 420ms var(--cw-spring),
+    opacity 380ms var(--cw-ease),
+    transform 480ms var(--cw-spring),
+    box-shadow 260ms var(--cw-ease),
+    background 300ms var(--cw-ease);
+}
+
+/* FAB menempel di sisi kiri — border-radius dicerminkan */
+.cw-fab.cw-fab--left{
+  border-radius:8px 22px 22px 22px;
+}
+
+/* Overlay drag-blocker: dibuat via JS saat drag dimulai.
+   z-index 8999 (di bawah FAB 9000, di atas iframe 100). */
+.cw-drag-overlay{
+  position:fixed;
+  inset:0;
+  z-index:8999;
+  cursor:grabbing;
+  pointer-events:auto;
+  background:transparent;
+  touch-action:none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   14. RESPONSIF
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width:400px){
+  .cw-panel{padding:18px 14px calc(26px + env(safe-area-inset-bottom))}
+  .cw-card{padding:26px 19px 18px;border-radius:22px 22px 22px 7px}
+  .cw-head h1{font-size:23px}
+  .cw-head{margin-bottom:20px}
+  .cw-role{min-height:126px;padding:16px 10px}
+  .cw-role__emoji{font-size:30px}
+  .cw-role__title{font-size:13.5px}
+  .cw-btn{padding:15px 18px;font-size:14.5px}
+  .cw-toasts{left:14px;right:14px}
+  .cw-fab{
+    height:46px;width:46px;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    right:calc(12px + env(safe-area-inset-right));
+  }
+  .cw-fab.is-leaving{width:46px !important}
+}
+@media (min-width:1280px){
+  .cw-hero{padding:64px 72px 52px}
+  .cw-panel{padding:56px 64px}
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   15. REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+  .cw-blob,.cw-hero__orb,.cw-hero__ring{display:none}
+  .cw-rise{opacity:1!important;transform:none!important}
+  .cw-fab.is-show::after{animation:none;opacity:0}
+  .cw-fab__aura{animation:none}
+  .cw-fab.is-leaving{transition-duration:.001ms !important;transition-delay:0ms !important}
+  /* ← UBAH: snap instant, tanpa micro-bounce */
+  .cw-fab.cw-fab--snapping{transition-duration:.001ms !important}
+  .cw-fab.cw-fab--dragging{transform:none !important}
+}
+</style>
+</head>
+<body class="cw-boot">
+
+<!-- ═══════════════ BACKGROUND ═══════════════ -->
+<div class="cw-bg" aria-hidden="true">
+  <span class="cw-blob cw-blob--merah"></span>
+  <span class="cw-blob cw-blob--emas"></span>
+</div>
+
+<!-- ═══════════════ LOGIN VIEW ═══════════════ -->
+<div class="cw-login" id="cwLogin">
+  <div class="cw-shell">
+
+    <!-- ─────────── HERO (kiri) ─────────── -->
+    <aside class="cw-hero">
+      <span class="cw-hero__grid" aria-hidden="true"></span>
+      <span class="cw-hero__orb" aria-hidden="true"></span>
+      <span class="cw-hero__ring" aria-hidden="true"></span>
+      <span class="cw-hero__ring cw-hero__ring--b" aria-hidden="true"></span>
+
+      <header class="cw-hero__top cw-rise" style="--d:60ms">
+        <span class="cw-logo" aria-hidden="true">
+          <span class="cw-logo__ring"></span>
+          <span class="cw-logo__core">🍚</span>
+        </span>
+        <span class="cw-hero__wordmark">
+          Cakrawala
+          <small>Sego Sambel</small>
+        </span>
+      </header>
+
+      <div class="cw-hero__body">
+        <span class="cw-hero__eyebrow cw-rise" style="--d:120ms">
+          <i aria-hidden="true"></i> Warung Digital
+        </span>
+
+        <h2 class="cw-hero__title cw-rise" style="--d:180ms">
+          Pesan Pedas,<br>
+          <span>Bayar Ringan.</span>
+        </h2>
+
+        <p class="cw-hero__desc cw-rise" style="--d:240ms">
+          Satu halaman untuk semua — pembeli memesan langsung dari meja,
+          kasir mengelola transaksi tanpa ribet.
+        </p>
+
+        <ul class="cw-hero__features cw-rise" style="--d:300ms">
+          <li><span class="cw-feat" aria-hidden="true">⚡</span><span><b>Pesan cepat</b> — tanpa antre panjang</span></li>
+          <li><span class="cw-feat" aria-hidden="true">🧾</span><span><b>Kasir rapi</b> — rekap transaksi otomatis</span></li>
+          <li><span class="cw-feat" aria-hidden="true">🌶️</span><span><b>Level pedas</b> — sesuaikan selera Anda</span></li>
+        </ul>
+      </div>
+
+      <footer class="cw-hero__foot cw-rise" style="--d:360ms">
+        <span>© 2024 Warung Cakrawala · Kudus</span>
+        <span>Sejak 2015</span>
+      </footer>
+    </aside>
+
+    <!-- ─────────── FORM (kanan) ─────────── -->
+    <main class="cw-panel">
+      <section class="cw-card" id="cwCard">
+
+        <!-- Mini header (mobile) -->
+        <div class="cw-minihead cw-rise" style="--d:80ms">
+          <span class="cw-minihead__logo" aria-hidden="true">🍚</span>
+          <span>Cakrawala <b>Sego Sambel</b></span>
+        </div>
+
+        <header class="cw-head cw-rise" style="--d:130ms">
+          <h1>Selamat Datang</h1>
+          <p>Silakan pilih peran untuk melanjutkan.</p>
+        </header>
+
+        <!-- Role -->
+        <div class="cw-label cw-rise" style="--d:180ms" id="cwRoleLabel">Pilih Peran Anda</div>
+
+        <div class="cw-roles cw-rise" style="--d:220ms" id="cwRoles"
+             role="radiogroup" aria-labelledby="cwRoleLabel">
+
+          <button type="button" class="cw-role" data-role="pembeli"
+                  role="radio" aria-checked="false" aria-label="Masuk sebagai Pembeli">
+            <span class="cw-role__glow" aria-hidden="true"></span>
+            <span class="cw-role__emoji" aria-hidden="true">🛒</span>
+            <span class="cw-role__title">Pembeli</span>
+            <span class="cw-role__sub">Pesan makanan &amp; minuman</span>
+            <span class="cw-role__check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </span>
+          </button>
+
+          <button type="button" class="cw-role" data-role="kasir"
+                  role="radio" aria-checked="false" aria-label="Masuk sebagai Kasir">
+            <span class="cw-role__glow" aria-hidden="true"></span>
+            <span class="cw-role__emoji" aria-hidden="true">💼</span>
+            <span class="cw-role__title">Kasir</span>
+            <span class="cw-role__sub">Kelola transaksi warung</span>
+            <span class="cw-role__check" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </span>
+          </button>
+
+        </div>
+
+        <!-- Password -->
+        <div class="cw-passbox" id="cwPassBox">
+          <label class="cw-passbox__label" for="cwPass">Password Kasir</label>
+          <div class="cw-passwrap">
+            <svg class="cw-passwrap__lock" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input type="password" id="cwPass" class="cw-pass" placeholder="••••••••"
+                   autocomplete="current-password" inputmode="text" spellcheck="false"
+                   aria-describedby="cwError">
+            <button type="button" class="cw-passwrap__toggle" id="cwTogglePass" aria-label="Tampilkan password">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <div class="cw-error" id="cwError" role="alert">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" x2="12" y1="8" y2="12"/>
+              <line x1="12" x2="12.01" y1="16" y2="16"/>
+            </svg>
+            <span id="cwErrorText"></span>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="button" class="cw-btn cw-rise" style="--d:280ms" id="cwSubmit" disabled>
+          <span>Pilih peran dulu</span>
+        </button>
+
+        <!-- Footer -->
+        <div class="cw-footer cw-rise" style="--d:340ms">
+          <div class="cw-footer__divider"><span aria-hidden="true">🍚</span></div>
+          © 2006 Warung Cakrawala · Kudus
+          <div class="cw-footer__version" id="cwVersionBadge" title="Versi aplikasi aktif">
+            <span id="cwVersionText">16.00-01.00</span>          
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+  </div>
+</div>
+
+<!-- ═══════════════ APP VIEW ═══════════════ -->
+<iframe id="cwFrame" class="cw-frame" title="Aplikasi Warung Cakrawala"
+        allow="bluetooth; usb; serial; clipboard-write; microphone; camera; fullscreen; web-share"
+        allowfullscreen></iframe>
+
+<!-- Loading overlay -->
+<div class="cw-loader" id="cwLoader" role="status" aria-live="polite" aria-hidden="true">
+  <div class="cw-loader__inner">
+    <div class="cw-loader__emoji" id="cwLoaderEmoji" aria-hidden="true">🍚</div>
+    <div class="cw-loader__spin" aria-hidden="true"></div>
+    <div class="cw-loader__text" id="cwLoaderText">Menyiapkan halaman…</div>
+    <div class="cw-progress" aria-hidden="true"><div class="cw-progress__bar" id="cwProgressBar"></div></div>
+  </div>
+</div>
+
+<!-- Logout FAB — <!-- ← UBAH: aria-label & title diperbarui agar menyebut fitur drag --> -->
+<button type="button" class="cw-fab" id="cwFab"
+        aria-label="Keluar / Ganti peran. Tekan dan tahan untuk menggeser posisi."
+        title="Keluar / Ganti peran. Tekan dan tahan untuk menggeser posisi.">
+  <span class="cw-fab__aura" aria-hidden="true"></span>
+  <span class="cw-fab__icon" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+      <polyline points="16 17 21 12 16 7"/>
+      <line x1="21" x2="9" y1="12" y2="12"/>
+    </svg>
+  </span>
+  <span class="cw-fab__label" aria-hidden="true">Keluar</span>
+</button>
+
+<!-- Toast -->
+<div class="cw-toasts" id="cwToasts" role="region" aria-live="polite" aria-label="Notifikasi"></div>
+
+<script>
+'use strict';
+(function () {
+/* ═══════════════════════════════════════════════════════════════════
+   KONFIGURASI — v3-pwd201110
+   ═══════════════════════════════════════════════════════════════════ */
+const APP_VERSION    = '16.00-01.00';
+const PASSWORD_KASIR = '201110';
+const MAX_ATTEMPTS   = 5;
+const LOCKOUT_SEC    = 30;
+const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+
+const KEY_ROLE = 'cakrawala_role';
+const KEY_TIME = 'cakrawala_login_at';
+
+const V = encodeURIComponent(APP_VERSION);
+const HOMES = {
+  pembeli: 'pesan.html?v=' + V,
+  kasir:   'kasir.html?v=' + V
+};
+
+const LOADING_TEXT  = { pembeli: 'Menyiapkan menu pesanan…', kasir: 'Menyiapkan kasir…' };
+const LOADING_EMOJI = { pembeli: '🛒', kasir: '💼' };
+const LOADER_CLASS  = { pembeli: 'cw-loader--pembeli', kasir: 'cw-loader--kasir' };
+const TITLES        = { pembeli: '🍚 Menu Pembeli', kasir: '💼 Kasir — Cakrawala' };
+const ROLES         = ['pembeli', 'kasir'];
+
+const FAB_EXIT_MS   = 520;
+
+const BASE_TITLE = document.title;
+const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+console.log(
+  '%c[Cakrawala]%c APP_VERSION = ' + APP_VERSION + ' · PASSWORD_KASIR length = ' + PASSWORD_KASIR.length,
+  'background:#E63946;color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;',
+  'color:#F4A300;font-weight:600;'
+);
+console.log(
+  '%c[Cakrawala]%c Jika Anda masih bisa login dengan password lama, hard reload: Ctrl+Shift+R',
+  'background:#F4A300;color:#0A0604;padding:2px 6px;border-radius:4px;font-weight:700;',
+  'color:#D4BFA9;'
+);
+
+/* ═══════════════════════════════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════════════════════════════ */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.prototype.slice.call((r || document).querySelectorAll(s));
+const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+
+const els = {};
+const state = {
+  role: null,
+  attempts: 0,
+  lockedUntil: 0,
+  processing: false,
+  appOpened: false,
+  loggingOut: false,
+  showPass: false,
+  passTimer: 0,
+  lockTimer: 0
+};
+
+function cacheEls() {
+  els.login        = $('#cwLogin');
+  els.card         = $('#cwCard');
+  els.roles        = $('#cwRoles');
+  els.passbox      = $('#cwPassBox');
+  els.pass         = $('#cwPass');
+  els.toggle       = $('#cwTogglePass');
+  els.error        = $('#cwError');
+  els.errorText    = $('#cwErrorText');
+  els.btn          = $('#cwSubmit');
+  els.frame        = $('#cwFrame');
+  els.loader       = $('#cwLoader');
+  els.loaderEmoji  = $('#cwLoaderEmoji');
+  els.loaderText   = $('#cwLoaderText');
+  els.progress     = $('#cwProgressBar');
+  els.fab          = $('#cwFab');
+  els.toasts       = $('#cwToasts');
+  els.versionText  = $('#cwVersionText');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ▓▓▓ DRAGGABLE FAB MODULE  ← UBAH
+   Modul mandiri, tidak ada dependency eksternal, pure vanilla JS.
+   API: DraggableFab.init({el, storageKey, snapSide, edgePadding, dragThreshold})
+        .enable() / .disable() / .reset()
+   ═══════════════════════════════════════════════════════════════════ */
+const DraggableFab = (function () {
+
+  /* Ukur safe-area-inset melalui element probe sekali saja */
+  function readSafeInset(side) {
+    try {
+      const probe = document.createElement('div');
+      probe.style.cssText =
+        'position:fixed;visibility:hidden;pointer-events:none;' +
+        'padding:env(safe-area-inset-' + side + ',0px);';
+      document.body.appendChild(probe);
+      const v = parseFloat(getComputedStyle(probe).paddingTop) || 0;
+      probe.remove();
+      return v;
+    } catch (_) { return 0; }
+  }
+
+  function createFabDrag(opts) {
+    const el = opts && opts.el;
+    if (!el) return null;
+
+    /* ── Konfigurasi ── */
+    const storageKey    = opts.storageKey    || 'cakrawala_fab_pos';
+    const snapSide      = opts.snapSide      || 'nearest'; // 'left'|'right'|'nearest'
+    const edgePadding   = opts.edgePadding   != null ? opts.edgePadding   : 16;
+    const dragThreshold = opts.dragThreshold != null ? opts.dragThreshold : 6;
+
+    /* ── State (tertutup dalam closure) ── */
+    let enabled           = false;
+    let dragging          = false;
+    let pointerId         = null;   // hanya satu pointer yang aktif
+    let startPtX          = 0;
+    let startPtY          = 0;
+    let startLeft         = 0;
+    let startTop          = 0;
+    let moved             = false;
+    let overlay           = null;
+    let currentSide       = 'right';
+    let suppressClickFlag = false;
+    let resizeTimer       = 0;
+
+    /* ── Util ukuran & clamp ── */
+    const fabW  = () => el.offsetWidth  || 48;
+    const fabH  = () => el.offsetHeight || 48;
+    const clampX = (x) => {
+      const max = Math.max(edgePadding, window.innerWidth - fabW() - edgePadding);
+      return Math.min(Math.max(x, edgePadding), max);
+    };
+    const clampY = (y) => {
+      const max = Math.max(edgePadding, window.innerHeight - fabH() - edgePadding);
+      return Math.min(Math.max(y, edgePadding), max);
+    };
+
+    /* ── Storage ── */
+    function loadPos() {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        if (!raw) return null;
+        const obj = JSON.parse(raw);
+        if (!obj || obj.v !== 1) return null;
+        if (typeof obj.x !== 'number' || typeof obj.y !== 'number') return null;
+        return obj;
+      } catch (_) { return null; }
+    }
+    function savePos() {
+      try {
+        const left = parseFloat(el.style.left) || 0;
+        const top  = parseFloat(el.style.top)  || 0;
+        localStorage.setItem(storageKey, JSON.stringify({
+          v: 1,
+          x: left,
+          y: top,
+          side: currentSide
+        }));
+      } catch (_) { /* private mode / storage disabled */ }
+    }
+    function clearPos() {
+      try { localStorage.removeItem(storageKey); } catch (_) {}
+    }
+
+    /* ── Apply posisi (dari storage / default) ── */
+    function applyPos(pos) {
+      let x, y, side;
+      if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
+        x = clampX(pos.x);
+        y = clampY(pos.y);
+        side = pos.side === 'left' ? 'left' : 'right';
+      } else {
+        /* Default: kanan-bawah, hormati safe-area-inset */
+        const safeR = readSafeInset('right');
+        const safeB = readSafeInset('bottom');
+        x = window.innerWidth  - fabW() - edgePadding - safeR;
+        y = window.innerHeight - fabH() - edgePadding - safeB;
+        side = 'right';
+      }
+      el.style.left   = x + 'px';
+      el.style.top    = y + 'px';
+      el.style.right  = 'auto';
+      el.style.bottom = 'auto';
+      currentSide = side;
+      el.classList.toggle('cw-fab--left',  side === 'left');
+      el.classList.toggle('cw-fab--right', side === 'right');
+    }
+
+    /* ── Overlay drag-blocker (mencegah iframe menerima pointer event) ── */
+    function showOverlay() {
+      if (overlay) return;
+      overlay = document.createElement('div');
+      overlay.className = 'cw-drag-overlay';
+      document.body.appendChild(overlay);
+    }
+    function hideOverlay() {
+      if (!overlay) return;
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      overlay = null;
+    }
+
+    /* ── Klik suppression pasca drag (agar tidak memicu logout) ──
+       Dipasang di document capture-phase sehingga berjalan lebih
+       dulu dari listener klik apa pun di FAB. */
+    function clickSuppressor(e) {
+      if (suppressClickFlag && e.target === el) {
+        suppressClickFlag = false;
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }
+
+    /* ── Pointer handlers ── */
+    function onPointerDown(e) {
+      if (!enabled) return;
+      if (state.loggingOut) return;
+      if (pointerId !== null) return;           /* multi-touch: pointer pertama menang */
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+      pointerId = e.pointerId;
+      startPtX  = e.clientX;
+      startPtY  = e.clientY;
+      const r   = el.getBoundingClientRect();
+      startLeft = r.left;
+      startTop  = r.top;
+      moved     = false;
+      suppressClickFlag = false;
+
+      try { el.setPointerCapture(pointerId); } catch (_) {}
+
+      el.addEventListener('pointermove',   onPointerMove,   { passive: false });
+      el.addEventListener('pointerup',     onPointerUp,     { passive: true  });
+      el.addEventListener('pointercancel', onPointerCancel, { passive: true  });
+    }
+
+    function onPointerMove(e) {
+      if (e.pointerId !== pointerId) return;
+
+      const dx = e.clientX - startPtX;
+      const dy = e.clientY - startPtY;
+
+      /* Threshold: < dragThreshold = klik, ≥ = drag */
+      if (!moved) {
+        if (Math.sqrt(dx * dx + dy * dy) < dragThreshold) return;
+        moved    = true;
+        dragging = true;
+        el.classList.add('cw-fab--dragging');
+        el.classList.remove('cw-fab--snapping');
+        showOverlay();
+      }
+      if (dragging) {
+        const nx = clampX(startLeft + dx);
+        const ny = clampY(startTop  + dy);
+        el.style.left = nx + 'px';
+        el.style.top  = ny + 'px';
+        e.preventDefault();
+      }
+    }
+
+    function onPointerUp(e) {
+      if (e.pointerId !== pointerId) return;
+      finishDrag();
+    }
+    function onPointerCancel(e) {
+      if (e.pointerId !== pointerId) return;
+      finishDrag();
+    }
+
+    function finishDrag() {
+      el.removeEventListener('pointermove',   onPointerMove);
+      el.removeEventListener('pointerup',     onPointerUp);
+      el.removeEventListener('pointercancel', onPointerCancel);
+      try { el.releasePointerCapture(pointerId); } catch (_) {}
+      pointerId = null;
+
+      /* Kalau bukan drag (di bawah threshold) → biarkan click normal */
+      if (!dragging) return;
+
+      dragging = false;
+      el.classList.remove('cw-fab--dragging');
+      hideOverlay();
+      snapToEdge();
+      savePos();
+      /* Cegah click logout yang mungkin ikut terpicu dari gesture drag */
+      suppressClickFlag = true;
+    }
+
+    /* ── Snap ke tepi terdekat ── */
+    function snapToEdge() {
+      const r       = el.getBoundingClientRect();
+      const vw      = window.innerWidth;
+      const centerX = r.left + r.width / 2;
+
+      let side;
+      if (snapSide === 'left')       side = 'left';
+      else if (snapSide === 'right') side = 'right';
+      else                           side = centerX < vw / 2 ? 'left' : 'right';
+
+      const targetX = side === 'left'
+        ? edgePadding
+        : vw - fabW() - edgePadding;
+      const targetY = clampY(r.top);
+
+      el.classList.add('cw-fab--snapping');
+      el.classList.toggle('cw-fab--left',  side === 'left');
+      el.classList.toggle('cw-fab--right', side === 'right');
+      currentSide = side;
+
+      /* reflow supaya transition benar-benar aktif */
+      void el.offsetWidth;
+      el.style.left = targetX + 'px';
+      el.style.top  = targetY + 'px';
+
+      const done = () => {
+        el.classList.remove('cw-fab--snapping');
+        el.removeEventListener('transitionend', done);
+      };
+      el.addEventListener('transitionend', done);
+      setTimeout(done, 500); /* fallback bila transitionend tidak terpanggil */
+    }
+
+    /* ── Resize / orientation change: clamp ulang ── */
+    function onResize() {
+      if (!enabled || dragging) return;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const cur = {
+          x: parseFloat(el.style.left) || 0,
+          y: parseFloat(el.style.top)  || 0,
+          side: currentSide
+        };
+        el.classList.add('cw-fab--snapping');
+        applyPos(cur);
+        setTimeout(() => el.classList.remove('cw-fab--snapping'), 420);
+      }, 80);
+    }
+
+    /* ── API publik ── */
+    return {
+      enable() {
+        if (enabled) return;
+        enabled = true;
+        applyPos(loadPos());
+        el.addEventListener('pointerdown', onPointerDown, { passive: false });
+        document.addEventListener('click', clickSuppressor, true);
+        window.addEventListener('resize', onResize);
+        window.addEventListener('orientationchange', onResize);
+      },
+      disable() {
+        if (!enabled) return;
+        enabled = false;
+        el.removeEventListener('pointerdown', onPointerDown);
+        el.removeEventListener('pointermove', onPointerMove);
+        el.removeEventListener('pointerup',   onPointerUp);
+        el.removeEventListener('pointercancel', onPointerCancel);
+        document.removeEventListener('click', clickSuppressor, true);
+        window.removeEventListener('resize', onResize);
+        window.removeEventListener('orientationchange', onResize);
+        hideOverlay();
+        el.classList.remove('cw-fab--dragging', 'cw-fab--snapping');
+      },
+      reset() {
+        clearPos();
+        applyPos(null);
+      },
+      isDragging() { return dragging; }
+    };
+  }
+
+  return { init: createFabDrag };
+})();
+
+/* Instance global — di-enable saat app dibuka */
+let fabDragger = null;  /* ← UBAH */
+
+/* ── Toast ─────────────────────────────────────────────────────── */
+const TOAST_ICON_OK =
+  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+  'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">' +
+  '<path d="M20 6 9 17l-5-5"/></svg>';
+const TOAST_ICON_ERR =
+  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+  'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' +
+  '<circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/>' +
+  '<line x1="9" x2="15" y1="9" y2="15"/></svg>';
+
+function toast(msg, type) {
+  if (!els.toasts) return;
+  const el = document.createElement('div');
+  el.className = 'cw-toast' + (type === 'success' ? ' cw-toast--success' : '');
+  el.innerHTML = (type === 'success' ? TOAST_ICON_OK : TOAST_ICON_ERR) + '<span></span>';
+  el.lastChild.textContent = msg;
+  els.toasts.appendChild(el);
+
+  setTimeout(function () {
+    el.classList.add('is-out');
+    setTimeout(function () { if (el.parentNode) el.remove(); }, 320);
+  }, 3000);
+}
+
+/* ── Ripple ────────────────────────────────────────────────────── */
+function attachRipple(el) {
+  if (!el || el.dataset.ripple === '1') return;
+  el.dataset.ripple = '1';
+  el.addEventListener('pointerdown', function (e) {
+    const rect = el.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    if (!size) return;
+    const s = document.createElement('span');
+    s.className = 'cw-ripple';
+    s.style.width  = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = (e.clientX - rect.left - size / 2) + 'px';
+    s.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+    el.appendChild(s);
+    s.addEventListener('animationend', function () { s.remove(); }, { once: true });
+  });
+}
+
+function goldBurst(el) {
+  if (REDUCED || !el) return;
+  const rect = el.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  if (!size) return;
+  const s = document.createElement('span');
+  s.className = 'cw-ripple cw-ripple--gold';
+  s.style.width  = size + 'px';
+  s.style.height = size + 'px';
+  s.style.left = '50%';
+  s.style.top  = '50%';
+  s.style.marginLeft = (-size / 2) + 'px';
+  s.style.marginTop  = (-size / 2) + 'px';
+  el.appendChild(s);
+  s.addEventListener('animationend', function () { s.remove(); }, { once: true });
+}
+
+/* ── Error inline ──────────────────────────────────────────────── */
+function setError(msg, shake) {
+  if (!els.error) return;
+  els.errorText.textContent = msg;
+  els.error.classList.add('is-show');
+  if (shake && els.pass) {
+    els.pass.classList.add('is-error');
+    setTimeout(function () { els.pass.classList.remove('is-error'); }, 720);
+  }
+}
+function clearError() {
+  if (!els.error) return;
+  els.error.classList.remove('is-show');
+  if (els.pass) els.pass.classList.remove('is-error');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PARTIKEL LEDAKAN
+   ═══════════════════════════════════════════════════════════════════ */
+function explode(card, role) {
+  if (REDUCED || !card || typeof card.animate !== 'function') return;
+  const rect = card.getBoundingClientRect();
+  if (!rect.width && !rect.height) return;
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  const palette = role === 'kasir'
+    ? ['#A855F7', '#C084FC', '#E63946', '#F4A300']
+    : ['#E63946', '#F4A300', '#FFD166', '#C42A38'];
+
+  const layer = document.createElement('div');
+  layer.className = 'cw-burst';
+  document.body.appendChild(layer);
+
+  const total = REDUCED ? 0 : 38;
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('i');
+    const size = 4 + Math.random() * 7;
+    dot.style.width  = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = cx + 'px';
+    dot.style.top  = cy + 'px';
+    dot.style.background = palette[i % palette.length];
+    dot.style.boxShadow = '0 0 8px ' + palette[i % palette.length];
+    layer.appendChild(dot);
+
+    const ang  = Math.random() * Math.PI * 2;
+    const dist = 90 + Math.random() * 220;
+    const dx = Math.cos(ang) * dist;
+    const dy = Math.sin(ang) * dist;
+
+    const anim = dot.animate([
+      { transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
+      { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(.15)', opacity: 0 }
+    ], {
+      duration: 600 + Math.random() * 300,
+      easing: 'cubic-bezier(.22,.8,.3,1)',
+      fill: 'forwards'
+    });
+    anim.onfinish = function () { dot.remove(); };
+  }
+  setTimeout(function () { if (layer.parentNode) layer.remove(); }, 1300);
+}
+
+function burstAroundFab(el, count) {
+  if (REDUCED || !el || typeof el.animate !== 'function') return;
+  const n = count || 10;
+  const rect = el.getBoundingClientRect();
+  if (!rect.width && !rect.height) return;
+
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const palette = ['#E63946', '#F4A300', '#FFD166', '#C42A38'];
+
+  const layer = document.createElement('div');
+  layer.className = 'cw-burst';
+  document.body.appendChild(layer);
+
+  for (let i = 0; i < n; i++) {
+    const dot = document.createElement('i');
+    const size = 4 + Math.random() * 5;
+    dot.style.width  = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = cx + 'px';
+    dot.style.top  = cy + 'px';
+    dot.style.background = palette[i % palette.length];
+    dot.style.boxShadow = '0 0 10px ' + palette[i % palette.length];
+    layer.appendChild(dot);
+
+    const ang  = Math.random() * Math.PI * 2;
+    const dist = 40 + Math.random() * 80;
+    const dx = Math.cos(ang) * dist;
+    const dy = Math.sin(ang) * dist;
+
+    const anim = dot.animate([
+      { transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
+      { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(.2)', opacity: 0 }
+    ], {
+      duration: 520 + Math.random() * 220,
+      easing: 'cubic-bezier(.22,.8,.3,1)',
+      fill: 'forwards'
+    });
+    anim.onfinish = function () { dot.remove(); };
+  }
+  setTimeout(function () { if (layer.parentNode) layer.remove(); }, 1000);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SESSION
+   ═══════════════════════════════════════════════════════════════════ */
+function saveSession(role) {
+  try {
+    sessionStorage.setItem(KEY_ROLE, role);
+    sessionStorage.setItem(KEY_TIME, String(Date.now()));
+  } catch (_) { /* private mode */ }
+}
+function readSession() {
+  try {
+    const role = sessionStorage.getItem(KEY_ROLE);
+    const time = parseInt(sessionStorage.getItem(KEY_TIME) || '0', 10);
+    if (role && ROLES.includes(role) && Date.now() - time < SESSION_TTL_MS) return role;
+    sessionStorage.removeItem(KEY_ROLE);
+    sessionStorage.removeItem(KEY_TIME);
+    return null;
+  } catch (_) { return null; }
+}
+function clearSession() {
+  try {
+    sessionStorage.removeItem(KEY_ROLE);
+    sessionStorage.removeItem(KEY_TIME);
+  } catch (_) { /* noop */ }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ROLE SELECT
+   ═══════════════════════════════════════════════════════════════════ */
+function selectRole(role) {
+  if (state.processing || state.appOpened || state.loggingOut) return;
+  if (state.lockedUntil > Date.now()) { toast('Terkunci sementara, tunggu sebentar'); return; }
+  if (!ROLES.includes(role)) return;
+
+  state.role = role;
+
+  $$('.cw-role', els.roles).forEach(function (b) {
+    const on = b.dataset.role === role;
+    b.classList.toggle('is-active', on);
+    b.setAttribute('aria-checked', String(on));
+  });
+  els.roles.classList.add('has-active');
+
+  clearError();
+  els.pass.value = '';
+
+  const isKasir = role === 'kasir';
+  els.passbox.classList.toggle('is-open', isKasir);
+
+  els.btn.disabled = false;
+  els.btn.classList.remove('cw-btn--success');
+  els.btn.innerHTML = '<span>Masuk sebagai ' + (isKasir ? 'Kasir' : 'Pembeli') + '</span>';
+
+  if (isKasir) {
+    setTimeout(function () { try { els.pass.focus(); } catch (_) {} }, 380);
+  }
+}
+
+function focusRole(role) {
+  const btn = $('.cw-role[data-role="' + role + '"]', els.roles);
+  if (btn) { try { btn.focus(); } catch (_) {} }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LOCKOUT
+   ═══════════════════════════════════════════════════════════════════ */
+function startLockout(seconds) {
+  state.lockedUntil = Date.now() + seconds * 1000;
+  let remaining = seconds;
+  renderLock(remaining);
+
+  if (state.lockTimer) clearInterval(state.lockTimer);
+  state.lockTimer = setInterval(function () {
+    remaining -= 1;
+    if (remaining <= 0) {
+      clearInterval(state.lockTimer);
+      state.lockTimer = 0;
+      state.lockedUntil = 0;
+      state.attempts = 0;
+      els.pass.disabled = false;
+      els.btn.disabled = false;
+      clearError();
+      els.btn.innerHTML = '<span>Masuk sebagai Kasir</span>';
+      if (state.role === 'kasir') { try { els.pass.focus(); } catch (_) {} }
+    } else {
+      renderLock(remaining);
+    }
+  }, 1000);
+}
+function renderLock(n) {
+  els.btn.disabled = true;
+  els.btn.innerHTML = '<span>Terkunci · ' + n + 's</span>';
+  els.pass.disabled = true;
+  els.errorText.textContent = 'Terlalu banyak percobaan. Tunggu ' + n + ' detik.';
+  els.error.classList.add('is-show');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LOADING OVERLAY
+   ═══════════════════════════════════════════════════════════════════ */
+function openLoader(role) {
+  els.loader.className = 'cw-loader is-show ' + (LOADER_CLASS[role] || '');
+  els.loader.setAttribute('aria-hidden', 'false');
+  els.loaderEmoji.textContent = LOADING_EMOJI[role] || '🍚';
+  els.loaderText.textContent  = LOADING_TEXT[role] || 'Menyiapkan halaman…';
+
+  els.progress.style.transition = 'transform .2s linear';
+  els.progress.style.transform  = 'scaleX(0)';
+  requestAnimationFrame(function () {
+    els.progress.style.transition = 'transform 1.6s cubic-bezier(.25,.8,.3,1)';
+    els.progress.style.transform  = 'scaleX(.82)';
+  });
+}
+function progressDone() {
+  els.progress.style.transition = 'transform .22s ease-out';
+  els.progress.style.transform  = 'scaleX(1)';
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   OPEN APP
+   ═══════════════════════════════════════════════════════════════════ */
+function openApp(role) {
+  const frame = els.frame;
+  if (!frame || !HOMES[role]) return;
+
+  document.body.classList.add('cw-appmode');
+  els.login.style.display = 'none';
+  frame.classList.add('is-active');
+
+  let finished = false;
+  function finalize() {
+    if (finished) return;
+    finished = true;
+    progressDone();
+    setTimeout(function () {
+      els.loader.classList.remove('is-show');
+      els.loader.classList.add('is-out');
+      setTimeout(function () {
+        els.loader.className = 'cw-loader';
+        els.loader.setAttribute('aria-hidden', 'true');
+      }, 340);
+
+      frame.classList.add('is-ready');
+
+      /* ← UBAH: enable drag SEBELUM FAB tampil, agar FAB langsung
+         muncul di posisi tersimpan tanpa "lompatan". */
+      if (fabDragger) fabDragger.enable();
+
+      els.fab.classList.add('is-show');
+      setTimeout(function () { burstAroundFab(els.fab, 6); }, 360);
+    }, 280);
+  }
+
+  frame.addEventListener('load', finalize, { once: true });
+  setTimeout(finalize, 6000);
+
+  try {
+    frame.src = HOMES[role];
+  } catch (_) {
+    finalize();
+  }
+
+  document.title = TITLES[role] || BASE_TITLE;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LOGOUT
+   ═══════════════════════════════════════════════════════════════════ */
+function doLogout() {
+  if (state.loggingOut || !state.appOpened) return;
+
+  let ok = true;
+  try { ok = window.confirm('Keluar dari akun dan kembali ke halaman login?'); } catch (_) { ok = true; }
+
+  if (!ok) {
+    if (els.fab) {
+      els.fab.classList.add('is-cancel');
+      setTimeout(function () {
+        if (els.fab) els.fab.classList.remove('is-cancel');
+      }, 420);
+    }
+    return;
+  }
+
+  state.loggingOut = true;
+  clearSession();
+
+  /* ← UBAH: matikan drag sebelum animasi keluar */
+  if (fabDragger) fabDragger.disable();
+
+  els.fab.classList.add('is-leaving');
+  els.fab.classList.add('is-success');
+  burstAroundFab(els.fab, 10);
+
+  setTimeout(function () {
+    els.fab.classList.remove('is-show', 'is-leaving', 'is-success');
+    els.fab.style.width = '';
+    els.fab.style.padding = '';
+    /* ← UBAH: bersihkan posisi inline agar default CSS aktif kembali */
+    els.fab.style.left = '';
+    els.fab.style.top = '';
+    els.fab.style.right = '';
+    els.fab.style.bottom = '';
+    els.fab.classList.remove('cw-fab--left', 'cw-fab--right', 'cw-fab--dragging', 'cw-fab--snapping');
+
+    try { els.frame.src = 'about:blank'; } catch (_) {}
+    els.frame.classList.remove('is-active', 'is-ready');
+    try { els.frame.removeAttribute('src'); } catch (_) {}
+
+    els.loader.className = 'cw-loader';
+    document.title = BASE_TITLE;
+
+    if (state.lockTimer) { clearInterval(state.lockTimer); state.lockTimer = 0; }
+    state.role = null;
+    state.attempts = 0;
+    state.lockedUntil = 0;
+    state.processing = false;
+    state.appOpened = false;
+    state.showPass = false;
+
+    document.body.classList.remove('cw-appmode');
+
+    $$('.cw-role', els.roles).forEach(function (b) {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-checked', 'false');
+    });
+    els.roles.classList.remove('has-active');
+
+    els.passbox.classList.remove('is-open');
+    els.pass.value = '';
+    els.pass.type = 'password';
+    els.pass.disabled = false;
+    els.btn.disabled = true;
+    els.btn.classList.remove('cw-btn--success');
+    els.btn.innerHTML = '<span>Pilih peran dulu</span>';
+    els.toggle.setAttribute('aria-label', 'Tampilkan password');
+    clearError();
+
+    els.login.style.display = '';
+    els.card.style.transition = 'none';
+    els.card.style.opacity = '0';
+    els.card.style.transform = 'scale(.96)';
+    els.card.classList.remove('cw-card--out');
+    void els.card.offsetWidth;
+    els.card.style.transition = '';
+
+    requestAnimationFrame(function () {
+      els.card.style.opacity = '';
+      els.card.style.transform = '';
+      els.card.style.filter = '';
+    });
+
+    setTimeout(function () {
+      state.loggingOut = false;
+      els.card.style.opacity = '';
+      els.card.style.transform = '';
+      toast('Berhasil keluar', 'success');
+    }, 480);
+  }, FAB_EXIT_MS);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SUBMIT
+   ═══════════════════════════════════════════════════════════════════ */
+function handleSubmit() {
+  if (state.processing || state.appOpened || state.loggingOut) return;
+  if (!state.role) { toast('Pilih peran dulu ya'); return; }
+  if (state.lockedUntil > Date.now()) { toast('Terkunci sementara, tunggu sebentar'); return; }
+
+  const role = state.role;
+  clearError();
+
+  if (role === 'kasir') {
+    if (!els.pass.value) {
+      setError('Password wajib diisi', true);
+      try { els.pass.focus(); } catch (_) {}
+      return;
+    }
+
+    state.processing = true;
+    els.btn.disabled = true;
+    els.btn.innerHTML = '<span class="cw-spinner" aria-hidden="true"></span><span>Memeriksa…</span>';
+
+    wait(420).then(function () {
+      if (els.pass.value !== PASSWORD_KASIR) {
+        state.attempts += 1;
+        state.processing = false;
+
+        if (state.attempts >= MAX_ATTEMPTS) {
+          startLockout(LOCKOUT_SEC);
+          return;
+        }
+        setError('Password salah. Sisa percobaan: ' + (MAX_ATTEMPTS - state.attempts), true);
+        els.pass.value = '';
+        try { els.pass.focus(); } catch (_) {}
+        els.btn.disabled = false;
+        els.btn.innerHTML = '<span>Masuk sebagai Kasir</span>';
+        return;
+      }
+      onSuccess(role);
+    });
+    return;
+  }
+
+  state.processing = true;
+  els.btn.disabled = true;
+  els.btn.innerHTML = '<span class="cw-spinner" aria-hidden="true"></span><span>Membuka…</span>';
+  wait(240).then(function () { onSuccess(role); });
+}
+
+function onSuccess(role) {
+  els.btn.classList.add('cw-btn--success');
+  els.btn.innerHTML =
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="20 6 9 17 4 12"/></svg><span>Berhasil! Membuka…</span>';
+  goldBurst(els.btn);
+
+  saveSession(role);
+  state.appOpened = true;
+
+  setTimeout(function () {
+    els.card.classList.add('cw-card--out');
+    explode(els.card, role);
+  }, 180);
+
+  setTimeout(function () {
+    els.login.style.display = 'none';
+    openLoader(role);
+  }, 420);
+
+  setTimeout(function () {
+    openApp(role);
+  }, 620);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TOGGLE PASSWORD
+   ═══════════════════════════════════════════════════════════════════ */
+const ICON_EYE =
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+  'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+const ICON_EYE_OFF =
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+  'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>' +
+  '<path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>' +
+  '<path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>' +
+  '<line x1="2" x2="22" y1="2" y2="22"/></svg>';
+
+function togglePass() {
+  state.showPass = !state.showPass;
+  els.pass.type = state.showPass ? 'text' : 'password';
+  els.toggle.innerHTML = state.showPass ? ICON_EYE_OFF : ICON_EYE;
+  els.toggle.setAttribute('aria-label', state.showPass ? 'Sembunyikan password' : 'Tampilkan password');
+  try { els.pass.focus(); } catch (_) {}
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════════════ */
+function init() {
+  cacheEls();
+
+  if (els.versionText) els.versionText.textContent = APP_VERSION;
+  const badge = $('#cwVersionBadge');
+  if (badge) badge.setAttribute('title', 'Versi aplikasi: ' + APP_VERSION);
+
+  attachRipple(els.btn);
+  attachRipple(els.fab);
+
+  const roleBtns = $$('.cw-role', els.roles);
+  roleBtns.forEach(function (b, i) {
+    attachRipple(b);
+    b.addEventListener('click', function () { selectRole(b.dataset.role); });
+
+    b.addEventListener('keydown', function (e) {
+      let next = -1;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % roleBtns.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + roleBtns.length) % roleBtns.length;
+      else if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        selectRole(b.dataset.role);
+        return;
+      } else return;
+
+      e.preventDefault();
+      const target = roleBtns[next];
+      selectRole(target.dataset.role);
+      try { target.focus(); } catch (_) {}
+    });
+  });
+
+  els.btn.addEventListener('click', handleSubmit);
+
+  els.pass.addEventListener('input', function () {
+    if (state.lockedUntil > Date.now()) return;
+    clearTimeout(state.passTimer);
+    state.passTimer = setTimeout(clearError, 60);
+  });
+
+  els.pass.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !els.btn.disabled) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  });
+
+  els.toggle.addEventListener('click', togglePass);
+  els.fab.addEventListener('click', doLogout);
+
+  /* ── ← UBAH: inisialisasi modul drag FAB (belum di-enable) ── */
+  fabDragger = DraggableFab.init({
+    el: els.fab,
+    storageKey: 'cakrawala_fab_pos',
+    snapSide: 'nearest',
+    edgePadding: 16,
+    dragThreshold: 6
+  });
+
+  /* Hotkey 1 / 2 */
+  document.addEventListener('keydown', function (e) {
+    if (state.appOpened || state.loggingOut) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.key === '1') { selectRole('pembeli'); focusRole('pembeli'); }
+    else if (e.key === '2') { selectRole('kasir'); focusRole('kasir'); }
+  });
+
+  /* Hotkey Escape → logout */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (!state.appOpened || state.loggingOut) return;
+    e.preventDefault();
+    doLogout();
+  });
+
+  /* ← UBAH: hotkey alternatif Alt+L / Ctrl+Shift+L untuk logout
+     (berguna bila FAB sudah digeser ke posisi sulit dijangkau). */
+  document.addEventListener('keydown', function (e) {
+    if (!state.appOpened || state.loggingOut) return;
+    const altL = e.altKey && (e.key === 'l' || e.key === 'L');
+    const ctrlShiftL = e.ctrlKey && e.shiftKey && (e.key === 'l' || e.key === 'L');
+    if (altL || ctrlShiftL) {
+      e.preventDefault();
+      doLogout();
+    }
+  });
+
+  /* Auto-restore sesi */
+  const role = readSession();
+  if (role) {
+    els.login.style.display = 'none';
+    document.body.classList.add('cw-appmode');
+    document.body.classList.remove('cw-boot');
+    state.role = role;
+    state.appOpened = true;
+    openLoader(role);
+    requestAnimationFrame(function () {
+      setTimeout(function () { openApp(role); }, 80);
+    });
+    return;
+  }
+
+  /* Tidak ada sesi */
+  els.btn.disabled = true;
+  els.btn.innerHTML = '<span>Pilih peran dulu</span>';
+  document.body.classList.remove('cw-boot');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init, { once: true });
+} else {
+  init();
+}
+})();
+</script>
+</body>
+</html>
